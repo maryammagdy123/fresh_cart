@@ -6,7 +6,9 @@ import { ShoppingCart, Heart } from "lucide-react"
 import { Product } from "@/Interfaces"
 import { renderStars } from "@/helpers/rating"
 
+
 export default function ProductCard({ viewMode, product }: { viewMode: "grid" | "list", product: Product }) {
+
 	return (
 		<section>
 			{viewMode === "grid" ? (

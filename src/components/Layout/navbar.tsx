@@ -31,6 +31,18 @@ export default function Navbar() {
 			href: "/categories",
 			label: "Categories"
 		},
+		{
+			href: "/cart",
+			label: "Cart"
+		},
+		{
+			href: "/wishlist",
+			label: "Wishlist"
+		},
+		{
+			href: "/orders",
+			label: "orders"
+		},
 	]
 	const cartCount = 1
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
@@ -47,7 +59,7 @@ export default function Navbar() {
 
 
 				{/*  Desktop NavigationMenu */}
-				<NavigationMenu className="hidden lg:flex">
+				<NavigationMenu className="hidden lg:flex z-50">
 					<NavigationMenuList className="space-x-6">
 						{links.map((link) => {
 
@@ -101,7 +113,7 @@ export default function Navbar() {
 
 			{/* Mobile NavigationMenu */}
 			{isMobileMenuOpen && (
-				<div className="lg:hidden border-t bg-background absolute shadow-md w-full">
+				<div className="lg:hidden border-t bg-background absolute shadow-md w-full z-50">
 					<div className="flex flex-col space-y-4 p-4">
 						{links.map((link) => {
 							const isActive = pathname.startsWith(link.href)

@@ -5,7 +5,7 @@ import Navbar from "@/components/Layout/navbar";
 import Footer from "@/components/Layout/footer";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import 'animate.css';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
