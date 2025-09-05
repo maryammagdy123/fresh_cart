@@ -50,11 +50,13 @@ export default function Navbar() {
 				<NavigationMenu className="hidden lg:flex">
 					<NavigationMenuList className="space-x-6">
 						{links.map((link) => {
-							const isActive = pathname === link.href
+
+							const isActive = pathname.startsWith(link.href)
 							return (
 								<NavigationMenuItem key={link.href}>
 									<NavigationMenuLink asChild>
 										<Link
+											key={link.href}
 											href={link.href}
 											className={`${isActive
 												? "text-blue-600 font-semibold border-b-2 border-blue-600"
@@ -102,7 +104,7 @@ export default function Navbar() {
 				<div className="lg:hidden border-t bg-background absolute shadow-md w-full">
 					<div className="flex flex-col space-y-4 p-4">
 						{links.map((link) => {
-							const isActive = pathname === link.href
+							const isActive = pathname.startsWith(link.href)
 							return (
 								<Link
 									key={link.href}
