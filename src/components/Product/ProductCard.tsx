@@ -34,12 +34,17 @@ export default function ProductCard({ viewMode, product }: { viewMode: "grid" | 
 					<div className="flex items-center justify-between text-sm text-gray-500 mb-1">
 						<div className="flex gap-1">
 							{renderStars(product.ratingsAverage)}
-
 						</div>
-						{/* <span className="max-w-sm">{Math.floor(product.sold)} sold</span> */}
 					</div>
 
-					<p className="text-gray-800 font-medium">${product.price}</p>
+					<div className="flex gap-4 justify-between ">
+						<div className="flex-1 max-w-sm">	<p className="text-gray-800 font-medium">${product.price}</p></div>
+						<div className="flex-1">
+							{/* <span className="max-w-sm">{Math.floor(product.sold)} sold</span> */}
+
+						</div>
+					</div>
+
 
 					{/* actions */}
 					<Button asChild className="mt-4 w-full">
