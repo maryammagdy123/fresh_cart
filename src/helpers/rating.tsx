@@ -11,4 +11,12 @@ export const renderStars = (rating: number) => {
 		);
 
 	}
+
+	if (halfStars) {
+		stars.push(
+			<Star key="halfStar"
+				className="h-5 w-5  fill-yellow-500 text-yellow-500"
+			/>
+		)
+	}
 }
