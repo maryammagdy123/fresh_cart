@@ -2,7 +2,7 @@
 import React from "react"
 import { Button } from "../ui/button"
 import Link from "next/link"
-import { ShoppingCart, Heart } from "lucide-react"
+import { ShoppingCart, Heart, Brackets } from "lucide-react"
 import { Product } from "@/Interfaces"
 import { renderStars } from "@/helpers/rating"
 import { div } from "framer-motion/client"
@@ -25,7 +25,7 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 						<Image src={product.imageCover}
 							alt={product.title}
 							fill
-							className="object-cover rounded-lg group:hover:scale-105 transition-transform duration-300"
+							className="object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
 							sizes="(max-width:766px) 100vw, (max-width:1200px) 50vw ,25vw" />
 
 						{/* action icons */}
@@ -41,7 +41,7 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 
 					{/* title + brand */}
 					<Link href="#">
-						<span className="text-md text-gray-600">{product.brand.name}</span>
+						<span className="text-md text-gray-600 hover:underline hover:text-blue-700">{product.brand.name}</span>
 					</Link>
 					<h2 className="text-lg font-semibold">{product.title.length > 15 ? product?.title.slice(0, 15) : product?.title}</h2>
 
@@ -49,9 +49,12 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 					<div className="flex flex-col  justify-between text-sm text-gray-500 mb-1">
 						<div className="flex  gap-1">
 							{renderStars(product.ratingsAverage)}
+							<span>
+								({product.ratingsQuantity})
+							</span>
 						</div>
 						<Link href="#">
-							<span className="text-md text-gray-600">{product.category.name}</span>
+							<span className="text-md text-gray-600 hover:underline hover:text-blue-700">{product.category.name}</span>
 						</Link>
 					</div>
 
@@ -82,10 +85,14 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 
 					{/* product image */}
 					<div className="relative w-32 h-32 bg-gray-100 rounded-lg shrink-0 overflow-hidden">
-						<Image src={product.imageCover} alt={product.title} fill className="object-cover rounded-lg" />
+						<Image src={product.imageCover}
+							alt={product.title}
+							fill
+							className="object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
+							sizes="(max-width:766px) 100vw, (max-width:1200px) 50vw ,25vw" />
 
 						{/* action icons */}
-						<div className="absolute top-2 right-2 flex gap-2">
+						<div className="absolute bottom-2 right-2 flex gap-2">
 							<Button className="p-2 bg-white rounded-full shadow hover:bg-gray-100 transition">
 								<Heart className="h-5 w-5 text-red-500" />
 							</Button>
@@ -100,22 +107,30 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 						{/* brand + title */}
 						<div className="mb-2">
 							<Link href="#">
-								<span className="text-sm text-gray-500">{product.brand.name}</span>
+								<span className="text-sm text-gray-500 hover:underline hover:text-blue-700">{product.brand.name}</span>
 							</Link>
 							<h2 className="text-lg font-semibold line-clamp-2">
 								{product.title.length > 25 ? product.title.slice(0, 25) + "..." : product.title}
 							</h2>
+
+							<p className="md:line-clamp-1 text-gray-500 text-sm">{product.description}</p>
 						</div>
 
 						{/* rating + sold + category */}
-						<div className="flex items-center justify-between mb-2">
-							<div className="flex gap-1">{renderStars(product.ratingsAverage)}</div>
+						<div className=" flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+							<div className=" flex gap-1">
+								{renderStars(product.ratingsAverage)}
+								<span className=" text-sm text-gray-500 ">
+									({product.ratingsQuantity})
+								</span>
+
+							</div>
 							<span className="text-gray-500 text-sm">
 								{product.sold ? product.sold.toString().slice(0, 4) : 0} sold
 							</span>
 						</div>
 						<Link href="#">
-							<span className="text-sm text-gray-600">{product.category.name}</span>
+							<span className="text-sm text-gray-600 hover:underline hover:text-blue-700">{product.category.name}</span>
 						</Link>
 
 						{/* price + button */}
