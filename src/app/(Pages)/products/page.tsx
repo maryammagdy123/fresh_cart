@@ -9,6 +9,7 @@ import ProductCard from "@/components/Product/ProductCard"
 import { ProductResponse } from "@/types"
 import { Product } from "@/Interfaces"
 import { motion } from "framer-motion"
+import { apiServices } from "@/services/api"
 
 
 export default function ProductsPage() {
@@ -33,9 +34,7 @@ export default function ProductsPage() {
 
 	async function getAllProducts() {
 		setLoading(true)
-		const data: ProductResponse = await fetch(
-			`https://ecommerce.routemisr.com/api/v1/products`
-		).then((res) => res.json());
+		const data: ProductResponse = await apiServices.getAllProducts()
 		setProducts(data.data)
 		setLoading(false)
 	}

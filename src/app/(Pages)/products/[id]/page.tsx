@@ -8,6 +8,7 @@ import { SingleProductResponse } from "@/types";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
+import { apiServices } from "@/services/api";
 
 
 export default function ProductDetailPage() {
@@ -17,11 +18,9 @@ export default function ProductDetailPage() {
 	const [product, setProducts] = useState<Product | null>(null)
 	const [loading, setLoading] = useState(false)
 
-	async function getSingleProduct() {
+	async function getProductDetail() {
 		setLoading(true)
-		const data: SingleProductResponse = await fetch(
-			`https://ecommerce.routemisr.com/api/v1/products/${id}`
-		).then((res) => res.json());
+		const data: SingleProductResponse = await apiServices.getSingleProduct(String(id))
 		setProducts(data.data)
 		setLoading(false)
 	}
@@ -29,7 +28,7 @@ export default function ProductDetailPage() {
 
 
 	useEffect(() => {
-		getSingleProduct()
+		getProductDetail()
 	}, [])
 	if (loading && !product) {
 		return <LoadingSpinner />
@@ -52,7 +51,7 @@ export default function ProductDetailPage() {
 									// sizes="(max-width:766px) 100vw, (max-width:1200px) 50vw ,25vw"
 									height={400}
 									width={400}
-									className="rounded-lg object-cover"
+									className="rounded-lg object-cover mx-auto"
 								/>
 							}
 
@@ -136,7 +135,7 @@ export default function ProductDetailPage() {
 								<Button className="p-2 rounded-md border hover:bg-gray-50" aria-label="add to wishlist">
 									<Heart className="h-5 w-5 text-red-500" />
 								</Button>
-								<Button className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white hover:brightness-95">
+								<Button disabled={product?.quantity === 0} className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white hover:brightness-95">
 									<ShoppingCart className="h-4 w-4" /> Add to cart
 								</Button>
 							</div>
