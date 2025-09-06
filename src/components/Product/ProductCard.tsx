@@ -6,8 +6,12 @@ import { ShoppingCart, Heart } from "lucide-react"
 import { Product } from "@/Interfaces"
 import { renderStars } from "@/helpers/rating"
 
+interface ProductCardProps {
+	viewMode: "grid" | "list",
+	product: Product
+}
 
-export default function ProductCard({ viewMode, product }: { viewMode: "grid" | "list", product: Product }) {
+export default function ProductCard({ viewMode = "grid", product }: ProductCardProps) {
 
 	return (
 		<section>
