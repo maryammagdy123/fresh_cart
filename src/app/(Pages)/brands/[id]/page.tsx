@@ -11,7 +11,7 @@ interface BrandProductsPageProps {
 export default async function BrandProductsPage({ params }: BrandProductsPageProps) {
 	const { id } = params
 
-	const data: ProductResponse = await apiServices.getAllBrandProducts(id)
+	const data: ProductResponse = await apiServices.getSingleBrandAllProducts(id)
 	const products: Product[] = data.data
 
 

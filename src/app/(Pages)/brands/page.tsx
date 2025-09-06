@@ -1,14 +1,12 @@
 import { Brand } from "@/Interfaces"
+import { apiServices } from "@/services/api"
 import { BrandResponse } from "@/types"
 import Image from "next/image"
 import Link from "next/link"
 
 export default async function BrandsPage() {
-	const response = await fetch("https://ecommerce.routemisr.com/api/v1/brands", {
-		cache: "force-cache",
-	})
 
-	const data: BrandResponse = await response.json()
+	const data: BrandResponse = await apiServices.getAllBrands()
 	const brands: Brand[] = data.data
 
 	return (
