@@ -6,6 +6,7 @@ import { ShoppingCart, Heart } from "lucide-react"
 import { Product } from "@/Interfaces"
 import { renderStars } from "@/helpers/rating"
 import { div } from "framer-motion/client"
+import Image from "next/image"
 
 interface ProductCardProps {
 	viewMode?: "grid" | "list",
@@ -20,8 +21,12 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 				// 🔹 Grid view mode
 				<div className="relative border rounded-2xl shadow-md p-4 flex flex-col justify-between hover:shadow-lg transition">
 					{/* product image */}
-					<div className="relative w-full h-48 mb-4 bg-gray-100 rounded-lg">
-						{/* <Image src={product.image} alt={product.name} fill className="object-cover rounded-lg" /> */}
+					<div className="relative w-full h-48 mb-4 bg-gray-100 rounded-lg ">
+						<Image src={product.imageCover}
+							alt={product.title}
+							fill
+							className="object-cover rounded-lg group:hover:scale-105 transition-transform duration-300"
+							sizes="(max-width:766px) 100vw, (max-width:1200px) 50vw ,25vw" />
 
 						{/* action icons */}
 						<div className="absolute top-2 right-2 flex gap-2">
@@ -77,7 +82,7 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 
 					{/* product image */}
 					<div className="relative w-32 h-32 bg-gray-100 rounded-lg shrink-0 overflow-hidden">
-						{/* <Image src={product.image} alt={product.name} fill className="object-cover rounded-lg" /> */}
+						<Image src={product.imageCover} alt={product.title} fill className="object-cover rounded-lg" />
 
 						{/* action icons */}
 						<div className="absolute top-2 right-2 flex gap-2">
@@ -97,7 +102,7 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 							<Link href="#">
 								<span className="text-sm text-gray-500">{product.brand.name}</span>
 							</Link>
-							<h2 className="text-lg font-semibold">
+							<h2 className="text-lg font-semibold line-clamp-2">
 								{product.title.length > 25 ? product.title.slice(0, 25) + "..." : product.title}
 							</h2>
 						</div>
