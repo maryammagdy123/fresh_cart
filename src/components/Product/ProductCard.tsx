@@ -8,9 +8,12 @@ import { renderStars } from "@/helpers/rating"
 // import { div } from "framer-motion/client"
 import Image from "next/image"
 
+
+
 interface ProductCardProps {
 	viewMode?: "grid" | "list",
 	product: Product
+
 }
 
 export default function ProductCard({ viewMode = "grid", product }: ProductCardProps) {
@@ -40,7 +43,7 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 					</div>
 
 					{/* title + brand */}
-					<Link href="#">
+					<Link href={`/brands/${product.brand._id}`}>
 						<span className="text-md text-gray-600 hover:underline hover:text-blue-700">{product.brand.name}</span>
 					</Link>
 					<Link href={`/products/${product.id}`}>

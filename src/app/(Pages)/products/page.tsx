@@ -1,16 +1,14 @@
 
 import { ApiResponse, Product } from "@/Interfaces"
 import ProductGridContainer from "@/components/Product/ProductGridContainer"
+import { apiServices } from "@/services/api"
 
 
 
 export default async function ProductsPage() {
 
-	const response = await fetch(`https://ecommerce.routemisr.com/api/v1/products`, {
-		cache: "force-cache"
-	})
-	const data: ApiResponse<Product> = await response.json()
-	console.log(data.data)
+
+	const data: ApiResponse<Product> = await apiServices.getAllProducts()
 
 	const products: Product[] = data.data
 
@@ -18,7 +16,6 @@ export default async function ProductsPage() {
 	return (
 		<>
 			<ProductGridContainer products={products} />
-
 		</>
 	)
 }
