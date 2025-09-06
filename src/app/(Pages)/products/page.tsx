@@ -107,7 +107,7 @@ export default function ProductsPage() {
 
 					{/* Products cards */}
 					<motion.div
-						className={`grid gap-6 px-7 ${viweMode == "grid"
+						className={`grid gap-6 px-7 h-full ${viweMode == "grid"
 							? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5"
 							: "grid-cols-1"
 							}`}
