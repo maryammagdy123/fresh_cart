@@ -26,12 +26,12 @@ export default async function BrandsPage() {
 							className="border rounded-xl shadow-sm hover:shadow-md transition flex flex-col items-center justify-center p-4 bg-white"
 						>
 							{/* Brand image */}
-							<div className="relative w-24 h-24 mb-3">
+							<div className="relative w-[150px] h-[150px] mb-3">
 								<Image
 									src={brand.image}
 									alt={brand.name}
 									fill
-									className="object-contain"
+									className="object-contain p-6 "
 									sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 200px"
 								/>
 							</div>

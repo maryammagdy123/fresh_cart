@@ -41,25 +41,21 @@ export default function ProductDetailPage() {
 				{/* LEFT: images */}
 				<section className="relative">
 					<div className="bg-white rounded-2xl shadow-md overflow-hidden">
-						<div className="relative w-full aspect-[4/3] mx-auto bg-gray-50">
+						<div className="relative w-full aspect-[4/3] mx-auto p-4 bg-gray-50">
 							{/* main image */}
 							{
 								product &&
 
-								<Image
-									src={product?.images[mainIndex]}
-									alt={product?.title || "product image"}
-									// sizes="(max-width:766px) 100vw, (max-width:1200px) 50vw ,25vw"
-									height={400}
-									width={400}
-									className="rounded-lg object-cover mx-auto"
-								/>
+								<div className="relative w-[400px] h-[400px] mx-auto">
+									<Image
+										src={product?.images[mainIndex]}
+										alt={product?.title || "product image"}
+										fill
+										className="rounded-lg object-cover"
+									/>
+								</div>
+
 							}
-
-
-
-
-
 						</div>
 
 						{/* thumbnails */}
