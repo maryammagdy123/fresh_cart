@@ -1,130 +1,63 @@
-"use client"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { useEffect, useState } from "react"
-import LoadingSpinner from "@/components/shared/LoadingSpinner"
-import MainSlider from "@/components/Product/MainSlider"
-import { Grid, List } from "lucide-react"
-import ProductCard from "@/components/Product/ProductCard"
-import { ProductResponse } from "@/types"
+
 import { Product } from "@/Interfaces"
-import { motion } from "framer-motion"
+import ProductGridContainer from "@/components/Product/ProductGridContainer"
+import { apiServices } from "@/services/api"
+import { ProductResponse } from "@/types"
+import Link from "next/link"
 
 
-export default function ProductsPage() {
-	const containerVariants = {
-		hidden: { opacity: 0 },
-		visible: {
-			opacity: 1,
-			transition: {
-				staggerChildren: 0.1,
-			},
-		},
-	}
 
-	const itemVariants = {
-		hidden: { opacity: 0, y: 40 },
-		visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-	}
-	const [products, setProducts] = useState<Product[]>([])
-	const [loading, setLoading] = useState(false)
-	const [error, setError] = useState(null)
-	const [viweMode, setViewMode] = useState<"grid" | "list">("grid")
+export default async function ProductsPage({
+	searchParams,
+}: {
+	searchParams?: { page?: string }
+}) {
+	const page = Number(searchParams?.page) || 1
 
-	async function getAllProducts() {
-		setLoading(true)
-		const data: ProductResponse = await fetch(
-			`https://ecommerce.routemisr.com/api/v1/products`
-		).then((res) => res.json());
-		setProducts(data.data)
-		setLoading(false)
-	}
-
-	useEffect(() => {
-		getAllProducts()
-	}, [])
-
-	if (loading && products.length == 0) {
-		return <LoadingSpinner />
-	}
-
-	if (error) {
-		return (
-			<section className="container mx-auto px-4 py-20 text-center">
-				<h1 className="text-3xl font-bold mb-4 text-red-600">Oops! Something went wrong 😢</h1>
-				<p className="text-gray-600 mb-6">
-					We couldn’t load the products right now. Please check your connection or try again later.
-				</p>
-
-				<div className="flex gap-4 justify-center">
-					<Button onClick={() => window.location.reload()}>Try Again</Button>
-					<Button asChild variant="outline">
-						<Link href="/">Go Home</Link>
-					</Button>
-				</div>
-			</section>
-		);
-	}
-
+	const data: ProductResponse = await apiServices.getAllProducts(page)
+	const products: Product[] = data.data
+	const totalPages = data.metadata.numberOfPages
 	return (
 		<>
-			<section>
+			<ProductGridContainer products={products} />
+			{/* Pagination */}
+			<div className="fixed bottom-4 left-0 right-0 flex justify-center z-50 ">
+				<div className="flex items-center space-x-2 bg-white shadow-md px-4 py-2 rounded-lg">
+					{/* Prev button */}
+					{page > 1 && (
+						<Link
+							href={`/products?page=${page - 1}`}
+							className="px-3 py-1 border rounded-md  hover:bg-gray-100"
+						>
+							Prev
+						</Link>
+					)}
 
+					{/* Page numbers */}
+					{Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+						<Link
+							key={num}
+							href={`/products?page=${num}`}
+							className={`px-3 py-1 border  rounded-md ${num === page
+								? "bg-black text-white border-black"
+								: "hover:bg-gray-100"
+								}`}
+						>
+							{num}
+						</Link>
+					))}
 
-
-				<div className="container mx-auto px-7 py-8">
-					<div className="mb-3 my-7 px-7">
-						<h1 className="text-4xl font-bold mb-4">Products</h1>
-						<p className="">Discover amazing products from our collection</p>
-					</div>
-					{/* slider */}
-					<MainSlider />
-					{/* Header */}
-
-
-					{/* setting view Mode */}
-					<div className="flex items-center justify-end mb-6 mt-4">
-						<div className="flex  items-center border rounded-md">
-							<Button
-								variant={viweMode === "grid" ? "default" : "ghost"}
-								size="sm"
-								onClick={() => setViewMode("grid")}
-								className="rounded-r-none"
-							>
-								<Grid className="h-4 w-4" />
-							</Button>
-
-							<Button
-								variant={viweMode === "list" ? "default" : "ghost"}
-								size="sm"
-								onClick={() => setViewMode("list")}
-								className="rounded-r-none"
-							>
-								<List className="h-4 w-4" />
-							</Button>
-						</div>
-					</div>
-
-					{/* Products cards */}
-					<motion.div
-						className={`grid gap-6 px-7 h-full ${viweMode == "grid"
-							? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5"
-							: "grid-cols-1"
-							}`}
-						variants={containerVariants}
-						initial="hidden"
-						animate="visible"
-					>
-						{products.map((product) => (
-							<motion.div key={product._id} variants={itemVariants}>
-								<ProductCard product={product} viewMode={viweMode} />
-							</motion.div>
-						))}
-					</motion.div>
-
-
+					{/* Next button */}
+					{page < totalPages && (
+						<Link
+							href={`/products?page=${page + 1}`}
+							className="px-3 py-1 border rounded-md hover:bg-gray-100"
+						>
+							Next
+						</Link>
+					)}
 				</div>
-			</section>
+			</div>
 
 		</>
 	)
