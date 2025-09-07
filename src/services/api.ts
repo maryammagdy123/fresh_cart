@@ -3,8 +3,8 @@ import { BrandResponse, ProductResponse, SingleBrandResponse, SingleProductRespo
 class ApiServices {
 
 	// get All Products
-	async getAllProducts(): Promise<ProductResponse> {
-		return await fetch(`https://ecommerce.routemisr.com/api/v1/products`, {
+	async getAllProducts(page: number = 1): Promise<ProductResponse> {
+		return await fetch(`https://ecommerce.routemisr.com/api/v1/products?page=${page}`, {
 			// cache: "force-cache"
 			next: {
 				revalidate: 3600

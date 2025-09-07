@@ -83,6 +83,7 @@ export default function ProductGridContainer({ products }: ProductGridContainerP
 
 
 			</div>
+
 		</section>
 	)
 }
