@@ -5,15 +5,14 @@ import { apiServices } from "@/services/api"
 import { ProductResponse } from "@/types"
 import Link from "next/link"
 
-
-
 export default async function ProductsPage({
 	searchParams,
 }: {
-	searchParams?: { page?: string }
+	searchParams: Promise<{ page?: string }>
 }) {
-	const page = Number(searchParams?.page) || 1
 
+	const params = await searchParams
+	const page = Number(params?.page) || 1
 	const data: ProductResponse = await apiServices.getAllProducts(page)
 	const products: Product[] = data.data
 	const totalPages = data.metadata.numberOfPages

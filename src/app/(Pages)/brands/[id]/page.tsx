@@ -4,13 +4,16 @@ import ProductCard from "@/components/Product/ProductCard"
 import { apiServices } from "@/services/api"
 import { ProductResponse } from "@/types"
 
-interface BrandProductsPageProps {
-	params: { id: string }
-}
 
-export default async function BrandProductsPage({ params }: BrandProductsPageProps) {
-	const { id } = params
 
+export default async function BrandProductsPage({
+	params,
+}: {
+	params: Promise<{ id: string }>
+}) {
+
+	const param = await params
+	const id = param.id;
 	const data: ProductResponse = await apiServices.getSingleBrandAllProducts(id)
 	const products: Product[] = data.data
 

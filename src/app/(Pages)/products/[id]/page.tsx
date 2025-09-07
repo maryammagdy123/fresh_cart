@@ -12,7 +12,8 @@ import { apiServices } from "@/services/api";
 
 
 export default function ProductDetailPage() {
-	const { id } = useParams()
+	const { id } = useParams<{ id: string }>()
+
 	const [mainIndex, setMainIndex] = useState(0);
 	const [quantity, setQuantity] = useState(1);
 	const [product, setProducts] = useState<Product | null>(null)
