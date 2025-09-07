@@ -16,13 +16,13 @@ export default function ProductDetailPage() {
 	const [mainIndex, setMainIndex] = useState(0);
 	const [quantity, setQuantity] = useState(1);
 	const [product, setProducts] = useState<Product | null>(null)
-	// const [loading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(false)
 
 	async function getProductDetail() {
-		// setLoading(true)
+		setLoading(true)
 		const data: SingleProductResponse = await apiServices.getSingleProduct(String(id))
 		setProducts(data.data)
-		// setLoading(false)
+		setLoading(false)
 	}
 
 
@@ -30,9 +30,9 @@ export default function ProductDetailPage() {
 	useEffect(() => {
 		getProductDetail()
 	}, [])
-	// if (loading && !product) {
-	// 	return <LoadingSpinner />
-	// }
+	if (loading && !product) {
+		return <LoadingSpinner />
+	}
 
 	return (
 		<main className="max-w-6xl mx-auto px-4 py-8">
