@@ -1,8 +1,10 @@
 import { Brand, Product } from "@/Interfaces"
 import EmptyBrands from "@/components/Brands/EmptyBrands"
 import ProductCard from "@/components/Product/ProductCard"
+import LoadingSpinner from "@/components/shared/LoadingSpinner"
 import { apiServices } from "@/services/api"
 import { ProductResponse } from "@/types"
+import { Suspense } from "react"
 
 
 
@@ -25,7 +27,7 @@ export default async function BrandProductsPage({
 
 
 	return (
-		<section className="container mx-auto px-6 py-8">
+		<Suspense fallback={<LoadingSpinner />}><section className="container mx-auto px-6 py-8">
 			{/* Header */}
 			<div className="mb-6">
 				<h1 className="text-3xl font-bold mb-2">{brand?.name} Products</h1>
@@ -44,6 +46,7 @@ export default async function BrandProductsPage({
 			) : (
 				<EmptyBrands />
 			)}
-		</section>
+		</section></Suspense>
+
 	)
 }

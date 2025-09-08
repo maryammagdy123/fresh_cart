@@ -9,7 +9,9 @@ import { renderStars } from "@/helpers/rating"
 import Image from "next/image"
 import { apiServices } from "@/services/api"
 import toast from "react-hot-toast"
-import Loader from "../Loader/Loader"
+import Loader from "@/components/Loader/Loader";
+
+
 
 
 
@@ -21,6 +23,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ viewMode = "grid", product }: ProductCardProps) {
 	const [addToCartLoader, setAddToCartLoader] = useState(false)
+
 	async function handleAddToCart() {
 		setAddToCartLoader(true)
 		const data = await apiServices.addToCart(product!._id)
@@ -97,9 +100,10 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 
 
 					{/* actions */}
-					<Button asChild className="mt-3" onClick={handleAddToCart}>
-						<span>	Add to cart <ShoppingCart className="h-5 w-5 text-white" /></span>
+					<Button onClick={handleAddToCart} disabled={addToCartLoader} className="mt-4">
+						{addToCartLoader ? <Loader /> : <>Add to cart <ShoppingCart className="h-5 w-5 text-white" /></>}
 					</Button>
+
 				</div>
 			) : (
 				//  list viewmode
@@ -159,11 +163,10 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 						<div className="flex items-center justify-between mt-3">
 							<p className="text-lg font-semibold text-gray-800">${product.price}</p>
 							{/* actions */}
-							<Button asChild onClick={handleAddToCart}>
-								{
-									addToCartLoader ? (<Loader />) : (<span>	Add to cart <ShoppingCart className="h-5 w-5 text-white" /></span>)
-								}
+							<Button onClick={handleAddToCart} disabled={addToCartLoader} className="mt-4">
+								{addToCartLoader ? <Loader /> : <>Add to cart <ShoppingCart className="h-5 w-5 text-white" /></>}
 							</Button>
+
 						</div>
 					</div>
 

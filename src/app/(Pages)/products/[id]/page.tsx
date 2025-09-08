@@ -154,7 +154,7 @@ export default function ProductDetailPage() {
 								<Button className="p-2 rounded-md border hover:bg-gray-50" aria-label="add to wishlist">
 									<Heart className="h-5 w-5 text-red-500" />
 								</Button>
-								<Button onClick={handleAddToCart} disabled={product?.quantity === 0} className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white hover:brightness-95">
+								<Button onClick={handleAddToCart} disabled={addToCartLoader} className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white hover:brightness-95">
 									{
 										addToCartLoader ? (<Loader />) : (<><ShoppingCart className="h-5 w-5" /> Add to cart</>)
 									}
