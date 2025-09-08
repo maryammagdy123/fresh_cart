@@ -9,6 +9,7 @@ import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import { apiServices } from "@/services/api";
+import toast from "react-hot-toast";
 
 
 export default function ProductDetailPage() {
@@ -26,11 +27,21 @@ export default function ProductDetailPage() {
 		setLoading(false)
 	}
 
+	async function handleAddToCart() {
 
+		const data = await apiServices.addToCart(String(product?._id))
+		if (data.status === 'success') {
+			toast.success(data.message)
+		} else {
+			toast.error(data.message)
+		}
+	}
 
 	useEffect(() => {
 		getProductDetail()
 	}, [])
+
+
 	if (loading && !product) {
 		return <LoadingSpinner />
 	}
@@ -79,6 +90,10 @@ export default function ProductDetailPage() {
 					<div>
 						<Link href="#" className="text-sm text-gray-500">
 							{product?.brand?.name}
+						</Link>
+						<br />
+						<Link href="#" className="text-sm text-gray-500">
+							{product?._id}
 						</Link>
 						<h1 className="text-2xl font-semibold mt-2 text-gray-900">{product?.title}</h1>
 
@@ -132,7 +147,7 @@ export default function ProductDetailPage() {
 								<Button className="p-2 rounded-md border hover:bg-gray-50" aria-label="add to wishlist">
 									<Heart className="h-5 w-5 text-red-500" />
 								</Button>
-								<Button disabled={product?.quantity === 0} className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white hover:brightness-95">
+								<Button onClick={handleAddToCart} disabled={product?.quantity === 0} className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white hover:brightness-95">
 									<ShoppingCart className="h-4 w-4" /> Add to cart
 								</Button>
 							</div>

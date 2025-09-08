@@ -8,6 +8,7 @@ import { renderStars } from "@/helpers/rating"
 // import { div } from "framer-motion/client"
 import Image from "next/image"
 import { apiServices } from "@/services/api"
+import toast from "react-hot-toast"
 
 
 
@@ -19,8 +20,14 @@ interface ProductCardProps {
 
 export default function ProductCard({ viewMode = "grid", product }: ProductCardProps) {
 	async function handleAddToCart() {
-		const data = await apiServices.addToCart(product._id)
-		console.log(data)
+		const data = await apiServices.addToCart(product!._id)
+		if (data.status ===
+			'success'
+		) {
+			toast.success(data.message)
+		} else {
+			toast.error(data.message)
+		}
 	}
 	return (
 		<section>
