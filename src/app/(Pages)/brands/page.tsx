@@ -22,27 +22,27 @@ export default async function BrandsPage() {
 			{/* Brands grid */}
 			<div className="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
 				{brands.map((brand) => (
-					<Suspense fallback={<LoadingSpinner /}>
-						<Link href={`/brands/${brand._id}`} key={brand._id}>
-							<div
-								key={brand._id}
-								className="border rounded-xl shadow-sm hover:shadow-md transition flex flex-col items-center justify-center p-4 bg-white"
-							>
-								{/* Brand image */}
-								<div className="relative w-[150px] h-[150px] mb-3">
-									<Image
-										src={brand.image}
-										alt={brand.name}
-										fill
-										className="object-contain p-6 "
-										sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 200px"
-									/>
-								</div>
-								{/* Brand name */}
 
+					<Link href={`/brands/${brand._id}`} key={brand._id}>
+						<div
+							key={brand._id}
+							className="border rounded-xl shadow-sm hover:shadow-md transition flex flex-col items-center justify-center p-4 bg-white"
+						>
+							{/* Brand image */}
+							<div className="relative w-[150px] h-[150px] mb-3">
+								<Image
+									src={brand.image}
+									alt={brand.name}
+									fill
+									className="object-contain p-6 "
+									sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 200px"
+								/>
 							</div>
-						</Link>
-					</Suspense>
+							{/* Brand name */}
+
+						</div>
+					</Link>
+
 				))}
 			</div>
 		</section ></Suspense>
