@@ -1,5 +1,5 @@
-
-import React, { useState } from "react"
+"use client"
+import { useState } from "react"
 import { Button } from "../ui/button"
 import Link from "next/link"
 import { ShoppingCart, Heart } from "lucide-react"
@@ -9,6 +9,7 @@ import { renderStars } from "@/helpers/rating"
 import Image from "next/image"
 import { apiServices } from "@/services/api"
 import toast from "react-hot-toast"
+import Loader from "../Loader/Loader"
 
 
 
@@ -19,9 +20,9 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ viewMode = "grid", product }: ProductCardProps) {
-	const [addToCartLoading, setAddToCartLoading] = useState(false)
+	const [addToCartLoader, setAddToCartLoader] = useState(false)
 	async function handleAddToCart() {
-		setAddToCartLoading(true)
+		setAddToCartLoader(true)
 		const data = await apiServices.addToCart(product!._id)
 		if (data.status ===
 			'success'
@@ -31,7 +32,7 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 			toast.error(data.message)
 		}
 
-		setAddToCartLoading(false)
+		setAddToCartLoader(false)
 	}
 	return (
 		<section>
@@ -159,7 +160,9 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 							<p className="text-lg font-semibold text-gray-800">${product.price}</p>
 							{/* actions */}
 							<Button asChild onClick={handleAddToCart}>
-								<span>	Add to cart <ShoppingCart className="h-5 w-5 text-white" /></span>
+								{
+									addToCartLoader ? (<Loader />) : (<span>	Add to cart <ShoppingCart className="h-5 w-5 text-white" /></span>)
+								}
 							</Button>
 						</div>
 					</div>

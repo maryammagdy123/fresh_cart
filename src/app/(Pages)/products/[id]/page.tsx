@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import { apiServices } from "@/services/api";
 import toast from "react-hot-toast";
+import Loader from "@/components/Loader/Loader";
 
 
 export default function ProductDetailPage() {
@@ -19,7 +20,7 @@ export default function ProductDetailPage() {
 	const [quantity, setQuantity] = useState(1);
 	const [product, setProducts] = useState<Product | null>(null)
 	const [loading, setLoading] = useState(false)
-	const [addToCartLoading, setAddToCartLoading] = useState(false)
+	const [addToCartLoader, setAddToCartLoader] = useState(false)
 
 	async function getProductDetail() {
 		setLoading(true)
@@ -30,7 +31,7 @@ export default function ProductDetailPage() {
 
 
 	async function handleAddToCart() {
-		setAddToCartLoading(true)
+		setAddToCartLoader(true)
 		const data = await apiServices.addToCart(product!._id)
 		if (data.status ===
 			'success'
@@ -40,7 +41,7 @@ export default function ProductDetailPage() {
 			toast.error(data.message)
 		}
 
-		setAddToCartLoading(false)
+		setAddToCartLoader(false)
 	}
 
 	useEffect(() => {
@@ -154,7 +155,9 @@ export default function ProductDetailPage() {
 									<Heart className="h-5 w-5 text-red-500" />
 								</Button>
 								<Button onClick={handleAddToCart} disabled={product?.quantity === 0} className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white hover:brightness-95">
-									<ShoppingCart className="h-4 w-4" /> Add to cart
+									{
+										addToCartLoader ? (<Loader />) : (<><ShoppingCart className="h-5 w-5" /> Add to cart</>)
+									}
 								</Button>
 							</div>
 						</div>
