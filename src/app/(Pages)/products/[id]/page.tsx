@@ -10,7 +10,8 @@ import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import { apiServices } from "@/services/api";
 import toast from "react-hot-toast";
-import Loader from "@/components/Loader/Loader";
+import AddToCartBtn from "@/components/Cart/AddToCartBtn";
+
 
 
 export default function ProductDetailPage() {
@@ -154,11 +155,8 @@ export default function ProductDetailPage() {
 								<Button className="p-2 rounded-md border hover:bg-gray-50" aria-label="add to wishlist">
 									<Heart className="h-5 w-5 text-red-500" />
 								</Button>
-								<Button onClick={handleAddToCart} disabled={addToCartLoader} className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white hover:brightness-95">
-									{
-										addToCartLoader ? (<Loader />) : (<><ShoppingCart className="h-5 w-5" /> Add to cart</>)
-									}
-								</Button>
+								<AddToCartBtn handleAddToCart={handleAddToCart} addToCartLoader={addToCartLoader} productQuantity={product!.quantity} />
+
 							</div>
 						</div>
 						{/* display quantity on stock */}
