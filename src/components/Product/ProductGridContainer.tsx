@@ -1,5 +1,5 @@
 "use client"
-import React, { Suspense, useState } from 'react'
+import React, { useState } from 'react'
 import MainSlider from './MainSlider'
 import { Button } from '../ui/button'
 import { Grid, List } from 'lucide-react'

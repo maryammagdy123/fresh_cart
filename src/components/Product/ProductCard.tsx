@@ -2,15 +2,14 @@
 import { useState } from "react"
 import { Button } from "../ui/button"
 import Link from "next/link"
-import { ShoppingCart, Heart } from "lucide-react"
 import { Product } from "@/Interfaces"
 import { renderStars } from "@/helpers/rating"
 // import { div } from "framer-motion/client"
 import Image from "next/image"
 import { apiServices } from "@/services/api"
 import toast from "react-hot-toast"
-import Loader from "@/components/Loader/Loader";
 import AddToCartBtn from "../Cart/AddToCartBtn"
+import { Heart } from "lucide-react"
 
 
 
@@ -86,7 +85,7 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 					</div>
 
 					{/* price + sold quantity */}
-					<div className="flex gap-4 justify-between ">
+					<div className="flex gap-4 justify-between mb-4">
 						<p className="text-gray-800 font-medium">${product.price}</p>
 						<span className="text-gray-500 text-sm">
 							{product.sold ? product.sold.toString().slice(0, 4) : 0} sold

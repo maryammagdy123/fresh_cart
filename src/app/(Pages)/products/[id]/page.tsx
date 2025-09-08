@@ -155,7 +155,7 @@ export default function ProductDetailPage() {
 								<Button className="p-2 rounded-md border hover:bg-gray-50" aria-label="add to wishlist">
 									<Heart className="h-5 w-5 text-red-500" />
 								</Button>
-								<AddToCartBtn handleAddToCart={handleAddToCart} addToCartLoader={addToCartLoader} productQuantity={product!.quantity} />
+								<AddToCartBtn handleAddToCart={handleAddToCart} addToCartLoader={addToCartLoader} />
 
 							</div>
 						</div>
