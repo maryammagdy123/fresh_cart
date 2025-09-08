@@ -1,4 +1,4 @@
-"use client"
+
 import React from "react"
 import { Button } from "../ui/button"
 import Link from "next/link"
@@ -7,6 +7,7 @@ import { Product } from "@/Interfaces"
 import { renderStars } from "@/helpers/rating"
 // import { div } from "framer-motion/client"
 import Image from "next/image"
+import { apiServices } from "@/services/api"
 
 
 
@@ -17,7 +18,10 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ viewMode = "grid", product }: ProductCardProps) {
-
+	async function handleAddToCart() {
+		const data = await apiServices.addToCart(product._id)
+		console.log(data)
+	}
 	return (
 		<section>
 			{viewMode === "grid" ? (
@@ -81,7 +85,7 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 
 
 					{/* actions */}
-					<Button asChild className="mt-3">
+					<Button asChild className="mt-3" onClick={handleAddToCart}>
 						<span>	Add to cart <ShoppingCart className="h-5 w-5 text-white" /></span>
 					</Button>
 				</div>
@@ -143,7 +147,7 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 						<div className="flex items-center justify-between mt-3">
 							<p className="text-lg font-semibold text-gray-800">${product.price}</p>
 							{/* actions */}
-							<Button asChild>
+							<Button asChild onClick={handleAddToCart}>
 								<span>	Add to cart <ShoppingCart className="h-5 w-5 text-white" /></span>
 							</Button>
 						</div>
