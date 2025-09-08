@@ -6,7 +6,7 @@ export interface CartResponse {
 	data: CartData
 }
 
-export interface CartData {
+interface CartData {
 	_id: string
 	cartOwner: string
 	products: CartProduct[]
@@ -16,7 +16,7 @@ export interface CartData {
 	totalCartPrice: number
 }
 
-export interface CartProduct {
+interface CartProduct {
 	count: number
 	_id: string
 	product: string

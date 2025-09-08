@@ -1,5 +1,6 @@
+import { Cart, CartResponse, } from "@/Interfaces/cart";
 import { BrandResponse, ProductResponse, SingleBrandResponse, SingleProductResponse } from "@/types";
-import { json } from "stream/consumers";
+
 
 class ApiServices {
 
@@ -51,13 +52,12 @@ class ApiServices {
 	}
 
 	// add products to cart
-	async addToCart(productId: string | string[]) {
-		return fetch(`https://ecommerce.routemisr.com/api/v1/cart`, {
+	async addToCart(productId: string | string[]): Promise<CartResponse> {
+		return await fetch(`https://ecommerce.routemisr.com/api/v1/cart`, {
 			method: 'post',
 			body: JSON.stringify({ productId }),
 			headers: this.getHeaders()
-		})
-
+		}).then((res) => res.json());
 	}
 
 
