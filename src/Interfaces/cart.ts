@@ -2,15 +2,23 @@
 import { Brand } from "./brand";
 import { Category, Subcategory } from "./category";
 
-export interface CartResponse {
+export interface AddToCartResponse {
 	status: string,
 	message: string,
 	numOfCartItems: number,
 	cartId: string,
-	data: CartData,
+	data: CartData<string>,
+}
+export interface GetCartResponse {
+	status: string,
+	message: string,
+	numOfCartItems: number,
+	cartId: string,
+	data: CartData<Product>,
 }
 
-interface CartData {
+// product[] - string 
+interface CartData<T> {
 	_id: string,
 	cartOwner: string,
 	products: CartProduct[],
