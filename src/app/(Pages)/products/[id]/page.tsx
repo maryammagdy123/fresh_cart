@@ -19,6 +19,7 @@ export default function ProductDetailPage() {
 	const [quantity, setQuantity] = useState(1);
 	const [product, setProducts] = useState<Product | null>(null)
 	const [loading, setLoading] = useState(false)
+	const [addToCartLoading, setAddToCartLoading] = useState(false)
 
 	async function getProductDetail() {
 		setLoading(true)
@@ -27,14 +28,19 @@ export default function ProductDetailPage() {
 		setLoading(false)
 	}
 
-	async function handleAddToCart() {
 
-		const data = await apiServices.addToCart(String(product?._id))
-		if (data.status === 'success') {
+	async function handleAddToCart() {
+		setAddToCartLoading(true)
+		const data = await apiServices.addToCart(product!._id)
+		if (data.status ===
+			'success'
+		) {
 			toast.success(data.message)
 		} else {
 			toast.error(data.message)
 		}
+
+		setAddToCartLoading(false)
 	}
 
 	useEffect(() => {
