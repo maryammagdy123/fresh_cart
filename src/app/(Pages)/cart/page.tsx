@@ -1,12 +1,13 @@
 "use client"
-import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Trash2, Plus, Minus } from "lucide-react"
 
-export default function page() {
+export default function Cart() {
 
+	async function handleGetUserCart(params: type) {
 
+	}
 
 	return (
 		<section className="p-6 max-w-6xl mx-auto">

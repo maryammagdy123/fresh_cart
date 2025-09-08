@@ -61,6 +61,12 @@ class ApiServices {
 		}).then((res) => res.json());
 	}
 
+	// get user cart
+	async getUserCart(): Promise<CartResponse> {
+		return await fetch(`https://ecommerce.routemisr.com/api/v1/cart`, {
+			headers: this.getHeaders()
+		}).then((res) => res.json())
+	}
 
 }
 
