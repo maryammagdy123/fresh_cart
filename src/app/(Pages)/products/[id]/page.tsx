@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingCart, Heart, Star } from "lucide-react";
+import { Heart, Star } from "lucide-react";
 import { Product } from "@/Interfaces";
 import { SingleProductResponse } from "@/types";
 import { useParams } from "next/navigation";
