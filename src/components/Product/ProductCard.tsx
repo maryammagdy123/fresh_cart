@@ -10,6 +10,7 @@ import Image from "next/image"
 import { apiServices } from "@/services/api"
 import toast from "react-hot-toast"
 import Loader from "@/components/Loader/Loader";
+import AddToCartBtn from "../Cart/AddToCartBtn"
 
 
 
@@ -101,9 +102,8 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 
 
 					{/* actions */}
-					<Button onClick={handleAddToCart} disabled={addToCartLoader} className="mt-4">
-						{addToCartLoader ? <Loader /> : <>Add to cart <ShoppingCart className="h-5 w-5 text-white" /></>}
-					</Button>
+
+					<AddToCartBtn handleAddToCart={handleAddToCart} addToCartLoader={addToCartLoader} productQuantity={product.quantity} />
 
 				</div>
 			) : (
