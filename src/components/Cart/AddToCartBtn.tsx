@@ -10,7 +10,8 @@ interface AddToCartBtnProps {
 export default function AddToCartBtn({ productQuantity, addToCartLoader, handleAddToCart }: AddToCartBtnProps) {
 	return (
 		<Button onClick={handleAddToCart} disabled={addToCartLoader || productQuantity == 0} >
-			{addToCartLoader ? <Loader2 className='animate-spin' /> : <>Add to cart <ShoppingCart className="h-5 w-5 text-white" /></>}
+			{addToCartLoader && <Loader2 className='animate-spin' />}
+			Add to cart <ShoppingCart className="h-5 w-5 text-white" />
 		</Button>
 	)
 }
