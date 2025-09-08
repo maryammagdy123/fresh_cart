@@ -1,4 +1,5 @@
 import { BrandResponse, ProductResponse, SingleBrandResponse, SingleProductResponse } from "@/types";
+import { json } from "stream/consumers";
 
 class ApiServices {
 
@@ -41,7 +42,19 @@ class ApiServices {
 		}).then((res) => res.json());
 	}
 
+	// add products to cart
+	async addToCart(productId: string | string[]) {
+		return fetch(`https://ecommerce.routemisr.com/api/v1/cart`, {
+			method: 'post',
+			body: JSON.stringify({ productId }),
+			headers: {
+				"Content-Type": "application / json",
+				token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YmM5NmM3YWY5NTQzMDZiMTAxNTQ1NSIsIm5hbWUiOiJNYXJpYW0gTWFnZHkiLCJyb2xlIjoidXNlciIsImlhdCI6MTc1NzM0Mjg1MywiZXhwIjoxNzY1MTE4ODUzfQ.HqAEbvRX4OO1NLocoCBgdcmXcUO-vSvQ4FtBZNUajVA"
+			}
 
+		})
+
+	}
 
 
 }
