@@ -59,8 +59,6 @@ class ApiServices {
 			body: JSON.stringify({ productId }),
 			headers: this.getHeaders()
 		}).then((res) => res.json());
-
-
 	}
 
 
