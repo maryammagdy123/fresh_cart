@@ -21,17 +21,18 @@ export interface GetCartResponse {
 interface CartData<T> {
 	_id: string,
 	cartOwner: string,
-	products: CartProduct[],
+	products: CartProduct<T>[],
 	createdAt: string,
 	updatedAt: string,
 	__v: number,
 	totalCartPrice: number,
 }
 
-interface CartProduct {
+interface CartProduct<T> {
 	count: number,
 	_id: string,
-	product: string | Product,
+	// T either Product [] or product as string
+	product: T,
 	price: number,
 }
 
