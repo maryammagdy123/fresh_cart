@@ -1,5 +1,5 @@
 
-import React from "react"
+import React, { useState } from "react"
 import { Button } from "../ui/button"
 import Link from "next/link"
 import { ShoppingCart, Heart } from "lucide-react"
@@ -19,7 +19,9 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ viewMode = "grid", product }: ProductCardProps) {
+	const [addToCartLoading, setAddToCartLoading] = useState(false)
 	async function handleAddToCart() {
+		setAddToCartLoading(true)
 		const data = await apiServices.addToCart(product!._id)
 		if (data.status ===
 			'success'
@@ -28,6 +30,8 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 		} else {
 			toast.error(data.message)
 		}
+
+		setAddToCartLoading(false)
 	}
 	return (
 		<section>
