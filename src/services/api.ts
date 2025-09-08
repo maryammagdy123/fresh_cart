@@ -1,4 +1,5 @@
-import { Cart, CartResponse, } from "@/Interfaces/cart";
+import { CartResponse } from '@/Interfaces/cart';
+
 import { BrandResponse, ProductResponse, SingleBrandResponse, SingleProductResponse } from "@/types";
 
 
@@ -58,6 +59,8 @@ class ApiServices {
 			body: JSON.stringify({ productId }),
 			headers: this.getHeaders()
 		}).then((res) => res.json());
+
+
 	}
 
 
