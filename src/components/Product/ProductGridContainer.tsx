@@ -5,8 +5,6 @@ import { Button } from '../ui/button'
 import { Grid, List } from 'lucide-react'
 import { motion } from "framer-motion"
 import { Product } from '@/Interfaces'
-import ProductCard from './ProductCard'
-import LoadingSpinner from '../shared/LoadingSpinner'
 interface ProductGridContainerProps {
 	products: Product[];
 }

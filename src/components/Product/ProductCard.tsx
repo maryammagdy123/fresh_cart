@@ -48,7 +48,8 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 							alt={product.title}
 							fill
 							className="object-cover rounded-lg group-hover:scale-105 transition-transform duration-300 h-full"
-							sizes="(max-width:766px) 100vw, (max-width:1200px) 50vw ,25vw" />
+							sizes="(max-width:766px) 100vw, (max-width:1200px) 50vw ,25vw"
+							loading="lazy" />
 
 						{/* action icons */}
 						<div className="absolute top-2 right-2 ">
