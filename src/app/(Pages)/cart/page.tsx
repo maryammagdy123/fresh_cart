@@ -3,17 +3,26 @@ import { apiServices } from "@/services/api"
 import React, { Suspense } from "react"
 import CartSummary from "@/components/Cart/CartSummary"
 import LoadingSpinner from "@/components/shared/LoadingSpinner"
-import CartList from "@/components/Cart/CartList"
+
 import { GetCartResponse } from "@/Interfaces"
-import { Product } from "@/Interfaces/cart"
-import dynamic from "next/dynamic"
+
+
+import { Minus, Plus, Trash2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import EmptyCart from "@/components/Cart/EmptyCart"
+import CartList from "@/components/Cart/CartList"
 
 export default async function Cart() {
 
 
 	const data: GetCartResponse = await apiServices.getUserCart()
 	const cartProducts = data.data.products
+	const total = data.data.totalCartPrice
 
+
+	if (cartProducts.length == 0) {
+		return <EmptyCart />
+	}
 
 	return (
 		<Suspense fallback={<LoadingSpinner />}>
@@ -26,13 +35,13 @@ export default async function Cart() {
 
 						{
 							cartProducts.map((item) =>
-								<CartList key={item._id} cartProducts={cartProducts} />
+								<CartList key={item._id} cartItem={item} totalprice={total} />
 							)
 						}
 					</div>
 
 					{/* summary box */}
-					<CartSummary />
+					<CartSummary totalprice={total} />
 				</div>
 			</section>
 		</Suspense>

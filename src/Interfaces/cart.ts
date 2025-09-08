@@ -18,7 +18,7 @@ export interface GetCartResponse {
 }
 
 // product[] - string 
-interface CartData<T> {
+export interface CartData<T> {
 	_id: string,
 	cartOwner: string,
 	products: CartProduct<T>[],
@@ -28,7 +28,7 @@ interface CartData<T> {
 	totalCartPrice: number,
 }
 
-interface CartProduct<T> {
+export interface CartProduct<T> {
 	count: number,
 	_id: string,
 	// T either Product or product as string
@@ -38,12 +38,12 @@ interface CartProduct<T> {
 
 export interface Product {
 	subcategory: Subcategory[];
-	_id: string;
-	id?: string;
-	title: string;
-	quantity: number;
-	imageCover?: string;
-	category: Category;
-	brand: Brand;
-	ratingsAverage?: number;
+	_id: string,
+	id?: string,
+	title: string,
+	quantity: number,
+	imageCover?: string,
+	category: Category,
+	brand: Brand,
+	ratingsAverage?: number
 }
