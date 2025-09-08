@@ -31,7 +31,7 @@ interface CartData<T> {
 interface CartProduct<T> {
 	count: number,
 	_id: string,
-	// T either Product [] or product as string
+	// T either Product or product as string
 	product: T,
 	price: number,
 }

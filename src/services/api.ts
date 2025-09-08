@@ -1,4 +1,4 @@
-import { AddToCartResponse, CartResponse, GetCartResponse } from '@/Interfaces/cart';
+import { AddToCartResponse, GetCartResponse } from '@/Interfaces/cart';
 
 import { BrandResponse, ProductResponse, SingleBrandResponse, SingleProductResponse } from "@/types";
 
