@@ -10,11 +10,13 @@ import CartList from "@/components/Cart/CartList"
 export default async function Cart() {
 
 
-	const data: GetCartResponse = await apiServices.getUserCart()
-	const cartProducts = data.data.products
-	const total = data.data.totalCartPrice
-	const numOfCartItems = data.numOfCartItems
-
+	async function handleDisplayCart() {
+		const response: GetCartResponse = await apiServices.getUserCart()
+		return response;
+	}
+	const response = await handleDisplayCart();
+	const cartProducts = response.data.products
+	const totalprice = response.data.totalCartPrice
 
 	if (cartProducts.length == 0) {
 		return <EmptyCart />
@@ -23,7 +25,9 @@ export default async function Cart() {
 	return (
 		<Suspense fallback={<LoadingSpinner />}>
 			<section className="p-7 max-w-6xl mx-auto">
-				<h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
+				<h1 className="text-3xl font-bold mb-2">Shopping Cart</h1>
+
+				<p className="text-gray-500 mb-4">You have {response.numOfCartItems} {response.numOfCartItems == 1 ? "item" : "items"} in your cart</p>
 
 				<div className="grid lg:grid-cols-3 gap-8">
 					{/* products list */}
@@ -37,7 +41,7 @@ export default async function Cart() {
 					</div>
 
 					{/* summary box */}
-					<CartSummary totalprice={total} />
+					<CartSummary totalprice={totalprice} />
 				</div>
 			</section>
 		</Suspense>

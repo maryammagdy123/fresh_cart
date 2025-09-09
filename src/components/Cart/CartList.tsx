@@ -1,27 +1,28 @@
 "use client"
-import { Minus, Plus, Trash2 } from 'lucide-react'
-import React, { useEffect } from 'react'
+import { Loader2, Minus, Plus, Trash2 } from 'lucide-react'
+import React, { useState } from 'react'
 import { Button } from '../ui/button'
-import { CartProduct, GetCartResponse, Product } from '@/Interfaces/cart'
+import { CartProduct, Product } from '@/Interfaces/cart'
 import Image from 'next/image'
 import { apiServices } from '@/services/api'
 import toast from 'react-hot-toast'
 
 interface CartListProps {
 	cartItem: CartProduct<Product>
+
 }
 export default function CartList({ cartItem }: CartListProps) {
-
+	const [isDelete, seIsDelete] = useState(false)
 	async function handleDeleteCartItem() {
+		seIsDelete(true)
 		const data = await apiServices.deleteCartItem(String(cartItem.product._id))
 		if (data.status === "success") {
 			toast.success("Item removed successfully!!")
 		}
+		seIsDelete(false)
 	}
-	async function getCart() {
-		const data: GetCartResponse = await apiServices.getUserCart()
-	}
-	useEffect(() => { getCart() }, [])
+
+
 	return (
 		<div
 
@@ -74,9 +75,11 @@ export default function CartList({ cartItem }: CartListProps) {
 					onClick={handleDeleteCartItem}
 					variant="destructive"
 					size="icon"
-
+					disabled={isDelete}
 				>
-					<Trash2 className="h-4 w-4" />
+					{
+						isDelete ? <Loader2 className="h-4 w-4" /> : <Trash2 className="h-4 w-4" />
+					}
 				</Button>
 			</div>
 		</div>

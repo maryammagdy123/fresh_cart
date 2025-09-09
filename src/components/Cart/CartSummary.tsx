@@ -19,7 +19,8 @@ export default function CartSummary({ totalprice }: CartSummaryProps) {
 				<span>Total</span>
 				<span>${totalprice}</span>
 			</div>
-			<Button className="w-full mt-6">Checkout</Button>
+			<Button variant={'outline'} className="w-full mt-6">Checkout</Button>
+			<Button className="w-full mt-6">continue shopping</Button>
 		</aside>
 	)
 }
