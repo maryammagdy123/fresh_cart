@@ -17,18 +17,24 @@ export default function MainSlider() {
 	return (
 
 
-		<div className="w-full">
+		<div className="w-full p-7">
 
 
 			<Slider {...settings}>
 				<div>
-					<Image src="/images/slider-image-1.jpeg" loader={ } width={1000} height={1000} alt="slider1" className="w-full h-96 object-cover " />
+					<Image src="/images/slider-image-1.jpeg"
+						priority
+						placeholder="blur"
+						blurDataURL="/images/slider-image-1.jpeg" width={1000} height={1000} alt="slider1" className="w-full h-96 object-cover " />
 				</div>
 				<div>
-					<Image src="/images/slider-image-2.jpeg" width={1000} height={1000} alt="slider2" className="w-full h-96 object-cover " />
+					<Image src="/images/slider-image-2.jpeg"
+						placeholder="blur"
+						blurDataURL="/images/slider-image-2.jpeg" width={1000} height={1000} alt="slider1" className="w-full h-96 object-cover " />
 				</div>
 				<div>
-					<Image src="/images/slider-image-3.jpeg" width={1000} height={1000} alt="slider3" className="w-full h-96 object-cover " />
+					<Image src="/images/slider-image-3.jpeg"
+						blurDataURL="/images/slider-image-3.jpeg" width={1000} height={1000} alt="slider3" className="w-full h-96 object-cover " />
 				</div>
 			</Slider>
 		</div>

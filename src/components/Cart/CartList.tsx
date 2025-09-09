@@ -1,15 +1,27 @@
+"use client"
 import { Minus, Plus, Trash2 } from 'lucide-react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button } from '../ui/button'
-import { CartProduct, Product } from '@/Interfaces/cart'
+import { CartProduct, GetCartResponse, Product } from '@/Interfaces/cart'
 import Image from 'next/image'
+import { apiServices } from '@/services/api'
+import toast from 'react-hot-toast'
+
 interface CartListProps {
 	cartItem: CartProduct<Product>
-	totalprice: number
-
 }
-export default function CartList({ cartItem, totalprice }: CartListProps) {
+export default function CartList({ cartItem }: CartListProps) {
 
+	async function handleDeleteCartItem() {
+		const data = await apiServices.deleteCartItem(String(cartItem.product._id))
+		if (data.status === "success") {
+			toast.success("Item removed successfully!!")
+		}
+	}
+	async function getCart() {
+		const data: GetCartResponse = await apiServices.getUserCart()
+	}
+	useEffect(() => { getCart() }, [])
 	return (
 		<div
 
@@ -19,7 +31,7 @@ export default function CartList({ cartItem, totalprice }: CartListProps) {
 			<div className="relative w-28 h-28 shrink-0">
 				<Image
 					src={cartItem.product.imageCover || "/placeholder.png"}
-					alt={cartItem._id}
+					alt={cartItem.product._id}
 					fill
 					className="object-cover rounded-xl"
 				/>
@@ -57,8 +69,9 @@ export default function CartList({ cartItem, totalprice }: CartListProps) {
 
 			{/* right side: total + remove */}
 			<div className="flex flex-col justify-between items-end">
-				<p className="font-semibold">${totalprice}</p>
+				<p className="font-semibold">${cartItem.count * cartItem.price}</p>
 				<Button
+					onClick={handleDeleteCartItem}
 					variant="destructive"
 					size="icon"
 

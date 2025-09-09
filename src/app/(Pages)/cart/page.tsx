@@ -22,16 +22,16 @@ export default async function Cart() {
 
 	return (
 		<Suspense fallback={<LoadingSpinner />}>
-			<section className="p-6 max-w-6xl mx-auto">
+			<section className="p-7 max-w-6xl mx-auto">
 				<h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
 
 				<div className="grid lg:grid-cols-3 gap-8">
 					{/* products list */}
-					<div className="lg:col-span-2 space-y-4">
+					<div className="lg:col-span-2  space-y-4">
 
 						{
 							cartProducts.map((item) =>
-								<CartList key={item._id} cartItem={item} totalprice={total} />
+								<CartList key={item._id} cartItem={item} />
 							)
 						}
 					</div>
