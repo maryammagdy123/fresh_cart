@@ -1,14 +1,9 @@
-import Image from "next/image"
+
 import { apiServices } from "@/services/api"
 import React, { Suspense } from "react"
 import CartSummary from "@/components/Cart/CartSummary"
 import LoadingSpinner from "@/components/shared/LoadingSpinner"
-
 import { GetCartResponse } from "@/Interfaces"
-
-
-import { Minus, Plus, Trash2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import EmptyCart from "@/components/Cart/EmptyCart"
 import CartList from "@/components/Cart/CartList"
 
@@ -18,6 +13,7 @@ export default async function Cart() {
 	const data: GetCartResponse = await apiServices.getUserCart()
 	const cartProducts = data.data.products
 	const total = data.data.totalCartPrice
+	const numOfCartItems = data.numOfCartItems
 
 
 	if (cartProducts.length == 0) {

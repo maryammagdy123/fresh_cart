@@ -22,7 +22,7 @@ export default function MainSlider() {
 
 			<Slider {...settings}>
 				<div>
-					<Image src="/images/slider-image-1.jpeg" width={1000} height={1000} alt="slider1" className="w-full h-96 object-cover " />
+					<Image src="/images/slider-image-1.jpeg" loader={ } width={1000} height={1000} alt="slider1" className="w-full h-96 object-cover " />
 				</div>
 				<div>
 					<Image src="/images/slider-image-2.jpeg" width={1000} height={1000} alt="slider2" className="w-full h-96 object-cover " />
