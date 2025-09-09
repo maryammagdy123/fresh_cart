@@ -4,23 +4,15 @@ import React, { useState } from 'react'
 import { Button } from '../ui/button'
 import { CartProduct, Product } from '@/Interfaces/cart'
 import Image from 'next/image'
-import { apiServices } from '@/services/api'
-import toast from 'react-hot-toast'
+
 
 interface CartListProps {
 	cartItem: CartProduct<Product>
-
+	handleDeleteCartItem: (productId: string, setIsDelete: (value: boolean) => void) => void
 }
-export default function CartList({ cartItem }: CartListProps) {
-	const [isDelete, seIsDelete] = useState(false)
-	async function handleDeleteCartItem() {
-		seIsDelete(true)
-		const data = await apiServices.deleteCartItem(String(cartItem.product._id))
-		if (data.status === "success") {
-			toast.success("Item removed successfully!!")
-		}
-		seIsDelete(false)
-	}
+export default function CartList({ cartItem, handleDeleteCartItem }: CartListProps) {
+	const [isDelete, setIsDelete] = useState(false)
+
 
 
 	return (
@@ -28,18 +20,20 @@ export default function CartList({ cartItem }: CartListProps) {
 
 			className="flex gap-4 p-4 rounded-2xl border bg-white shadow-sm hover:shadow-md transition"
 		>
+
+
 			{/* product image */}
-			<div className="relative w-28 h-28 shrink-0">
+			<div className="relative w-28 h-28 shrink-0" >
 				<Image
 					src={cartItem.product.imageCover || "/placeholder.png"}
 					alt={cartItem.product._id}
 					fill
 					className="object-cover rounded-xl"
 				/>
-			</div>
+			</div >
 
 			{/* product info */}
-			<div className="flex-1 flex flex-col justify-between">
+			<div className="flex-1 flex flex-col justify-between" >
 				<div>
 					<h2 className="font-semibold text-lg">{cartItem.product.title}</h2>
 					<p className="text-sm text-gray-500">{cartItem.product.brand.name}</p>
@@ -66,22 +60,24 @@ export default function CartList({ cartItem }: CartListProps) {
 						<Plus className="h-4 w-4" />
 					</Button>
 				</div>
-			</div>
+			</div >
 
 			{/* right side: total + remove */}
-			<div className="flex flex-col justify-between items-end">
+			<div className="flex flex-col justify-between items-end" >
 				<p className="font-semibold">${cartItem.count * cartItem.price}</p>
 				<Button
-					onClick={handleDeleteCartItem}
+					onClick={() => {
+						handleDeleteCartItem(cartItem.product._id, setIsDelete)
+					}}
 					variant="destructive"
 					size="icon"
 					disabled={isDelete}
 				>
 					{
-						isDelete ? <Loader2 className="h-4 w-4" /> : <Trash2 className="h-4 w-4" />
+						isDelete ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />
 					}
 				</Button>
-			</div>
-		</div>
+			</div >
+		</div >
 	)
 }

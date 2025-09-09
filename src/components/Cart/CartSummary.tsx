@@ -1,15 +1,16 @@
 import React from 'react'
 import { Button } from '../ui/button'
+import { GetCartResponse } from '@/Interfaces'
 interface CartSummaryProps {
-	totalprice: number
+	cart: GetCartResponse
 }
-export default function CartSummary({ totalprice }: CartSummaryProps) {
+export default function CartSummary({ cart }: CartSummaryProps) {
 	return (
 		<aside className="bg-white rounded-2xl shadow-sm border p-6 h-fit">
 			<h3 className="text-xl font-semibold mb-4">Order Summary</h3>
 			<div className="flex justify-between mb-2 text-gray-600">
 				<span>Subtotal</span>
-				<span>${totalprice}</span>
+				<span>${cart.data.totalCartPrice}</span>
 			</div>
 			<div className="flex justify-between mb-2 text-gray-600">
 				<span>Shipping</span>
@@ -17,7 +18,7 @@ export default function CartSummary({ totalprice }: CartSummaryProps) {
 			</div>
 			<div className="flex justify-between text-lg font-bold border-t pt-3">
 				<span>Total</span>
-				<span>${totalprice}</span>
+				<span>${cart.data.totalCartPrice}</span>
 			</div>
 			<Button variant={'outline'} className="w-full mt-6">Checkout</Button>
 			<Button className="w-full mt-6">continue shopping</Button>
