@@ -27,8 +27,8 @@ export default function InnerCart({ cartData }: InnerCartProps) {
 	// update cart product quantity
 	async function handleUpdateCart(productId: string, count: number, setIsUpdate: (value: boolean) => void) {
 		setIsUpdate(true)
-		const data = await apiServices.updateCartProductQuantity(productId, count)
-		console.log(data)
+		const response = await apiServices.updateCartProductQuantity(productId, count)
+		console.log(response)
 
 		setIsUpdate(false)
 		const newCartResponseData = await apiServices.getUserCart()
@@ -37,10 +37,7 @@ export default function InnerCart({ cartData }: InnerCartProps) {
 	// handle clear cart
 	async function handleClearCart(setIsDelete: (value: boolean) => void) {
 		setIsDelete(true)
-		const data = await apiServices.clearCart()
-		if (data.status === "success") {
-			toast.success("Cart cleared successfully!!")
-		}
+		const response = await apiServices.clearCart()
 		setIsDelete(false)
 		const newCartResponseData = await apiServices.getUserCart()
 		setCart(newCartResponseData)

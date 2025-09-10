@@ -9,6 +9,16 @@ export interface AddToCartResponse {
 	cartId: string,
 	data: CartData<string>,
 }
+export type ClearCartResponse = {
+	message: string
+}
+// update and dlete specifc item
+export type UpdateCartItemResponse = {
+	statusMsg: string,
+	message: string,
+}
+
+
 export interface GetCartResponse {
 	status: string,
 	message: string,

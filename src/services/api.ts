@@ -1,4 +1,4 @@
-import { AddToCartResponse, GetCartResponse } from '@/Interfaces/cart';
+import { AddToCartResponse, ClearCartResponse, DeleteCartItemResponse, GetCartResponse, UpdateCartItemResponse } from '@/Interfaces/cart';
 
 import { BrandResponse, ProductResponse, SingleBrandResponse, SingleProductResponse } from "@/types";
 
@@ -69,7 +69,7 @@ class ApiServices {
 	}
 
 	// delete specific cart item
-	async deleteCartItem(productId: string): Promise<GetCartResponse> {
+	async deleteCartItem(productId: string): Promise<UpdateCartItemResponse> {
 		return await fetch(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, {
 			method: 'delete',
 			headers: this.getHeaders()
@@ -78,7 +78,7 @@ class ApiServices {
 
 	// update cart product quantity
 
-	async updateCartProductQuantity(productId: string, count: number) {
+	async updateCartProductQuantity(productId: string, count: number): Promise<UpdateCartItemResponse> {
 		return await fetch(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, {
 			method: `put`,
 			body: JSON.stringify({ count }),
@@ -86,7 +86,7 @@ class ApiServices {
 		}).then((res) => res.json())
 	}
 	// clear cart
-	async clearCart() {
+	async clearCart(): Promise<ClearCartResponse> {
 		return await fetch(`https://ecommerce.routemisr.com/api/v1/cart`, {
 			method: `delete`,
 			headers: this.getHeaders()
