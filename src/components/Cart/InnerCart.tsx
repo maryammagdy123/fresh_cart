@@ -35,7 +35,14 @@ export default function InnerCart({ cartData }: InnerCartProps) {
 	}
 	// handle clear cart
 	async function handleClearCart() {
-
+		setIsDelete(true)
+		const data = await apiServices.clearCart()
+		if (data.status === "success") {
+			toast.success("Cart cleared successfully!!")
+		}
+		setIsDelete(false)
+		const newCartResponseData = await apiServices.getUserCart()
+		setCart(newCartResponseData)
 	}
 	if (cart.data.products.length === 0) {
 		return <EmptyCart />
@@ -52,7 +59,7 @@ export default function InnerCart({ cartData }: InnerCartProps) {
 
 						{
 							cart?.data?.products?.map((item) =>
-								<CartList key={item._id} cartItem={item} handleDeleteCartItem={handleDeleteCartItem} handleUpdate={handleUpdateCart} />
+								<CartList key={item._id} cartItem={item} handleDeleteCartItem={handleDeleteCartItem} handleUpdate={handleUpdateCart} handleClearCart={handleClearCart} />
 							)
 
 						}
