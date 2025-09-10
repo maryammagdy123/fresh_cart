@@ -12,7 +12,7 @@ export interface AddToCartResponse {
 export type ClearCartResponse = {
 	message: string
 }
-// update and dlete specifc item
+// update and delete specifc item
 export type UpdateCartItemResponse = {
 	statusMsg: string,
 	message: string,

@@ -6,12 +6,15 @@ import { GetCartResponse } from '@/Interfaces/cart'
 import { apiServices } from '@/services/api'
 import toast from 'react-hot-toast'
 import EmptyCart from './EmptyCart'
+import { Button } from '../ui/button'
+import { Loader2, Trash2 } from 'lucide-react'
 interface InnerCartProps {
 	cartData: GetCartResponse
 
 }
 export default function InnerCart({ cartData }: InnerCartProps) {
 	const [cart, setCart] = useState<GetCartResponse>(cartData)
+	const [isDelete, setIsDelete] = useState(false)
 
 	// delete item from cart
 	async function handleDeleteCartItem(productId: string, setIsDelete: (value: boolean) => void) {
@@ -25,12 +28,9 @@ export default function InnerCart({ cartData }: InnerCartProps) {
 		setCart(newCartResponseData)
 	}
 	// update cart product quantity
-	async function handleUpdateCart(productId: string, count: number, setIsUpdate: (value: boolean) => void) {
-		setIsUpdate(true)
+	async function handleUpdateCart(productId: string, count: number) {
 		const response = await apiServices.updateCartProductQuantity(productId, count)
 		console.log(response)
-
-		setIsUpdate(false)
 		const newCartResponseData = await apiServices.getUserCart()
 		setCart(newCartResponseData)
 	}
@@ -50,7 +50,17 @@ export default function InnerCart({ cartData }: InnerCartProps) {
 	return (
 		<>
 			<section>
+
 				<p className="text-gray-500 mb-4">You have {cart?.numOfCartItems} {cart?.numOfCartItems == 1 ? "item" : "items"} in your cart</p>
+				<Button className='my-4'
+					variant="outline"
+					size={'lg'}
+					onClick={() => handleClearCart(setIsDelete)}
+					disabled={isDelete}
+					id='clearCartBtn'
+				>
+					{isDelete ? <Loader2 className='animate-spin' /> : <Trash2 className="h-4 w-4" />}	clear cart
+				</Button>
 				<div className="grid lg:grid-cols-3 gap-8">
 					{/* products list */}
 					<div className="lg:col-span-2  space-y-4">

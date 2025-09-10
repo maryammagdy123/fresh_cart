@@ -10,40 +10,39 @@ import Image from 'next/image'
 interface CartListProps {
 	cartItem: CartProduct<Product>
 	handleDeleteCartItem: (productId: string, setIsDelete: (value: boolean) => void) => void
-	handleUpdate: (productId: string, count: number, isUpdate: (value: boolean) => void) => void
+	handleUpdate: (productId: string, count: number) => void
 	handleClearCart: (setIsDelete: (value: boolean) => void) => void
 }
-export default function CartList({ cartItem, handleDeleteCartItem, handleUpdate, handleClearCart }: CartListProps) {
+export default function CartList({ cartItem, handleDeleteCartItem, handleUpdate }: CartListProps) {
 	const [isDelete, setIsDelete] = useState(false)
-	const [isIncrease, setIsInrease] = useState(false)
-	const [isDcrease, setIsDcrease] = useState(false)
 	const [count, setCount] = useState<number>(cartItem.count)
+	const [timeOutId, setTimeOutId] = useState<NodeJS.Timeout>()
 
-	// const [isQnttyUpdate, setIsQnttyUpdate] = useState(0)
 	function handleIncrease() {
 		const newCount = count + 1
 		setCount(newCount)
-		handleUpdate(cartItem.product._id, newCount, setIsInrease)
+		clearTimeout(timeOutId)
+		const id = setTimeout(() => {
+			handleUpdate(cartItem.product._id, newCount)
+		}, 500)
+		setTimeOutId(id)
+
 	}
 	function handleDcrease() {
 		const newCount = count - 1
 		setCount(newCount)
-		handleUpdate(cartItem.product._id, newCount, setIsDcrease)
+		clearTimeout(timeOutId)
+		const id = setTimeout(() => {
+			handleUpdate(cartItem.product._id, newCount)
+		}, 5000)
+		setTimeOutId(id)
 	}
 
 	return (
 
 
 		<>
-			<Button
-				variant="outline"
-				size={'lg'}
-				onClick={() => handleClearCart(setIsDelete)}
-				disabled={isDelete}
-				id='clearCartBtn'
-			>
-				<Trash2 className="h-4 w-4" /> clear cart
-			</Button>
+
 
 			<div className="flex gap-4 p-4 rounded-2xl border bg-white shadow-sm hover:shadow-md transition">
 				{/* product image */}
@@ -76,18 +75,19 @@ export default function CartList({ cartItem, handleDeleteCartItem, handleUpdate,
 							id={cartItem.product._id}
 						>
 							<Minus className="h-4 w-4" />
+
+
 						</Button>
 						<span className="w-6 text-center">{count}</span>
 						<Button
 							variant="outline"
 							size="icon"
 							onClick={handleIncrease}
-							disabled={isIncrease}
+							disabled={count > cartItem.product.quantity}
 							id={cartItem.product._id}
 						>
-							{
-								isIncrease ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />
-							}
+							<Plus className="h-4 w-4" />
+
 
 						</Button>
 					</div>
