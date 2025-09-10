@@ -64,17 +64,24 @@ class ApiServices {
 	// get user cart
 	async getUserCart(): Promise<GetCartResponse> {
 		return await fetch(`https://ecommerce.routemisr.com/api/v1/cart`, {
-			next: {
-				revalidate: 0
-			},
 			headers: this.getHeaders()
 		},).then((res) => res.json())
 	}
 
 	// delete specific cart item
-	async deleteCartItem(productId: string | string[]): Promise<GetCartResponse> {
+	async deleteCartItem(productId: string): Promise<GetCartResponse> {
 		return await fetch(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, {
 			method: 'delete',
+			headers: this.getHeaders()
+		}).then((res) => res.json())
+	}
+
+	// update cart product quantity
+
+	async updateCartProductQuantity(productId: string, count: number) {
+		return await fetch(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, {
+			method: `put`,
+			body: JSON.stringify({ count }),
 			headers: this.getHeaders()
 		}).then((res) => res.json())
 	}

@@ -4,16 +4,31 @@ import React, { useState } from 'react'
 import { Button } from '../ui/button'
 import { CartProduct, Product } from '@/Interfaces/cart'
 import Image from 'next/image'
+import { count } from 'console'
 
 
 interface CartListProps {
 	cartItem: CartProduct<Product>
 	handleDeleteCartItem: (productId: string, setIsDelete: (value: boolean) => void) => void
+	handleUpdate: (productId: string, count: number, isUpdate: (value: boolean) => void) => void
 }
-export default function CartList({ cartItem, handleDeleteCartItem }: CartListProps) {
+export default function CartList({ cartItem, handleDeleteCartItem, handleUpdate }: CartListProps) {
 	const [isDelete, setIsDelete] = useState(false)
+	const [isIncrease, setIsInrease] = useState(false)
+	const [isDcrease, setIsDcrease] = useState(false)
+	const [count, setCount] = useState<number>(cartItem.count)
 
-
+	// const [isQnttyUpdate, setIsQnttyUpdate] = useState(0)
+	function handleIncrease() {
+		const newCount = count + 1
+		setCount(newCount)
+		handleUpdate(cartItem.product._id, newCount, setIsInrease)
+	}
+	function handleDcrease() {
+		const newCount = count - 1
+		setCount(newCount)
+		handleUpdate(cartItem.product._id, newCount, setIsDcrease)
+	}
 
 	return (
 		<div
@@ -47,17 +62,24 @@ export default function CartList({ cartItem, handleDeleteCartItem }: CartListPro
 					<Button
 						variant="outline"
 						size="icon"
-
+						onClick={handleDcrease}
+						disabled={count == 1}
+						id={cartItem.product._id}
 					>
 						<Minus className="h-4 w-4" />
 					</Button>
-					<span className="w-6 text-center">{cartItem.count}</span>
+					<span className="w-6 text-center">{count}</span>
 					<Button
 						variant="outline"
 						size="icon"
-
+						onClick={handleIncrease}
+						disabled={isIncrease}
+						id={cartItem.product._id}
 					>
-						<Plus className="h-4 w-4" />
+						{
+							isIncrease ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />
+						}
+
 					</Button>
 				</div>
 			</div >

@@ -13,6 +13,7 @@ interface InnerCartProps {
 export default function InnerCart({ cartData }: InnerCartProps) {
 	const [cart, setCart] = useState<GetCartResponse>(cartData)
 
+	// delete item from cart
 	async function handleDeleteCartItem(productId: string, setIsDelete: (value: boolean) => void) {
 		setIsDelete(true)
 		const data = await apiServices.deleteCartItem(productId)
@@ -23,9 +24,16 @@ export default function InnerCart({ cartData }: InnerCartProps) {
 		const newCartResponseData = await apiServices.getUserCart()
 		setCart(newCartResponseData)
 	}
-	async function handleUpdateCart(params: type) {
+	// update cart product quantity
+	async function handleUpdateCart(productId: string, count: number, setIsUpdate: (value: boolean) => void) {
+		setIsUpdate(true)
+		const data = await apiServices.updateCartProductQuantity(productId, count)
 
+		setIsUpdate(false)
+		const newCartResponseData = await apiServices.getUserCart()
+		setCart(newCartResponseData)
 	}
+	// handle clear cart
 	if (cart.data.products.length === 0) {
 		return <EmptyCart />
 	}
@@ -41,7 +49,7 @@ export default function InnerCart({ cartData }: InnerCartProps) {
 
 						{
 							cart?.data?.products?.map((item) =>
-								<CartList key={item._id} cartItem={item} handleDeleteCartItem={handleDeleteCartItem} />
+								<CartList key={item._id} cartItem={item} handleDeleteCartItem={handleDeleteCartItem} handleUpdate={handleUpdateCart} />
 							)
 
 						}
