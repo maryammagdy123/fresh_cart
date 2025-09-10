@@ -11,8 +11,9 @@ interface CartListProps {
 	cartItem: CartProduct<Product>
 	handleDeleteCartItem: (productId: string, setIsDelete: (value: boolean) => void) => void
 	handleUpdate: (productId: string, count: number, isUpdate: (value: boolean) => void) => void
+	handleClearCart: (productId: string, count: number, isUpdate: (value: boolean) => void) => void
 }
-export default function CartList({ cartItem, handleDeleteCartItem, handleUpdate }: CartListProps) {
+export default function CartList({ cartItem, handleDeleteCartItem, handleUpdate, handleClearCart }: CartListProps) {
 	const [isDelete, setIsDelete] = useState(false)
 	const [isIncrease, setIsInrease] = useState(false)
 	const [isDcrease, setIsDcrease] = useState(false)
