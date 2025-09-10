@@ -4,14 +4,14 @@ import React, { useState } from 'react'
 import { Button } from '../ui/button'
 import { CartProduct, Product } from '@/Interfaces/cart'
 import Image from 'next/image'
-import { count } from 'console'
+
 
 
 interface CartListProps {
 	cartItem: CartProduct<Product>
 	handleDeleteCartItem: (productId: string, setIsDelete: (value: boolean) => void) => void
 	handleUpdate: (productId: string, count: number, isUpdate: (value: boolean) => void) => void
-	handleClearCart: (productId: string, count: number, isUpdate: (value: boolean) => void) => void
+	handleClearCart: (setIsDelete: (value: boolean) => void) => void
 }
 export default function CartList({ cartItem, handleDeleteCartItem, handleUpdate, handleClearCart }: CartListProps) {
 	const [isDelete, setIsDelete] = useState(false)
