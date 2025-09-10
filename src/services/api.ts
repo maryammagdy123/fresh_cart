@@ -85,6 +85,12 @@ class ApiServices {
 			headers: this.getHeaders()
 		}).then((res) => res.json())
 	}
+	async clearCart() {
+		return await fetch(`https://ecommerce.routemisr.com/api/v1/cart`, {
+			method: `delete`,
+			headers: this.getHeaders()
+		}).then((res) => res.json())
+	}
 
 }
 

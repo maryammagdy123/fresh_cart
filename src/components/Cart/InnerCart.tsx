@@ -34,6 +34,9 @@ export default function InnerCart({ cartData }: InnerCartProps) {
 		setCart(newCartResponseData)
 	}
 	// handle clear cart
+	async function handleClearCart() {
+
+	}
 	if (cart.data.products.length === 0) {
 		return <EmptyCart />
 	}
