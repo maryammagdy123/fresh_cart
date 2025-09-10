@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'animate.css';
 import { Toaster } from "react-hot-toast";
+import CartContextProvider from "@/Context/CartContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,10 +34,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
-        {children}
-        <Footer />
-        <Toaster />
+        <CartContextProvider>
+          <Navbar />
+          {children}
+          <Footer />
+          <Toaster />
+        </CartContextProvider>
       </body>
     </html>
   );
