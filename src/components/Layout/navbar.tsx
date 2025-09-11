@@ -53,74 +53,77 @@ export default function Navbar() {
 	const pathname = usePathname()
 
 	return (
-		<nav className="w-full border-b bg-white lg:sticky backdrop-blur-2xl top-0 left-0 z-50  shadow-sm">
-			<div className="container mx-auto px-4 flex items-center justify-between h-16">
-				{/* Logo */}
-				<Link href="/" className="text-xl font-bold text-black p-2 px-4">
-					<span className='p-2 px-4 rounded-xl mx-2 bg-black font-bold text-xl text-white'>F</span>FreshMart
-				</Link>
+		<>
+			<nav className="w-full border-b bg-white lg:sticky backdrop-blur-2xl top-0 left-0 z-50  shadow-sm">
+				<div className="container mx-auto px-4 flex items-center justify-between h-16">
+					{/* Logo */}
+					<Link href="/" className="text-xl font-bold text-black p-2 px-4">
+						<span className='p-2 px-4 rounded-xl mx-2 bg-black font-bold text-xl text-white'>F</span>FreshMart
+					</Link>
 
 
 
-				{/*  Desktop NavigationMenu */}
-				<NavigationMenu className="hidden lg:flex z-50">
-					<NavigationMenuList className="space-x-6">
-						{links.map((link) => {
+					{/*  Desktop NavigationMenu */}
+					<NavigationMenu className="hidden lg:flex z-50">
+						<NavigationMenuList className="space-x-6">
+							{links.map((link) => {
 
-							const isActive = pathname.startsWith(link.href)
-							return (
-								<NavigationMenuItem key={link.href}>
-									<NavigationMenuLink asChild>
-										<Link
-											key={link.href}
-											href={link.href}
-											className={`${isActive
-												? "text-blue-600 font-semibold border-b-2 border-blue-600"
-												: "text-gray-700 hover:text-blue-600"
-												} transition-colors`}
-										>
-											{link.label}
-										</Link>
-									</NavigationMenuLink>
-								</NavigationMenuItem>
-							)
-						})}
-					</NavigationMenuList>
-				</NavigationMenu>
+								const isActive = pathname.startsWith(link.href)
+								return (
+									<NavigationMenuItem key={link.href}>
+										<NavigationMenuLink asChild>
+											<Link
+												key={link.href}
+												href={link.href}
+												className={`${isActive
+													? "text-blue-600 font-semibold border-b-2 border-blue-600"
+													: "text-gray-700 hover:text-blue-600"
+													} transition-colors`}
+											>
+												{link.label}
+											</Link>
+										</NavigationMenuLink>
+									</NavigationMenuItem>
+								)
+							})}
+						</NavigationMenuList>
+					</NavigationMenu>
 
-				{/* actions btns */}
-				<div className="space-x-4 mx-4 flex items-center">
-					{/* user icon */}
-					<Button variant="ghost" size="icon">
-						<BiUser className="h-10 w-10" />
-						<span className="sr-only">Account</span>
-					</Button>
-					{/* shoppingCart icon */}
-					<Button variant="ghost" size="icon" className="relative">
-						<BsCart3 className="h-10 w-10" />
-						{cartCount > 0 && <span
-							className="absolute -top-2 -right-2 bg-black text-white text-xs font-bold px-2 py-0.5 rounded-full"
-						>
+					{/* actions btns */}
+					<div className="space-x-4 mx-4 flex items-center">
+						{/* user icon */}
+						<Button variant="ghost" size="icon">
+							<BiUser className="h-10 w-10" />
+							<span className="sr-only">Account</span>
+						</Button>
+						{/* shoppingCart icon */}
+						<Button variant="ghost" size="icon" className="relative">
+							<BsCart3 className="h-10 w-10" />
+							{cartCount > 0 && <span
+								className="absolute -top-2 -right-2 bg-black text-white text-xs font-bold px-2 py-0.5 rounded-full"
+							>
+								{
+									isLoading ? <Loader2 className="animate-spin" /> : <span>{cartCount}</span>
+								}
+							</span>}
+						</Button>
+						{/* mobile menu icon toggler */}
+						<Button variant="ghost" size="icon" className="lg:hidden" onClick={() => { setIsMobileMenuOpen(!isMobileMenuOpen) }}>
 							{
-								isLoading ? <Loader2 className="animate-spin" /> : <span>{cartCount}</span>
+								isMobileMenuOpen ? (<AiOutlineClose className="h-10 w-10" />) : (<AiOutlineMenu className="h-10 w-10" />)
 							}
-						</span>}
-					</Button>
-					{/* mobile menu icon toggler */}
-					<Button variant="ghost" size="icon" className="lg:hidden" onClick={() => { setIsMobileMenuOpen(!isMobileMenuOpen) }}>
-						{
-							isMobileMenuOpen ? (<AiOutlineClose className="h-10 w-10" />) : (<AiOutlineMenu className="h-10 w-10" />)
-						}
-						<span className="sr-only">Menu</span>
-					</Button>
+							<span className="sr-only">Menu</span>
+						</Button>
 
-				</div>
-			</div >
+					</div>
+				</div >
 
+
+			</nav >
 			{/* Mobile NavigationMenu */}
 			{isMobileMenuOpen && (
-				<div className="lg:hidden border-t bg-background absolute shadow-md w-full z-50">
-					<div className="flex flex-col space-y-4 p-4">
+				<div className="lg:hidden border-t bg-background absolute shadow-md w-full z-[10000]">
+					<div className="flex flex-col space-y-4 p-4 ">
 						{links.map((link) => {
 							const isActive = pathname.startsWith(link.href)
 							return (
@@ -139,6 +142,7 @@ export default function Navbar() {
 					</div>
 				</div>
 			)}
-		</nav >
+		</>
+
 	)
 }

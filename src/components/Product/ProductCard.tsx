@@ -117,8 +117,8 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 					<div className="flex-1 flex flex-col justify-between">
 						{/* brand + title */}
 						<div className="mb-2">
-							<Link href="#">
-								<span className="text-sm text-gray-500 hover:underline hover:text-blue-700">{product.brand.name}</span>
+							<Link href={`/brands/${product.brand._id}`}>
+								<span className="text-md text-gray-600 hover:underline hover:text-blue-700">{product.brand.name}</span>
 							</Link>
 
 							<Link href={`/products/${product.id}`}>	<h2 className="text-lg font-semibold line-clamp-2">
