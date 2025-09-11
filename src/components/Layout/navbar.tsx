@@ -120,6 +120,7 @@ export default function Navbar() {
 
 
 			</nav >
+
 			{/* Mobile NavigationMenu */}
 			{isMobileMenuOpen && (
 				<div className="lg:hidden border-t bg-background absolute shadow-md w-full z-[10000]">
