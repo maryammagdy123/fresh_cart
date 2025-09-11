@@ -1,4 +1,5 @@
-import { AddToCartResponse, ClearCartResponse, DeleteCartItemResponse, GetCartResponse, UpdateCartItemResponse } from '@/Interfaces/cart';
+import { CategoryResponse } from './../types/responses';
+import { AddToCartResponse, ClearCartResponse, GetCartResponse, UpdateCartItemResponse } from '@/Interfaces/cart';
 
 import { BrandResponse, ProductResponse, SingleBrandResponse, SingleProductResponse } from "@/types";
 
@@ -20,6 +21,14 @@ class ApiServices {
 		return await fetch(
 			`https://ecommerce.routemisr.com/api/v1/products/${id}`
 		).then((res) => res.json());
+	}
+	// get all categories
+	async getAllCategories(): Promise<CategoryResponse> {
+		return await fetch(
+			`https://ecommerce.routemisr.com/api/v1/categories` {
+			cache: "force-cache",
+		}
+		).then((res) => res.json())
 	}
 
 	// get all brands
