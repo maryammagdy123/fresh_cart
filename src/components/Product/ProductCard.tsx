@@ -166,7 +166,7 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 						<div className="flex items-center justify-between mt-3">
 							<p className="text-lg font-semibold text-gray-800">${product.price}</p>
 							{/* actions */}
-							<AddToCartBtn handleAddToCart={handleAddToCart} addToCartLoader={addToCartLoader} productQuantity={product.quantity} />
+							<AddToCartBtn productId={product._id} productQuantity={product.quantity} />
 
 
 						</div>
