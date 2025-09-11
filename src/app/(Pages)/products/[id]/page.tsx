@@ -9,7 +9,6 @@ import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import { apiServices } from "@/services/api";
-import toast from "react-hot-toast";
 import AddToCartBtn from "@/components/Cart/AddToCartBtn";
 
 
@@ -21,7 +20,7 @@ export default function ProductDetailPage() {
 	const [quantity, setQuantity] = useState(1);
 	const [product, setProducts] = useState<Product | null>(null)
 	const [loading, setLoading] = useState(false)
-	const [addToCartLoader, setAddToCartLoader] = useState(false)
+
 
 	async function getProductDetail() {
 		setLoading(true)
@@ -31,19 +30,6 @@ export default function ProductDetailPage() {
 	}
 
 
-	async function handleAddToCart() {
-		setAddToCartLoader(true)
-		const data = await apiServices.addToCart(product!._id)
-		if (data.status ===
-			'success'
-		) {
-			toast.success(data.message)
-		} else {
-			toast.error(data.message)
-		}
-
-		setAddToCartLoader(false)
-	}
 
 	useEffect(() => {
 		getProductDetail()
@@ -155,7 +141,7 @@ export default function ProductDetailPage() {
 								<Button className="p-2 rounded-md border hover:bg-gray-50" aria-label="add to wishlist">
 									<Heart className="h-5 w-5 text-red-500" />
 								</Button>
-								<AddToCartBtn handleAddToCart={handleAddToCart} addToCartLoader={addToCartLoader} productQuantity={product?.quantity} />
+								<AddToCartBtn productQuantity={product?.quantity} productId={id} />
 
 							</div>
 						</div>

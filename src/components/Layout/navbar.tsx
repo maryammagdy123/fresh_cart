@@ -1,5 +1,5 @@
 "use client"
-import * as React from "react"
+
 import Link from "next/link"
 
 import {
@@ -14,9 +14,14 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import { Button } from "../ui/button";
 import { AiOutlineClose } from 'react-icons/ai';
 import { usePathname } from "next/navigation";
+import { useContext, useState } from "react";
+import { cartContext } from "@/Context/CartContext";
+import { Loader2 } from "lucide-react";
+
 
 
 export default function Navbar() {
+	const { cartCount, isLoading } = useContext(cartContext)
 	const links: { href: string, label: string }[] = [
 		{
 			href: "/products",
@@ -43,8 +48,8 @@ export default function Navbar() {
 			label: "orders"
 		},
 	]
-	const cartCount = 1
-	const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
+
+	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 	const pathname = usePathname()
 
 	return (
@@ -96,7 +101,9 @@ export default function Navbar() {
 						{cartCount > 0 && <span
 							className="absolute -top-2 -right-2 bg-black text-white text-xs font-bold px-2 py-0.5 rounded-full"
 						>
-							{cartCount}
+							{
+								isLoading ? <Loader2 className="animate-spin" /> : <span>{cartCount}</span>
+							}
 						</span>}
 					</Button>
 					{/* mobile menu icon toggler */}

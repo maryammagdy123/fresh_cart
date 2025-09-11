@@ -1,13 +1,34 @@
-import React from 'react'
+"use client"
+import React, { useContext, useState } from 'react'
 import { Button } from '../ui/button'
 import { Loader2, ShoppingCart } from 'lucide-react'
+import toast from 'react-hot-toast'
+import { apiServices } from '@/services/api'
+import { cartContext } from '@/Context/CartContext'
 interface AddToCartBtnProps {
 	productQuantity?: number | null
-	addToCartLoader: boolean
-	handleAddToCart: () => void
+	productId: string
 }
 
-export default function AddToCartBtn({ productQuantity, addToCartLoader, handleAddToCart }: AddToCartBtnProps) {
+
+
+export default function AddToCartBtn({ productQuantity, productId }: AddToCartBtnProps) {
+	const [addToCartLoader, setAddToCartLoader] = useState(false)
+	const { setCartCount } = useContext(cartContext)
+	async function handleAddToCart() {
+		setAddToCartLoader(true)
+		const data = await apiServices.addToCart(productId)
+		if (data.status ===
+			'success'
+		) {
+			toast.success(data.message)
+			setCartCount(data.numOfCartItems)
+		} else {
+			toast.error(data.message)
+		}
+
+		setAddToCartLoader(false)
+	}
 	return (
 		<Button onClick={handleAddToCart} disabled={addToCartLoader || productQuantity == 0} >
 			{addToCartLoader && <Loader2 className='animate-spin' />}

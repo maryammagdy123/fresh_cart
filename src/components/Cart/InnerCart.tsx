@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import CartList from './CartList'
 import CartSummary from './CartSummary'
 import { GetCartResponse } from '@/Interfaces/cart'
@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 import EmptyCart from './EmptyCart'
 import { Button } from '../ui/button'
 import { Loader2, Trash2 } from 'lucide-react'
+import { cartContext } from '@/Context/CartContext'
 interface InnerCartProps {
 	cartData: GetCartResponse
 
@@ -15,7 +16,11 @@ interface InnerCartProps {
 export default function InnerCart({ cartData }: InnerCartProps) {
 	const [cart, setCart] = useState<GetCartResponse>(cartData)
 	const [isDelete, setIsDelete] = useState(false)
+	const { setCartCount } = useContext(cartContext)
 
+	useEffect(() => {
+		setCartCount(cart.numOfCartItems)
+	}, [cart])
 	// delete item from cart
 	async function handleDeleteCartItem(productId: string, setIsDelete: (value: boolean) => void) {
 		setIsDelete(true)

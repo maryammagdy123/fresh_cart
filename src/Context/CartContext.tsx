@@ -1,3 +1,4 @@
+"use client"
 import { apiServices } from '@/services/api';
 import React, { Dispatch, SetStateAction, useEffect } from 'react'
 import { createContext, ReactNode, useState } from "react";
