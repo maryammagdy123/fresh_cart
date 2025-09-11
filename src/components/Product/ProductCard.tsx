@@ -1,16 +1,15 @@
 "use client"
-import { useContext, useState } from "react"
+
 import { Button } from "../ui/button"
 import Link from "next/link"
 import { Product } from "@/Interfaces"
 import { renderStars } from "@/helpers/rating"
 // import { div } from "framer-motion/client"
 import Image from "next/image"
-import { apiServices } from "@/services/api"
-import toast from "react-hot-toast"
+
 import AddToCartBtn from "../Cart/AddToCartBtn"
 import { Heart } from "lucide-react"
-import { cartContext } from "@/Context/CartContext"
+
 
 
 
@@ -23,23 +22,8 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ viewMode = "grid", product }: ProductCardProps) {
-	const [addToCartLoader, setAddToCartLoader] = useState(false)
-	const { setCartCount } = useContext(cartContext)
-	async function handleAddToCart() {
-		setAddToCartLoader(true)
-		const data = await apiServices.addToCart(product!._id)
-		if (data.status ===
-			'success'
-		) {
-			toast.success(data.message)
-			setCartCount(data.numOfCartItems)
 
-		} else {
-			toast.error(data.message)
-		}
 
-		setAddToCartLoader(false)
-	}
 	return (
 		<section>
 			{viewMode === "grid" ? (
