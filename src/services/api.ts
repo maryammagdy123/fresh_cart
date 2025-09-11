@@ -1,4 +1,4 @@
-import { CategoryResponse } from './../types/responses';
+import { CategoryResponse, SubcategoryResponse } from './../types/responses';
 import { AddToCartResponse, ClearCartResponse, GetCartResponse, UpdateCartItemResponse } from '@/Interfaces/cart';
 
 import { BrandResponse, ProductResponse, SingleBrandResponse, SingleProductResponse } from "@/types";
@@ -25,7 +25,7 @@ class ApiServices {
 	// get all categories
 	async getAllCategories(): Promise<CategoryResponse> {
 		return await fetch(
-			`https://ecommerce.routemisr.com/api/v1/categories` {
+			`https://ecommerce.routemisr.com/api/v1/categories`, {
 			cache: "force-cache",
 		}
 		).then((res) => res.json())
@@ -34,6 +34,13 @@ class ApiServices {
 	// get all brands
 	async getAllBrands(): Promise<BrandResponse> {
 		return await fetch("https://ecommerce.routemisr.com/api/v1/brands", {
+			cache: "force-cache",
+		})
+			.then((res) => res.json());
+	}
+	// get all brands
+	async getAllSubcategories(): Promise<SubcategoryResponse> {
+		return await fetch("https://ecommerce.routemisr.com/api/v1/subcategories", {
 			cache: "force-cache",
 		})
 			.then((res) => res.json());
