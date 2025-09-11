@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { CategoryResponse, SubcategoryResponse } from "@/types";
 import { Category, Subcategory } from "@/Interfaces";
+import Link from "next/link";
 
 
 
@@ -36,7 +37,8 @@ export default function BrowseByCategory() {
 				<nav className="space-y-2">
 					{categories.map((cat) => (
 						<div key={cat._id} className="border-b border-gray-100 pb-2">
-							<button
+							<Button
+								variant={"outline"}
 								className="w-full flex justify-between items-center p-2 rounded-lg hover:bg-gray-50 transition"
 								onClick={() =>
 									setOpenCategory(openCategory === cat._id ? null : cat._id)
@@ -47,7 +49,7 @@ export default function BrowseByCategory() {
 									className={`h-4 w-4 text-gray-500 transition-transform ${openCategory === cat._id ? "rotate-180" : ""
 										}`}
 								/>
-							</button>
+							</Button>
 							<div
 								className={`overflow-hidden transition-all duration-300 ease-in-out ${openCategory === cat._id ? "max-h-40 mt-2" : "max-h-0"
 									}`}
@@ -56,12 +58,13 @@ export default function BrowseByCategory() {
 									{subcategories
 										.filter((sub) => sub.category === cat._id)
 										.map((sub) => (
-											<button
+											<Button
+												variant={"outline"}
 												key={sub._id}
 												className="block w-full text-left text-xs text-gray-600 hover:text-black transition"
 											>
 												{sub.name}
-											</button>
+											</Button>
 										))}
 								</div>
 							</div>
@@ -93,20 +96,22 @@ export default function BrowseByCategory() {
 				{/* Category Grid */}
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 					{categories.map((cat) => (
-						<div
-							key={cat._id}
-							className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition border border-gray-100 p-4 flex flex-col items-center text-center"
-						>
-							<div className="relative h-24 w-24 mb-3">
-								<Image
-									src={cat.image}
-									alt={cat.name}
-									fill
-									className="rounded-xl object-cover"
-								/>
+						<Link href={`/categories/${cat._id}`} key={cat._id}>
+							<div
+
+								className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition border border-gray-100 p-4 flex flex-col items-center text-center"
+							>
+								<div className="relative h-24 w-24 mb-3">
+									<Image
+										src={cat.image}
+										alt={cat.name}
+										fill
+										className="rounded-xl object-cover"
+									/>
+								</div>
+								<h4 className="font-medium text-base">{cat.name}</h4>
 							</div>
-							<h4 className="font-medium text-base">{cat.name}</h4>
-						</div>
+						</Link>
 					))}
 				</div>
 			</main>
