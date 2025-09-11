@@ -53,7 +53,7 @@ export default function Navbar() {
 	const pathname = usePathname()
 
 	return (
-		<nav className="w-full border-b bg-white shadow-sm">
+		<nav className="w-full border-b bg-white lg:sticky backdrop-blur-2xl top-0 left-0 z-50  shadow-sm">
 			<div className="container mx-auto px-4 flex items-center justify-between h-16">
 				{/* Logo */}
 				<Link href="/" className="text-xl font-bold text-black p-2 px-4">
