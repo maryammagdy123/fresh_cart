@@ -1,6 +1,6 @@
-import { AddToCartResponse, ClearCartResponse, DeleteCartItemResponse, GetCartResponse, UpdateCartItemResponse } from '@/Interfaces/cart';
+import { AddToCartResponse, ClearCartResponse, GetCartResponse, UpdateCartItemResponse } from '@/Interfaces/cart';
 
-import { BrandResponse, CategoryResponse, ProductResponse, SingleBrandResponse, SingleProductResponse, SubcategoryResponse } from "@/types";
+import { BrandResponse, CategoryResponse, ProductResponse, SingleBrandResponse, SingleCategoryResponse, SingleProductResponse, SubcategoryResponse } from "@/types";
 
 
 class ApiServices {
@@ -53,6 +53,19 @@ class ApiServices {
 		}
 		).then((res) => res.json())
 	}
+
+	// get single category 
+	async getSingleCategory(id: string): Promise<SingleCategoryResponse> {
+		return fetch(`https://ecommerce.routemisr.com/api/v1/categories/${id}`, {
+			cache: "force-cache",
+		}).then((res) => res.json());
+	}
+	// get all products with specific category
+	async getSingleCategoryAllProducts(id: string): Promise<ProductResponse> {
+		return await fetch(`https://ecommerce.routemisr.com/api/v1/products?category[in]=${id}`, {
+			cache: "no-store",
+		}).then((res) => res.json());
+	}
 	// get all subcategories
 	async getAllSubcategories(): Promise<SubcategoryResponse> {
 		return await fetch("https://ecommerce.routemisr.com/api/v1/subcategories", {
@@ -84,7 +97,7 @@ class ApiServices {
 	async getUserCart(): Promise<GetCartResponse> {
 		return await fetch(`https://ecommerce.routemisr.com/api/v1/cart`, {
 			headers: this.getHeaders()
-		},).then((res) => res.json())
+		}).then((res) => res.json())
 	}
 
 	// delete specific cart item

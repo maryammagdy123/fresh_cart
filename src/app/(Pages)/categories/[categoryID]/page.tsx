@@ -1,4 +1,4 @@
-import { Brand, Category, Product } from "@/Interfaces"
+import { Category, Product } from "@/Interfaces"
 import EmptyBrands from "@/components/Brands/EmptyBrands"
 import ProductCard from "@/components/Product/ProductCard"
 import LoadingSpinner from "@/components/shared/LoadingSpinner"
@@ -11,16 +11,17 @@ import { Suspense } from "react"
 export default async function SingleCategoryProductsPage({
 	params,
 }: {
-	params: Promise<{ catProductID: string }>
+	params: Promise<{ categoryID: string }>
 }) {
 
 	const param = await params
-	const id = param.catProductID;
+	// subcategory
+	const id = param.categoryID;
 	const data: ProductResponse = await apiServices.getSingleCategoryAllProducts(id)
 	const products: Product[] = data.data
 
 
-	// Fetch single cat details
+	// // Fetch single cat details
 
 	const CategoryData = await apiServices.getSingleCategory(id)
 	const Category: Category = CategoryData.data
@@ -32,7 +33,7 @@ export default async function SingleCategoryProductsPage({
 			<div className="mb-6">
 				<h1 className="text-3xl font-bold mb-2">{Category?.name} Products</h1>
 				{
-					products?.length > 0 && <p className="text-gray-600">Browse all products for this brand</p>
+					products?.length > 0 && <p className="text-gray-600">Browse all products for this Category</p>
 				}
 			</div>
 
