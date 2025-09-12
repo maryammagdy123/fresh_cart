@@ -58,13 +58,15 @@ export default function BrowseByCategory() {
 									{subcategories
 										.filter((sub) => sub.category === cat._id)
 										.map((sub) => (
-											<Button
-												variant={"outline"}
-												key={sub._id}
-												className="block w-full text-left text-xs text-gray-600 hover:text-black transition"
-											>
-												{sub.name}
-											</Button>
+											<Link href={`/categories/${sub._id}`} key={sub._id}>
+												<Button
+													variant={"outline"}
+													key={sub._id}
+													className="block w-full text-left text-xs text-gray-600 hover:text-black transition"
+												>
+													{sub.name}
+												</Button>
+											</Link>
 										))}
 								</div>
 							</div>

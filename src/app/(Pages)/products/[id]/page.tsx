@@ -108,6 +108,7 @@ export default function ProductDetailPage() {
 							<summary className="font-medium cursor-pointer">Category</summary>
 							<span className="mt-2 text-sm text-gray-700">{product?.category.name}</span>
 
+
 						</details>
 
 					</div>

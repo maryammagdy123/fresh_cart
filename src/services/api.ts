@@ -1,10 +1,20 @@
 import { AddToCartResponse, ClearCartResponse, GetCartResponse, UpdateCartItemResponse } from '@/Interfaces/cart';
 
-import { BrandResponse, CategoryResponse, ProductResponse, SingleBrandResponse, SingleCategoryResponse, SingleProductResponse, SubcategoryResponse } from "@/types";
+import { BrandResponse, CategoryResponse, ProductResponse, SingleBrandResponse, SingleCategoryResponse, SingleProductResponse, SingleSubcategoryResponse, SubcategoryResponse } from "@/types";
 
 
 class ApiServices {
+	// -----------------------------headers-----------------------------------------------------
 
+	// headers
+	getHeaders() {
+		return {
+			"Content-Type": "application/json",
+			token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YmM5NmM3YWY5NTQzMDZiMTAxNTQ1NSIsIm5hbWUiOiJNYXJpYW0gTWFnZHkiLCJyb2xlIjoidXNlciIsImlhdCI6MTc1NzM0Mjg1MywiZXhwIjoxNzY1MTE4ODUzfQ.HqAEbvRX4OO1NLocoCBgdcmXcUO-vSvQ4FtBZNUajVA"
+		}
+	}
+
+	// -----------------------------------------Products-----------------------------------------------------
 	// get All Products
 	async getAllProducts(page: number = 1): Promise<ProductResponse> {
 		return await fetch(`https://ecommerce.routemisr.com/api/v1/products?page=${page}`, {
@@ -21,6 +31,10 @@ class ApiServices {
 			`https://ecommerce.routemisr.com/api/v1/products/${id}`
 		).then((res) => res.json());
 	}
+
+
+
+	// ---------------------------------------Brands------------------------------------------------------------
 
 	// get all brands
 	async getAllBrands(): Promise<BrandResponse> {
@@ -44,7 +58,7 @@ class ApiServices {
 		}).then((res) => res.json());
 	}
 
-
+	// --------------------------------Categories--------------------------------------------------------------
 	// get all categories
 	async getAllCategories(): Promise<CategoryResponse> {
 		return await fetch(
@@ -63,9 +77,11 @@ class ApiServices {
 	// get all products with specific category
 	async getSingleCategoryAllProducts(id: string): Promise<ProductResponse> {
 		return await fetch(`https://ecommerce.routemisr.com/api/v1/products?category[in]=${id}`, {
-			cache: "no-store",
-		}).then((res) => res.json());
+			headers: this.getHeaders()
+		}).then((res) => res.json())
 	}
+
+	// ------------------------------------Subcategories---------------------------------------------------
 	// get all subcategories
 	async getAllSubcategories(): Promise<SubcategoryResponse> {
 		return await fetch("https://ecommerce.routemisr.com/api/v1/subcategories", {
@@ -74,16 +90,25 @@ class ApiServices {
 			.then((res) => res.json());
 	}
 
-
-
-	// headers
-	getHeaders() {
-		return {
-			"Content-Type": "application/json",
-			token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YmM5NmM3YWY5NTQzMDZiMTAxNTQ1NSIsIm5hbWUiOiJNYXJpYW0gTWFnZHkiLCJyb2xlIjoidXNlciIsImlhdCI6MTc1NzM0Mjg1MywiZXhwIjoxNzY1MTE4ODUzfQ.HqAEbvRX4OO1NLocoCBgdcmXcUO-vSvQ4FtBZNUajVA"
-		}
+	// get spesific subcategory
+	async getSingleSubcategory(id: string): Promise<SingleSubcategoryResponse> {
+		return await fetch(`https://ecommerce.routemisr.com/api/v1/subcategories/${id}`, {
+			cache: "force-cache"
+		}).then((res) => res.json())
 	}
 
+	// get all products with specific subcategory
+	async getSingleSubCategoryAllProducts(id: string): Promise<ProductResponse> {
+		return await fetch(`https://ecommerce.routemisr.com/api/v1/products?category[in]=${encodeURIComponent(id)}`, {
+			cache: "no-store",
+			headers: this.getHeaders()
+		}).then((res) => res.json());
+	}
+
+
+
+
+	// ---------------------------------------Cart-------------------------------------------
 	// add products to cart
 	async addToCart(productId: string | string[]): Promise<AddToCartResponse> {
 		return await fetch(`https://ecommerce.routemisr.com/api/v1/cart`, {
