@@ -18,7 +18,7 @@ export default async function page({
 	const products: Product[] = data.data
 
 
-	// // Fetch single cat details
+	// // Fetch single subcat details
 
 	const subCtegoryData = await apiServices.getSingleSubcategory(id)
 	const subcategory: Subcategory = subCtegoryData.data
