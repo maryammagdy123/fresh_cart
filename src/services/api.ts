@@ -1,6 +1,6 @@
 import { AddToCartResponse, ClearCartResponse, GetCartResponse, UpdateCartItemResponse } from '@/Interfaces/cart';
 
-import { BrandResponse, CategoryResponse, ProductResponse, SingleBrandResponse, SingleCategoryResponse, SingleProductResponse, SingleSubcategoryResponse, SubcategoryResponse } from "@/types";
+import { AddToWishListResponse, BrandResponse, CategoryResponse, ProductResponse, SingleBrandResponse, SingleCategoryResponse, SingleProductResponse, SingleSubcategoryResponse, SubcategoryResponse } from "@/types";
 
 
 class ApiServices {
@@ -148,6 +148,21 @@ class ApiServices {
 			method: `delete`,
 			headers: this.getHeaders()
 		}).then((res) => res.json())
+	}
+
+
+
+	// add to wishlist
+	async addToWishlist(productId: string): Promise<AddToWishListResponse> {
+		const res = await fetch("/api/wishlist", {
+			method: "POST",
+			headers: this.getHeaders(),
+			body: JSON.stringify({ productId }),
+		});
+
+		if (!res.ok) throw new Error("Failed to add product");
+		const data: AddToWishListResponse = await res.json();
+		return data;
 	}
 
 }
