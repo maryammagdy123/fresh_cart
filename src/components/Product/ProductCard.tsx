@@ -9,6 +9,9 @@ import Image from "next/image"
 
 import AddToCartBtn from "../Cart/AddToCartBtn"
 import { Heart } from "lucide-react"
+import { apiServices } from "@/services/api"
+import toast from "react-hot-toast"
+import { useEffect, useState } from "react"
 
 
 
@@ -22,6 +25,46 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ viewMode = "grid", product }: ProductCardProps) {
+
+	const [isInWishlist, setIsInWishlist] = useState<boolean>(false);
+
+	async function handleToggleWishlist() {
+		try {
+			if (isInWishlist) {
+
+				const data = await apiServices.removeFromWishlist(product._id);
+				if (data.status === "success") {
+					setIsInWishlist(false);
+					toast.success("Removed from wishlist");
+				} else {
+					toast.error(data.message);
+				}
+			} else {
+
+				const data = await apiServices.addToWishlist(product._id);
+				if (data.status === "success") {
+					setIsInWishlist(true);
+					toast.success("Added to wishlist");
+				} else {
+					toast.error(data.message);
+				}
+			}
+		} catch (err) {
+			toast.error("Something went wrong" + err);
+		}
+	}
+	useEffect(() => {
+		async function checkWishlistStatus() {
+			try {
+				const wishlist = await apiServices.getWishlist();
+				const exists = wishlist.data.some((item: Product) => item._id === product._id);
+				setIsInWishlist(exists);
+			} catch (err) {
+				console.error(err);
+			}
+		}
+		checkWishlistStatus();
+	}, [product._id]);
 
 
 	return (
@@ -40,8 +83,8 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 
 						{/* action icons */}
 						<div className="absolute top-2 right-2 ">
-							<Button className="p-2 bg-white rounded-full shadow hover:bg-gray-100 transition">
-								<Heart className="h-5 w-5 text-red-500" />
+							<Button onClick={() => handleToggleWishlist()} className={`p-2 rounded-full shadow hover:bg-gray-100 transition bg-white`}>
+								<Heart className="h-5 w-5 text-red-500" fill={isInWishlist ? "red" : "none"} />
 							</Button>
 							{/* <Button className="p-2 bg-white rounded-full shadow hover:bg-gray-100 transition">
 								

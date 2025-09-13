@@ -25,7 +25,7 @@ export default function InnerCart({ cartData }: InnerCartProps) {
 	async function handleDeleteCartItem(productId: string, setIsDelete: (value: boolean) => void) {
 		setIsDelete(true)
 		const data = await apiServices.deleteCartItem(productId)
-		if (data.status === "success") {
+		if (data.statusMsg === "success") {
 			toast.success("Item removed successfully!!")
 		}
 		setIsDelete(false)

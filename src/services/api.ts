@@ -1,6 +1,8 @@
-import { AddToCartResponse, ClearCartResponse, GetCartResponse, UpdateCartItemResponse } from '@/Interfaces/cart';
 
-import { AddToWishListResponse, BrandResponse, CategoryResponse, ProductResponse, SingleBrandResponse, SingleCategoryResponse, SingleProductResponse, SingleSubcategoryResponse, SubcategoryResponse } from "@/types";
+import { AddToCartResponse, ClearCartResponse, GetCartResponse, UpdateCartItemResponse } from '@/Interfaces/cart';
+import { WishListResponse } from '@/Interfaces/wishlist';
+
+import { AddToWishListResponse, BrandResponse, CategoryResponse, ProductResponse, RemoveFromWishListResponse, SingleBrandResponse, SingleCategoryResponse, SingleProductResponse, SingleSubcategoryResponse, SubcategoryResponse } from "@/types";
 
 
 class ApiServices {
@@ -154,7 +156,7 @@ class ApiServices {
 
 	// add to wishlist
 	async addToWishlist(productId: string): Promise<AddToWishListResponse> {
-		const res = await fetch("/api/wishlist", {
+		const res = await fetch("https://ecommerce.routemisr.com/api/v1/wishlist", {
 			method: "POST",
 			headers: this.getHeaders(),
 			body: JSON.stringify({ productId }),
@@ -165,6 +167,29 @@ class ApiServices {
 		return data;
 	}
 
+
+	// remove from wishlist
+	async removeFromWishlist(productId: string): Promise<RemoveFromWishListResponse> {
+		const res = await fetch(`https://ecommerce.routemisr.com/api/v1/wishlist/${productId}`, {
+			method: "DELETE",
+			headers: this.getHeaders(),
+			body: JSON.stringify({ productId }),
+		});
+
+		if (!res.ok) throw new Error("Failed to remove product");
+		const data: AddToWishListResponse = await res.json();
+		return data;
+	}
+
+	// get wishlist
+
+	async getWishlist(): Promise<WishListResponse> {
+		const res = await fetch(`https://ecommerce.routemisr.com/api/v1/wishlist`, {
+			headers: this.getHeaders(),
+		});
+		const data: WishListResponse = await res.json();
+		return data;
+	}
 }
 
 export const apiServices = new ApiServices()
