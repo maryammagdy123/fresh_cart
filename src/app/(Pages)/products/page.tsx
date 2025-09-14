@@ -4,8 +4,15 @@ import ProductGridContainer from "@/components/Product/ProductGridContainer"
 import LoadingSpinner from "@/components/shared/LoadingSpinner"
 import { apiServices } from "@/services/api"
 import { ProductResponse } from "@/types"
+import { Metadata } from "next"
 import Link from "next/link"
 import { Suspense } from "react"
+
+
+
+export const metadata: Metadata = {
+	title: "Products Page",
+};
 
 export default async function ProductsPage({
 	searchParams,
