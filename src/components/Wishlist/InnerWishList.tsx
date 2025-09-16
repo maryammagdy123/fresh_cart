@@ -16,10 +16,7 @@ interface InnerWishListProps {
 	wishListProducts: WishListResponse
 }
 export default function InnerWishList({ wishListProducts }: InnerWishListProps) {
-	const router = useRouter()
 	const [wishlist, setWislist] = useState<WishListResponse>(wishListProducts)
-	const [addToCartLoader, setAddToCartLoader] = useState(false)
-	const { setCartCount } = useContext(cartContext)
 	const { setWishlistCount } = useContext(WishlistContext)
 
 
