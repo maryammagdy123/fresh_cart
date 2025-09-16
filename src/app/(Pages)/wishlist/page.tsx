@@ -1,11 +1,15 @@
 import Image from "next/image";
 import { apiServices } from "../../../services/api";
 import { Button } from "@/components/ui/button";
+import EmptyWishlist from "@/components/Wishlist/EmptyWishList";
 
 export default async function Page() {
 	const wishlistRes = await apiServices.getWishlist();
 	const wishListProducts = wishlistRes.data;
 
+	if (wishListProducts.length == 0) {
+		return <EmptyWishlist />
+	}
 	return (
 		<main className="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-10 py-8">
 			{/* Header */}
