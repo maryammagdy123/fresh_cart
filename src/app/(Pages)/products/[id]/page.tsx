@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { apiServices } from "@/services/api";
+import { getSingleProduct } from "@/services/api";
 import ProductDetailPage from "../../../../components/Product/ProductDetailPage";
 
 
@@ -9,7 +9,8 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	const product = await apiServices.getSingleProduct(params.id);
+	const id = params.id;
+	const product = await getSingleProduct(id);
 
 	return {
 		title: product.data.title,
@@ -22,7 +23,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	};
 }
 
-export default async function Page({ params }: Props) {
-	const product = await apiServices.getSingleProduct(params.id);
+export default async function Page({
+	params,
+}: {
+	params: Promise<{ id: string }>
+}) {
+	const { id } = await params;
+	const product = await getSingleProduct(id);
 	return <ProductDetailPage productData={product.data} />;
 }

@@ -9,7 +9,7 @@ import Image from "next/image"
 
 import AddToCartBtn from "../Cart/AddToCartBtn"
 import { Heart, Loader2 } from "lucide-react"
-import { apiServices } from "@/services/api"
+import { addToWishlist, getWishlist, removeFromWishlist } from "@/services/api"
 import toast from "react-hot-toast"
 import { useEffect, useState } from "react"
 
@@ -32,17 +32,13 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 	async function handleToggleWishlist() {
 		try {
 			setIsAddingToWishList(true);
-
-			// 🟢 نحدد الـ action
-			const action = isInWishlist ? "removeFromWishlist" : "addToWishlist";
 			const successMsg = isInWishlist ? "Removed from wishlist" : "Added to wishlist";
 			const errorMsg = isInWishlist ? "Failed to remove from wishlist" : "Failed to add to wishlist";
-
-			// 🟢 نعمل call للـ API بطريقة ديناميكية
-			const data = await apiServices[action](product._id);
+			const actionFn = isInWishlist ? removeFromWishlist : addToWishlist;
+			const data = await actionFn(product._id);
 
 			if (data.status === "success") {
-				setIsInWishlist(!isInWishlist); // ✅ نغير الحالة مرة واحدة
+				setIsInWishlist(!isInWishlist);
 				toast.success(successMsg);
 			} else {
 				toast.error(data.message || errorMsg);
@@ -55,11 +51,11 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 		}
 	}
 
-	// ✅ التحقق من وجود المنتج في الـwishlist
+
 	useEffect(() => {
 		const checkWishlistStatus = async () => {
 			try {
-				const wishlist = await apiServices.getWishlist();
+				const wishlist = await getWishlist();
 				setIsInWishlist(
 					wishlist.data.some((item: Product) => item._id === product._id)
 				);

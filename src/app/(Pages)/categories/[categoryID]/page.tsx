@@ -2,7 +2,7 @@ import { Category, Product } from "@/Interfaces"
 import EmptyCategory from "@/components/Category/EmptyCategory"
 import ProductCard from "@/components/Product/ProductCard"
 
-import { apiServices } from "@/services/api"
+import { getSingleCategory, getSingleCategoryAllProducts } from "@/services/api"
 import { ProductResponse } from "@/types"
 import { Metadata } from "next"
 
@@ -13,7 +13,7 @@ export async function generateMetadata({
 	params: { categoryID: string };
 }): Promise<Metadata> {
 	try {
-		const CategoryData = await apiServices.getSingleCategory(params.categoryID);
+		const CategoryData = await getSingleCategory(params.categoryID);
 		const category: Category = CategoryData.data;
 
 		return {
@@ -41,19 +41,19 @@ export async function generateMetadata({
 export default async function SingleCategoryProductsPage({
 	params,
 }: {
-	params: { categoryID: string };
+	params: Promise<{ categoryID: string }>
 }) {
 
 
 	// subcategory
-	const id = params.categoryID;
-	const data: ProductResponse = await apiServices.getSingleCategoryAllProducts(id)
+	const { categoryID } = await params;
+	const data: ProductResponse = await getSingleCategoryAllProducts(categoryID)
 	const products: Product[] = data.data
 
 
 	// // Fetch single cat details
 
-	const CategoryData = await apiServices.getSingleCategory(id)
+	const CategoryData = await getSingleCategory(categoryID)
 	const Category: Category = CategoryData.data
 
 

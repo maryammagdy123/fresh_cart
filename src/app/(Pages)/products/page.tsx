@@ -2,7 +2,7 @@
 import { Product } from "@/Interfaces"
 import ProductGridContainer from "@/components/Product/ProductGridContainer"
 import LoadingSpinner from "@/components/shared/LoadingSpinner"
-import { apiServices } from "@/services/api"
+import { getAllProducts } from "@/services/api"
 import { ProductResponse } from "@/types"
 import { Metadata } from "next"
 import Link from "next/link"
@@ -22,7 +22,7 @@ export default async function ProductsPage({
 
 	const params = await searchParams
 	const page = Number(params?.page) || 1
-	const data: ProductResponse = await apiServices.getAllProducts(page)
+	const data: ProductResponse = await getAllProducts(page)
 	const products: Product[] = data.data
 	const totalPages = data.metadata.numberOfPages
 	return (

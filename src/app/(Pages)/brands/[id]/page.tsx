@@ -1,8 +1,7 @@
-// app/brands/[id]/page.tsx
 import { Brand, Product } from "@/Interfaces";
 import EmptyBrands from "@/components/Brands/EmptyBrands";
 import ProductCard from "@/components/Product/ProductCard";
-import { apiServices } from "@/services/api";
+import { getSingleBrand, getSingleBrandAllProducts } from "@/services/api";
 import { ProductResponse } from "@/types";
 import { Metadata } from "next";
 
@@ -10,25 +9,15 @@ import { Metadata } from "next";
 export async function generateMetadata({
 	params,
 }: {
-	params: { id: string };
+	params: Promise<{ id: string }>;
 }): Promise<Metadata> {
 	try {
-		const brandData = await apiServices.getSingleBrand(params.id);
+		const brandData = await getSingleBrand(params.id);
 		const brand: Brand = brandData.data;
 
 		return {
 			title: `${brand.name} Products | MyShop`,
 			description: `Browse and shop the latest products from ${brand.name}.`,
-			openGraph: {
-				title: `${brand.name} Products | MyShop`,
-				description: `Discover top products from ${brand.name}.`,
-				url: `/brands/${params.id}`,
-			},
-			twitter: {
-				card: "summary_large_image",
-				title: `${brand.name} Products`,
-				description: `Discover top products from ${brand.name}.`,
-			},
 		};
 	} catch {
 		return {
@@ -42,16 +31,16 @@ export async function generateMetadata({
 export default async function BrandProductsPage({
 	params,
 }: {
-	params: { id: string };
+	params: Promise<{ id: string }>
 }) {
-	const id = params.id;
+	const { id } = await params
 
 	// Fetch products
-	const data: ProductResponse = await apiServices.getSingleBrandAllProducts(id);
+	const data: ProductResponse = await getSingleBrandAllProducts(id);
 	const products: Product[] = data.data;
 
 	// Fetch brand details
-	const brandData = await apiServices.getSingleBrand(id);
+	const brandData = await getSingleBrand(id);
 	const brand: Brand = brandData.data;
 
 	return (

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { ChevronDown, Grid2x2 } from "lucide-react";
-import { apiServices } from "@/services/api";
+import { getAllCategories, getAllSubcategories } from "@/services/api";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { CategoryResponse, SubcategoryResponse } from "@/types";
@@ -18,9 +18,9 @@ export default function BrowsCategory() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const catRes: CategoryResponse = await apiServices.getAllCategories();
+			const catRes: CategoryResponse = await getAllCategories();
 			const subRes: SubcategoryResponse =
-				await apiServices.getAllSubcategories();
+				await getAllSubcategories();
 
 			setCategories(catRes.data);
 			setSubcategories(subRes.data);

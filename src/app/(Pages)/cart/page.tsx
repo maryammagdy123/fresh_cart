@@ -1,4 +1,4 @@
-import { apiServices } from "@/services/api"
+import { getUserCart } from "@/services/api"
 import React, { Suspense } from "react"
 import LoadingSpinner from "@/components/shared/LoadingSpinner"
 import { GetCartResponse } from "@/Interfaces"
@@ -8,7 +8,7 @@ export default async function Cart() {
 
 
 	async function handleDisplayCart() {
-		const response: GetCartResponse = await apiServices.getUserCart()
+		const response: GetCartResponse = await getUserCart()
 		return response;
 	}
 	const cartData = await handleDisplayCart();

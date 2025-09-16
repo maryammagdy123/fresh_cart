@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react'
 import { Button } from '../ui/button'
 import { Loader2, ShoppingCart } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { apiServices } from '@/services/api'
+import { addToCart } from '@/services/api'
 import { cartContext } from '@/Context/CartContext'
 interface AddToCartBtnProps {
 	productQuantity?: number | null
@@ -17,7 +17,7 @@ export default function AddToCartBtn({ productQuantity, productId }: AddToCartBt
 	const { setCartCount } = useContext(cartContext)
 	async function handleAddToCart() {
 		setAddToCartLoader(true)
-		const data = await apiServices.addToCart(productId)
+		const data = await addToCart(productId)
 		if (data.status ===
 			'success'
 		) {

@@ -4,12 +4,10 @@ import Image from 'next/image'
 import React, { useContext, useEffect, useState } from 'react'
 import RemoveFromWishlistBtn from './RemoveFromWishlistBtn'
 import { WishlistContext } from '@/Context/WishListContext'
-import { apiServices } from '@/services/api'
+import { getWishlist, removeFromWishlist } from '@/services/api'
 import toast from 'react-hot-toast'
 import EmptyWishlist from './EmptyWishList'
-import { Button } from '../ui/button'
-import { cartContext } from '@/Context/CartContext'
-import { useRouter } from 'next/navigation'
+
 import AddToCartBtn from '../Cart/AddToCartBtn'
 
 interface InnerWishListProps {
@@ -23,12 +21,12 @@ export default function InnerWishList({ wishListProducts }: InnerWishListProps) 
 	// delete item from wishlist
 	async function handleRemoveFromWishList(productId: string, setIsDelete: (value: boolean) => void) {
 		setIsDelete(true)
-		const data = await apiServices.removeFromWishlist(productId)
+		const data = await removeFromWishlist(productId)
 		if (data.status === "success") {
 			toast.success("Item removed successfully!!")
 		}
 		setIsDelete(false)
-		const newWishlistResponseData = await apiServices.getWishlist()
+		const newWishlistResponseData = await getWishlist()
 		setWislist(newWishlistResponseData)
 	}
 

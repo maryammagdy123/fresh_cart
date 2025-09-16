@@ -1,6 +1,6 @@
 
 import { Brand } from "@/Interfaces"
-import { apiServices } from "@/services/api"
+import { getAllBrands } from "@/services/api"
 import { BrandResponse } from "@/types"
 import Image from "next/image"
 import Link from "next/link"
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 export default async function BrandsPage() {
 
-	const data: BrandResponse = await apiServices.getAllBrands()
+	const data: BrandResponse = await getAllBrands()
 	const brands: Brand[] = data.data
 
 	return (

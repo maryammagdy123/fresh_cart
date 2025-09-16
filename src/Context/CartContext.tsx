@@ -1,5 +1,5 @@
 "use client"
-import { apiServices } from '@/services/api';
+import { getUserCart } from '@/services/api';
 import React, { Dispatch, SetStateAction, useEffect } from 'react'
 import { createContext, ReactNode, useState } from "react";
 
@@ -16,7 +16,7 @@ export default function CartContextProvider({ children }: { children: ReactNode 
 
 	async function getCart() {
 		setIsLoading(true)
-		const res = await apiServices.getUserCart()
+		const res = await getUserCart()
 		setCartCount(res.numOfCartItems)
 		setIsLoading(false)
 	}

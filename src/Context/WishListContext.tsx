@@ -1,5 +1,5 @@
 "use client"
-import { apiServices } from '@/services/api';
+import { getWishlist } from '@/services/api';
 import { Dispatch, SetStateAction, useEffect } from 'react'
 import { createContext, ReactNode, useState } from "react";
 
@@ -16,7 +16,7 @@ export default function WishlistContextProvider({ children }: { children: ReactN
 
 	async function getWishList() {
 		setIsLoading(true)
-		const res = await apiServices.getWishlist()
+		const res = await getWishlist()
 		setWishlistCount(res.count)
 		setIsLoading(false)
 	}

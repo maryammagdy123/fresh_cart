@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import CartList from './CartList'
 import CartSummary from './CartSummary'
 import { GetCartResponse } from '@/Interfaces/cart'
-import { apiServices } from '@/services/api'
+import { clearCart, deleteCartItem, getUserCart, updateCartProductQuantity } from '@/services/api'
 import toast from 'react-hot-toast'
 import EmptyCart from './EmptyCart'
 import { Button } from '../ui/button'
@@ -24,27 +24,27 @@ export default function InnerCart({ cartData }: InnerCartProps) {
 	// delete item from cart
 	async function handleDeleteCartItem(productId: string, setIsDelete: (value: boolean) => void) {
 		setIsDelete(true)
-		const data = await apiServices.deleteCartItem(productId)
+		const data = await deleteCartItem(productId)
 		if (data.statusMsg === "success") {
 			toast.success("Item removed successfully!!")
 		}
 		setIsDelete(false)
-		const newCartResponseData = await apiServices.getUserCart()
+		const newCartResponseData = await getUserCart()
 		setCart(newCartResponseData)
 	}
 	// update cart product quantity
 	async function handleUpdateCart(productId: string, count: number) {
-		const response = await apiServices.updateCartProductQuantity(productId, count)
+		const response = await updateCartProductQuantity(productId, count)
 		console.log(response)
-		const newCartResponseData = await apiServices.getUserCart()
+		const newCartResponseData = await getUserCart()
 		setCart(newCartResponseData)
 	}
 	// handle clear cart
 	async function handleClearCart(setIsDelete: (value: boolean) => void) {
 		setIsDelete(true)
-		const response = await apiServices.clearCart()
+		const response = await clearCart()
 		setIsDelete(false)
-		const newCartResponseData = await apiServices.getUserCart()
+		const newCartResponseData = await getUserCart()
 		setCart(newCartResponseData)
 	}
 	if (cart.data.products.length === 0) {
