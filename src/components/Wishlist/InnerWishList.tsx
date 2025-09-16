@@ -7,14 +7,21 @@ import { WishlistContext } from '@/Context/WishListContext'
 import { apiServices } from '@/services/api'
 import toast from 'react-hot-toast'
 import EmptyWishlist from './EmptyWishList'
+import { Button } from '../ui/button'
+import { cartContext } from '@/Context/CartContext'
+import { useRouter } from 'next/navigation'
+import AddToCartBtn from '../Cart/AddToCartBtn'
+
 interface InnerWishListProps {
 	wishListProducts: WishListResponse
 }
 export default function InnerWishList({ wishListProducts }: InnerWishListProps) {
-
+	const router = useRouter()
 	const [wishlist, setWislist] = useState<WishListResponse>(wishListProducts)
-
+	const [addToCartLoader, setAddToCartLoader] = useState(false)
+	const { setCartCount } = useContext(cartContext)
 	const { setWishlistCount } = useContext(WishlistContext)
+
 
 	// delete item from wishlist
 	async function handleRemoveFromWishList(productId: string, setIsDelete: (value: boolean) => void) {
@@ -28,9 +35,11 @@ export default function InnerWishList({ wishListProducts }: InnerWishListProps) 
 		setWislist(newWishlistResponseData)
 	}
 
+
 	useEffect(() => {
 		setWishlistCount(wishlist.count)
 	}, [wishlist])
+
 	return (
 		<main className="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-10 py-8">
 			{/* Header */}
@@ -79,7 +88,9 @@ export default function InnerWishList({ wishListProducts }: InnerWishListProps) 
 								</div>
 
 								{/* Action Button */}
-								<div>
+								<div className='space-x-2.5'>
+									<AddToCartBtn productId={item._id} />
+
 									<RemoveFromWishlistBtn id={item._id} handleRemoveFromWishList={handleRemoveFromWishList} />
 								</div>
 							</div>
