@@ -49,7 +49,7 @@ class ApiServices {
 	// get all products of the single Brand
 	async getSingleBrandAllProducts(id: string | string[]): Promise<ProductResponse> {
 		return await fetch(`https://ecommerce.routemisr.com/api/v1/products?brand=${id}`, {
-			cache: "no-store",
+			cache: "force-cache",
 		}).then((res) => res.json());
 	}
 
@@ -152,7 +152,7 @@ class ApiServices {
 		}).then((res) => res.json())
 	}
 
-
+	// -------------------------------------------Wishlist--------------------------------------------------------------
 
 	// add to wishlist
 	async addToWishlist(productId: string): Promise<AddToWishListResponse> {

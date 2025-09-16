@@ -1,39 +1,69 @@
-import { Brand, Product } from "@/Interfaces"
-import EmptyBrands from "@/components/Brands/EmptyBrands"
-import ProductCard from "@/components/Product/ProductCard"
-import LoadingSpinner from "@/components/shared/LoadingSpinner"
-import { apiServices } from "@/services/api"
-import { ProductResponse } from "@/types"
-import { Suspense } from "react"
+// app/brands/[id]/page.tsx
+import { Brand, Product } from "@/Interfaces";
+import EmptyBrands from "@/components/Brands/EmptyBrands";
+import ProductCard from "@/components/Product/ProductCard";
+import { apiServices } from "@/services/api";
+import { ProductResponse } from "@/types";
+import { Metadata } from "next";
 
+
+export async function generateMetadata({
+	params,
+}: {
+	params: { id: string };
+}): Promise<Metadata> {
+	try {
+		const brandData = await apiServices.getSingleBrand(params.id);
+		const brand: Brand = brandData.data;
+
+		return {
+			title: `${brand.name} Products | MyShop`,
+			description: `Browse and shop the latest products from ${brand.name}.`,
+			openGraph: {
+				title: `${brand.name} Products | MyShop`,
+				description: `Discover top products from ${brand.name}.`,
+				url: `/brands/${params.id}`,
+			},
+			twitter: {
+				card: "summary_large_image",
+				title: `${brand.name} Products`,
+				description: `Discover top products from ${brand.name}.`,
+			},
+		};
+	} catch {
+		return {
+			title: "Brand Products",
+			description: "Browse products for this brand.",
+		};
+	}
+}
 
 
 export default async function BrandProductsPage({
 	params,
 }: {
-	params: Promise<{ id: string }>
+	params: { id: string };
 }) {
+	const id = params.id;
 
-	const param = await params
-	const id = param.id;
-	const data: ProductResponse = await apiServices.getSingleBrandAllProducts(id)
-	const products: Product[] = data.data
+	// Fetch products
+	const data: ProductResponse = await apiServices.getSingleBrandAllProducts(id);
+	const products: Product[] = data.data;
 
-
-	// Fetch single brand details
-
-	const brandData = await apiServices.getSingleBrand(id)
-	const brand: Brand = brandData.data
-
+	// Fetch brand details
+	const brandData = await apiServices.getSingleBrand(id);
+	const brand: Brand = brandData.data;
 
 	return (
-		<Suspense fallback={<LoadingSpinner />}><section className="container mx-auto px-6 py-8">
+		<section className="container mx-auto px-6 py-8">
 			{/* Header */}
 			<div className="mb-6">
 				<h1 className="text-3xl font-bold mb-2">{brand?.name} Products</h1>
-				{
-					products?.length > 0 && <p className="text-gray-600">Browse all products for this brand</p>
-				}
+				{products?.length > 0 && (
+					<p className="text-gray-600">
+						Browse all products for this brand
+					</p>
+				)}
 			</div>
 
 			{/* Products Grid */}
@@ -46,7 +76,6 @@ export default async function BrandProductsPage({
 			) : (
 				<EmptyBrands />
 			)}
-		</section></Suspense>
-
-	)
+		</section>
+	);
 }

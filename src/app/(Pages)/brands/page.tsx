@@ -1,18 +1,22 @@
-import LoadingSpinner from "@/components/shared/LoadingSpinner"
+
 import { Brand } from "@/Interfaces"
 import { apiServices } from "@/services/api"
 import { BrandResponse } from "@/types"
 import Image from "next/image"
 import Link from "next/link"
-import { Suspense } from "react"
 
+
+import { Metadata } from "next";
+export const metadata: Metadata = {
+	title: "Browse Brands",
+};
 export default async function BrandsPage() {
 
 	const data: BrandResponse = await apiServices.getAllBrands()
 	const brands: Brand[] = data.data
 
 	return (
-		<Suspense fallback={<LoadingSpinner />}><section className="container mx-auto px-6 py-8">
+		<section className="container mx-auto px-6 py-8">
 			{/* Header */}
 			<div className="mb-6">
 				<h1 className="text-4xl font-bold mb-2">Browse Brands</h1>
@@ -45,7 +49,7 @@ export default async function BrandsPage() {
 
 				))}
 			</div>
-		</section ></Suspense>
+		</section >
 
 	)
 }

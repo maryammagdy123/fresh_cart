@@ -1,22 +1,52 @@
 import { Category, Product } from "@/Interfaces"
-import EmptyBrands from "@/components/Brands/EmptyBrands"
+import EmptyCategory from "@/components/Category/EmptyCategory"
 import ProductCard from "@/components/Product/ProductCard"
-import LoadingSpinner from "@/components/shared/LoadingSpinner"
+
 import { apiServices } from "@/services/api"
 import { ProductResponse } from "@/types"
-import { Suspense } from "react"
+import { Metadata } from "next"
 
 
+export async function generateMetadata({
+	params,
+}: {
+	params: { categoryID: string };
+}): Promise<Metadata> {
+	try {
+		const CategoryData = await apiServices.getSingleCategory(params.categoryID);
+		const category: Category = CategoryData.data;
+
+		return {
+			title: `${category.name} Products | MyShop`,
+			description: `Browse and shop the latest products from ${category.name}.`,
+			openGraph: {
+				title: `${category.name} Products | MyShop`,
+				description: `Discover top products from ${category.name}.`,
+				url: `/brands/${params.categoryID}`,
+			},
+			twitter: {
+				card: "summary_large_image",
+				title: `${category.name} Products`,
+				description: `Discover top products from ${category.name}.`,
+			},
+		};
+	} catch {
+		return {
+			title: "Category Products",
+			description: "Browse products for this category.",
+		};
+	}
+}
 
 export default async function SingleCategoryProductsPage({
 	params,
 }: {
-	params: Promise<{ categoryID: string }>
+	params: { categoryID: string };
 }) {
 
-	const param = await params
+
 	// subcategory
-	const id = param.categoryID;
+	const id = params.categoryID;
 	const data: ProductResponse = await apiServices.getSingleCategoryAllProducts(id)
 	const products: Product[] = data.data
 
@@ -28,7 +58,8 @@ export default async function SingleCategoryProductsPage({
 
 
 	return (
-		<Suspense fallback={<LoadingSpinner />}><section className="container mx-auto px-6 py-8">
+
+		<section className="container mx-auto px-6 py-8">
 			{/* Header */}
 			<div className="mb-6">
 				<h1 className="text-3xl font-bold mb-2">{Category?.name} Products</h1>
@@ -45,9 +76,9 @@ export default async function SingleCategoryProductsPage({
 					))}
 				</div>
 			) : (
-				<EmptyBrands />
+				<EmptyCategory />
 			)}
-		</section></Suspense>
+		</section>
 
 	)
 }

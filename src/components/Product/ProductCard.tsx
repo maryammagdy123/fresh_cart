@@ -8,7 +8,7 @@ import { renderStars } from "@/helpers/rating"
 import Image from "next/image"
 
 import AddToCartBtn from "../Cart/AddToCartBtn"
-import { Heart } from "lucide-react"
+import { Heart, Loader2 } from "lucide-react"
 import { apiServices } from "@/services/api"
 import toast from "react-hot-toast"
 import { useEffect, useState } from "react"
@@ -27,42 +27,47 @@ interface ProductCardProps {
 export default function ProductCard({ viewMode = "grid", product }: ProductCardProps) {
 
 	const [isInWishlist, setIsInWishlist] = useState<boolean>(false);
+	const [isAddingToWishList, setIsAddingToWishList] = useState<boolean>(false);
 
 	async function handleToggleWishlist() {
 		try {
-			if (isInWishlist) {
+			setIsAddingToWishList(true);
 
-				const data = await apiServices.removeFromWishlist(product._id);
-				if (data.status === "success") {
-					setIsInWishlist(false);
-					toast.success("Removed from wishlist");
-				} else {
-					toast.error(data.message);
-				}
+			// 🟢 نحدد الـ action
+			const action = isInWishlist ? "removeFromWishlist" : "addToWishlist";
+			const successMsg = isInWishlist ? "Removed from wishlist" : "Added to wishlist";
+			const errorMsg = isInWishlist ? "Failed to remove from wishlist" : "Failed to add to wishlist";
+
+			// 🟢 نعمل call للـ API بطريقة ديناميكية
+			const data = await apiServices[action](product._id);
+
+			if (data.status === "success") {
+				setIsInWishlist(!isInWishlist); // ✅ نغير الحالة مرة واحدة
+				toast.success(successMsg);
 			} else {
-
-				const data = await apiServices.addToWishlist(product._id);
-				if (data.status === "success") {
-					setIsInWishlist(true);
-					toast.success("Added to wishlist");
-				} else {
-					toast.error(data.message);
-				}
+				toast.error(data.message || errorMsg);
 			}
 		} catch (err) {
-			toast.error("Something went wrong" + err);
+			console.error(err);
+			toast.error("Something went wrong");
+		} finally {
+			setIsAddingToWishList(false);
 		}
 	}
+
+	// ✅ التحقق من وجود المنتج في الـwishlist
 	useEffect(() => {
-		async function checkWishlistStatus() {
+		const checkWishlistStatus = async () => {
 			try {
 				const wishlist = await apiServices.getWishlist();
-				const exists = wishlist.data.some((item: Product) => item._id === product._id);
-				setIsInWishlist(exists);
+				setIsInWishlist(
+					wishlist.data.some((item: Product) => item._id === product._id)
+				);
 			} catch (err) {
 				console.error(err);
 			}
-		}
+		};
+
 		checkWishlistStatus();
 	}, [product._id]);
 
@@ -84,7 +89,9 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 						{/* action icons */}
 						<div className="absolute top-2 right-2 ">
 							<Button onClick={() => handleToggleWishlist()} className={`p-2 rounded-full shadow hover:bg-gray-100 transition bg-white`}>
-								<Heart className="h-5 w-5 text-red-500" fill={isInWishlist ? "red" : "none"} />
+								{
+									isAddingToWishList ? (<Loader2 className="animate-spin text-black" />) : <Heart className="h-5 w-5 text-red-500" fill={isInWishlist ? "red" : "none"} />
+								}
 							</Button>
 							{/* <Button className="p-2 bg-white rounded-full shadow hover:bg-gray-100 transition">
 								
