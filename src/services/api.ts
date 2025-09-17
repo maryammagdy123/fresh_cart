@@ -41,7 +41,7 @@ export async function getSingleProduct(id: string | string[]): Promise<SinglePro
 
 // get all brands
 export async function getAllBrands(): Promise<BrandResponse> {
-	return await fetch("${BASE_URL}v1/brands", {
+	return await fetch(`${BASE_URL}v1/brands`, {
 		cache: "force-cache",
 	})
 		.then((res) => res.json());
@@ -87,7 +87,7 @@ export async function getSingleCategoryAllProducts(id: string): Promise<ProductR
 // ------------------------------------Subcategories---------------------------------------------------
 // get all subcategories
 export async function getAllSubcategories(): Promise<SubcategoryResponse> {
-	return await fetch("${BASE_URL}v1/subcategories", {
+	return await fetch(`${BASE_URL}v1/subcategories`, {
 		cache: "force-cache",
 	})
 		.then((res) => res.json());
@@ -157,7 +157,7 @@ export async function clearCart(): Promise<ClearCartResponse> {
 
 // add to wishlist
 export async function addToWishlist(productId: string): Promise<AddToWishListResponse> {
-	const res = await fetch("${BASE_URL}v1/wishlist", {
+	const res = await fetch(`${BASE_URL}v1/wishlist`, {
 		method: "POST",
 		headers: getHeaders(),
 		body: JSON.stringify({ productId }),
@@ -187,7 +187,7 @@ export async function removeFromWishlist(productId: string): Promise<RemoveFromW
 export async function getWishlist(): Promise<WishListResponse> {
 	const res = await fetch(`${BASE_URL}v1/wishlist`, {
 		headers: getHeaders(),
-	});
+	})
 	const data: WishListResponse = await res.json();
 	return data;
 }
