@@ -220,11 +220,13 @@ export async function Login(values: LoginFormValues): Promise<AuthResponse> {
 	return data;
 }
 
+
+// --------------------------------------ForgotPassword--------------------------------------------------------------
 export async function forgetPassword(values: EmailFormValues): Promise<ForgetPasswordResponse> {
 	const res = await fetch(`${BASE_URL}v1/auth/forgotPasswords`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(values), // ✅ هنا
+		body: JSON.stringify(values),
 	});
 
 	const data: ForgetPasswordResponse = await res.json();
@@ -236,7 +238,7 @@ export async function verifyCode(values: CodeFormValues): Promise<CodeRes> {
 	const res = await fetch(`${BASE_URL}v1/auth/verifyResetCode`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(values), // ✅
+		body: JSON.stringify(values),
 	});
 
 	const data: CodeRes = await res.json();
@@ -248,7 +250,7 @@ export async function resetPassword(values: PasswordFormValues): Promise<NewPass
 	const res = await fetch(`${BASE_URL}v1/auth/resetPassword`, {
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(values), // ✅
+		body: JSON.stringify(values),
 	});
 
 	const data: NewPassword = await res.json();
