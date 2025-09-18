@@ -1,10 +1,12 @@
-
 "use server"
+
+
 import { LoginFormValues } from '@/app/(Pages)/login/page';
 import { RegisterFormValues } from '@/app/(Pages)/register/page';
-import { AuthRespons, AuthResponse } from '@/Interfaces';
+import { AuthResponse, CodeRes, ForgetPasswordResponse, NewPassword } from '@/Interfaces';
 import { AddToCartResponse, ClearCartResponse, GetCartResponse, UpdateCartItemResponse } from '@/Interfaces/cart';
 import { WishListResponse } from '@/Interfaces/wishlist';
+import { CodeFormValues, EmailFormValues, PasswordFormValues } from '@/schemas/forgetPassword';
 
 import { AddToWishListResponse, BrandResponse, CategoryResponse, ProductResponse, RemoveFromWishListResponse, SingleBrandResponse, SingleCategoryResponse, SingleProductResponse, SingleSubcategoryResponse, SubcategoryResponse } from "@/types";
 
@@ -206,7 +208,7 @@ export async function SignUp(values: RegisterFormValues): Promise<AuthResponse> 
 	const data: AuthResponse = await res.json();
 	return data;
 }
-// -------------------------------------Sign Up-----------------------------------------------
+// -------------------------------------Login Up-----------------------------------------------
 export async function Login(values: LoginFormValues): Promise<AuthResponse> {
 	const res = await fetch(`${BASE_URL}v1/auth/signin`, {
 		method: "POST",
@@ -215,5 +217,41 @@ export async function Login(values: LoginFormValues): Promise<AuthResponse> {
 	});
 
 	const data: AuthResponse = await res.json();
+	return data;
+}
+
+export async function forgetPassword(values: EmailFormValues): Promise<ForgetPasswordResponse> {
+	const res = await fetch(`${BASE_URL}v1/auth/forgotPasswords`, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(values), // ✅ هنا
+	});
+
+	const data: ForgetPasswordResponse = await res.json();
+	if (!res.ok) throw new Error(data?.message || "Request failed");
+	return data;
+}
+
+export async function verifyCode(values: CodeFormValues): Promise<CodeRes> {
+	const res = await fetch(`${BASE_URL}v1/auth/verifyResetCode`, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(values), // ✅
+	});
+
+	const data: CodeRes = await res.json();
+	if (!res.ok) throw new Error(data?.status || "Request failed");
+	return data;
+}
+
+export async function resetPassword(values: PasswordFormValues): Promise<NewPassword> {
+	const res = await fetch(`${BASE_URL}v1/auth/resetPassword`, {
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(values), // ✅
+	});
+
+	const data: NewPassword = await res.json();
+
 	return data;
 }

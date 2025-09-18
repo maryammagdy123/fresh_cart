@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Login } from "@/services/api";
+import Link from "next/link";
 
 const loginSchema = z.object({
 	email: z.string().email("Invalid email address"),
@@ -106,21 +107,21 @@ export default function LoginPage() {
 
 				{/* Footer */}
 				<div className="flex justify-between items-center mt-6 text-sm">
-					<a
-						href="/forgot-password"
+					<Link
+						href="/forgotpassword"
 						className="text-blue-600 hover:underline hover:text-blue-800"
 					>
 						Forgot Password?
-					</a>
+					</Link>
 
 					<p className="text-gray-500">
 						Don&apos;t have an account?{" "}
-						<a
+						<Link
 							href="/register"
 							className="text-blue-600 hover:underline hover:text-blue-800"
 						>
 							Sign up
-						</a>
+						</Link>
 					</p>
 				</div>
 			</div>

@@ -9,3 +9,16 @@ export interface User {
 	email: string;
 	role: "user" | "admin" | string;
 }
+
+export interface ForgetPasswordResponse {
+	statusMsg: string;
+	message: string;
+}
+
+export interface CodeRes {
+	status: string
+}
+
+export interface NewPassword {
+	token: string
+}
