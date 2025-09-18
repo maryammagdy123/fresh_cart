@@ -13,6 +13,7 @@ export type RemoveFromWishListResponse = UpdateWishListResponse;
 
 
 
+
 // get specific [product , category , brand]
 export type SingleProductResponse = {
 	data: Product;

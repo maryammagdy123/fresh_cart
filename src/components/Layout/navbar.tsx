@@ -45,8 +45,9 @@ export default function Navbar() {
 		},
 		{
 			href: "/orders",
-			label: "orders"
+			label: "Orders"
 		},
+
 	]
 
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -93,7 +94,9 @@ export default function Navbar() {
 					<div className="space-x-4 mx-4 flex items-center">
 						{/* user icon */}
 						<Button variant="ghost" size="icon">
-							<BiUser className="h-10 w-10" />
+							<Link href="/register">
+								<BiUser className="h-10 w-10" />
+							</Link>
 							<span className="sr-only">Account</span>
 						</Button>
 						{/* shoppingCart icon */}
