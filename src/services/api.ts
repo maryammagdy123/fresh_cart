@@ -1,5 +1,8 @@
 
 "use server"
+import { LoginFormValues } from '@/app/(Pages)/login/page';
+import { RegisterFormValues } from '@/app/(Pages)/register/page';
+import { AuthRespons, AuthResponse } from '@/Interfaces';
 import { AddToCartResponse, ClearCartResponse, GetCartResponse, UpdateCartItemResponse } from '@/Interfaces/cart';
 import { WishListResponse } from '@/Interfaces/wishlist';
 
@@ -191,6 +194,26 @@ export async function getWishlist(): Promise<WishListResponse> {
 	const data: WishListResponse = await res.json();
 	return data;
 }
-// export const apiServices = new ApiServices()
 
+// -------------------------------------Sign Up-----------------------------------------------
+export async function SignUp(values: RegisterFormValues): Promise<AuthResponse> {
+	const res = await fetch(`${BASE_URL}v1/auth/signup`, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(values),
+	});
 
+	const data: AuthResponse = await res.json();
+	return data;
+}
+// -------------------------------------Sign Up-----------------------------------------------
+export async function Login(values: LoginFormValues): Promise<AuthResponse> {
+	const res = await fetch(`${BASE_URL}v1/auth/signin`, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(values),
+	});
+
+	const data: AuthResponse = await res.json();
+	return data;
+}

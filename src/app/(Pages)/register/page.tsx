@@ -17,6 +17,8 @@ import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
 import { Input } from "@/components/ui/input";
 import { PasswordChecklist } from "@/components/Form/PasswordCheckList";
+import { SignUp } from "@/services/api";
+import { useRouter } from "next/navigation";
 
 const registerSchema = z
 	.object({
@@ -39,8 +41,7 @@ const registerSchema = z
 		path: ["confirmPassword"],
 	});
 
-type RegisterFormValues = z.infer<typeof registerSchema>;
-
+export type RegisterFormValues = z.infer<typeof registerSchema>;
 const inputs = [
 	{ name: "name", formLabel: "Name", inputType: "text" },
 	{ name: "email", formLabel: "Email", inputType: "email" },
@@ -48,6 +49,7 @@ const inputs = [
 ];
 
 export default function RegisterPage() {
+	const navigate = useRouter()
 	const form = useForm<RegisterFormValues>({
 		resolver: zodResolver(registerSchema),
 		defaultValues: {
@@ -59,9 +61,17 @@ export default function RegisterPage() {
 		},
 	});
 
-	const onSubmit = (values: RegisterFormValues) => {
-		toast.success("Registered successfully!");
-		console.log("Form Values:", values);
+	const onSubmit = async (values: RegisterFormValues) => {
+		const registerRes = await SignUp(values)
+		if (registerRes.message === "success") {
+			console.log(registerRes)
+			toast.success("Registered successfully!");
+			console.log("Form Values:", values);
+			form.reset()
+			navigate.push('/login')
+		} else {
+			toast.error(registerRes.message)
+		}
 	};
 
 	// Watch password
