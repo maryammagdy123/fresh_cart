@@ -17,6 +17,7 @@ import { usePathname } from "next/navigation";
 import { useContext, useState } from "react";
 import { cartContext } from "@/Context/CartContext";
 import { Loader2 } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 
 
@@ -52,6 +53,7 @@ export default function Navbar() {
 
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 	const pathname = usePathname()
+	const { data, status } = useSession()
 
 	return (
 		<>
@@ -93,23 +95,33 @@ export default function Navbar() {
 					{/* actions btns */}
 					<div className="space-x-4 mx-4 flex items-center">
 						{/* user icon */}
-						<Button variant="ghost" size="icon">
-							<Link href="/register">
-								<BiUser className="h-10 w-10" />
-							</Link>
-							<span className="sr-only">Account</span>
-						</Button>
-						{/* shoppingCart icon */}
-						<Button variant="ghost" size="icon" className="relative">
-							<BsCart3 className="h-10 w-10" />
-							{cartCount > 0 && <span
-								className="absolute -top-2 -right-2 bg-black text-white text-xs font-bold px-2 py-0.5 rounded-full"
-							>
-								{
-									isLoading ? <Loader2 className="animate-spin" /> : <span>{cartCount}</span>
-								}
-							</span>}
-						</Button>
+						{
+							status == "loading" ? (<Loader2 className="animate-spin" />) : (
+								status == "authenticated" ? (<>
+									<Button variant="ghost" size="icon">
+										<Link href="/register">
+											<BiUser className="h-10 w-10" />
+										</Link>
+										<span className="sr-only">Account</span>
+									</Button>
+									{/* shoppingCart icon */}
+									<Button variant="ghost" size="icon" className="relative">
+										<BsCart3 className="h-10 w-10" />
+										{cartCount > 0 && <span
+											className="absolute -top-2 -right-2 bg-black text-white text-xs font-bold px-2 py-0.5 rounded-full"
+										>
+											{
+												isLoading ? <Loader2 className="animate-spin" /> : <span>{cartCount}</span>
+											}
+										</span>}
+									</Button>
+								</>) : (
+									<Link href="/auth/login">
+										<span >Login</span>
+									</Link>
+
+								))
+						}
 						{/* mobile menu icon toggler */}
 						<Button variant="ghost" size="icon" className="lg:hidden" onClick={() => { setIsMobileMenuOpen(!isMobileMenuOpen) }}>
 							{

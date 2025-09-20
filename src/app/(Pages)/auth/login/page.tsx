@@ -12,10 +12,12 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { LoginFormValues, loginSchema } from "@/schemas/login";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 
 
@@ -27,6 +29,9 @@ const inputs = [
 
 export default function LoginPage() {
 	const router = useRouter();
+	const searchParams = useSearchParams()
+	const callabackUrl = searchParams.get("callabackUrl") || "/products"
+	const [isLogin, setIslogin] = useState(false)
 
 	const form = useForm<LoginFormValues>({
 		resolver: zodResolver(loginSchema),
@@ -37,6 +42,7 @@ export default function LoginPage() {
 	});
 
 	const onSubmit = async (values: LoginFormValues) => {
+		setIslogin(true)
 		try {
 			const response = await signIn("credentials", {
 				email: values.email,
@@ -45,11 +51,12 @@ export default function LoginPage() {
 			});
 			if (response?.ok) {
 				toast.success("Loged in successfully")
-				router.push("/products")
+				router.push(callabackUrl)
 			}
 		} catch (error) {
 			console.log(error)
 		}
+		setIslogin(false)
 	};
 
 	return (
@@ -92,8 +99,12 @@ export default function LoginPage() {
 
 						<Button
 							type="submit"
+							disabled={isLogin}
 							className="w-full mt-2  bg-black hover:bg-gray-800 text-white"
 						>
+							{
+								isLogin && (<Loader2 className="animate-spin" />)
+							}
 							Login
 						</Button>
 					</form>
@@ -111,7 +122,7 @@ export default function LoginPage() {
 					<p className="text-gray-500">
 						Don&apos;t have an account?{" "}
 						<Link
-							href="/register"
+							href="/auth/register"
 							className="text-blue-600 hover:underline hover:text-blue-800"
 						>
 							Sign up
