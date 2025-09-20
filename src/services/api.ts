@@ -219,6 +219,20 @@ export async function Login(values: LoginFormValues): Promise<AuthResponse> {
 	const data: AuthResponse = await res.json();
 	return data;
 }
+// -------------------------------------Login Up-----------------------------------------------
+export async function LoginNextAuth(email: string, password: string): Promise<AuthResponse> {
+	const res = await fetch(`${BASE_URL}v1/auth/signin`, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({
+			email,
+			password
+		}),
+	});
+
+	const data: AuthResponse = await res.json();
+	return data;
+}
 
 
 // --------------------------------------ForgotPassword--------------------------------------------------------------
