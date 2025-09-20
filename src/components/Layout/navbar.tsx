@@ -55,6 +55,7 @@ export default function Navbar() {
 	const pathname = usePathname()
 	const { data, status } = useSession()
 
+
 	return (
 		<>
 			<nav className="w-full border-b bg-white lg:sticky backdrop-blur-2xl top-0 left-0 z-50  shadow-sm">
