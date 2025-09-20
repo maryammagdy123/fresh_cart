@@ -1,12 +1,13 @@
 "use server"
 
 
-import { LoginFormValues } from '@/app/(Pages)/login/page';
-import { RegisterFormValues } from '@/app/(Pages)/register/page';
+
+import { RegisterFormValues } from '@/app/(Pages)/auth/register/page';
 import { AuthResponse, CodeRes, ForgetPasswordResponse, NewPassword } from '@/Interfaces';
 import { AddToCartResponse, ClearCartResponse, GetCartResponse, UpdateCartItemResponse } from '@/Interfaces/cart';
 import { WishListResponse } from '@/Interfaces/wishlist';
 import { CodeFormValues, EmailFormValues, PasswordFormValues } from '@/schemas/forgetPassword';
+
 
 import { AddToWishListResponse, BrandResponse, CategoryResponse, ProductResponse, RemoveFromWishListResponse, SingleBrandResponse, SingleCategoryResponse, SingleProductResponse, SingleSubcategoryResponse, SubcategoryResponse } from "@/types";
 
@@ -208,17 +209,17 @@ export async function SignUp(values: RegisterFormValues): Promise<AuthResponse> 
 	const data: AuthResponse = await res.json();
 	return data;
 }
-// -------------------------------------Login Up-----------------------------------------------
-export async function Login(values: LoginFormValues): Promise<AuthResponse> {
-	const res = await fetch(`${BASE_URL}v1/auth/signin`, {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(values),
-	});
+// // -------------------------------------Login Up-----------------------------------------------
+// export async function Login(values: LoginFormValues): Promise<AuthResponse> {
+// 	const res = await fetch(`${BASE_URL}v1/auth/signin`, {
+// 		method: "POST",
+// 		headers: { "Content-Type": "application/json" },
+// 		body: JSON.stringify(values),
+// 	});
 
-	const data: AuthResponse = await res.json();
-	return data;
-}
+// 	const data: AuthResponse = await res.json();
+// 	return data;
+// }
 // -------------------------------------Login Up-----------------------------------------------
 export async function LoginNextAuth(email: string, password: string): Promise<AuthResponse> {
 	const res = await fetch(`${BASE_URL}v1/auth/signin`, {

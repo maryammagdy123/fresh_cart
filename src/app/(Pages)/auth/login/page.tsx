@@ -1,9 +1,7 @@
 "use client";
-
+import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-
 import {
 	Form,
 	FormControl,
@@ -14,23 +12,13 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Login } from "@/services/api";
 import Link from "next/link";
+import { LoginFormValues, loginSchema } from "@/schemas/login";
+import toast from "react-hot-toast";
 
-const loginSchema = z.object({
-	email: z.string().email("Invalid email address"),
-	password: z
-		.string()
-		.min(8, "Password must be at least 8 characters")
-		.regex(/[A-Z]/, "Must include an uppercase letter")
-		.regex(/[a-z]/, "Must include a lowercase letter")
-		.regex(/\d/, "Must include a number")
-		.regex(/[!@#$%^&*]/, "Must include a special character"),
-});
 
-export type LoginFormValues = z.infer<typeof loginSchema>;
+
 
 const inputs = [
 	{ name: "email", formLabel: "Email", inputType: "email" },
@@ -39,6 +27,7 @@ const inputs = [
 
 export default function LoginPage() {
 	const router = useRouter();
+
 	const form = useForm<LoginFormValues>({
 		resolver: zodResolver(loginSchema),
 		defaultValues: {
@@ -48,13 +37,18 @@ export default function LoginPage() {
 	});
 
 	const onSubmit = async (values: LoginFormValues) => {
-		const loginRes = await Login(values);
-		if (loginRes.message === "success") {
-			toast.success("Logged in successfully!");
-			form.reset();
-			router.push("/");
-		} else {
-			toast.error(loginRes.message);
+		try {
+			const response = await signIn("credentials", {
+				email: values.email,
+				password: values.password,
+				redirect: false
+			});
+			if (response?.ok) {
+				toast.success("Loged in successfully")
+				router.push("/products")
+			}
+		} catch (error) {
+			console.log(error)
 		}
 	};
 
