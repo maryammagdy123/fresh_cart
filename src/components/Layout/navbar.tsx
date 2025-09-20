@@ -53,7 +53,7 @@ export default function Navbar() {
 
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 	const pathname = usePathname()
-	const { data, status } = useSession()
+	const { status } = useSession()
 
 
 	return (

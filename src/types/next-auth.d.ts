@@ -1,20 +1,26 @@
-import NextAuth, { DefaultSession } from "next-auth"
+import { DefaultSession } from "next-auth";
 
 declare module "next-auth" {
-	/**
-	 * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
-	 */
 	interface Session {
-		accessToken: string,
+		/** الـ Access Token الخاص بالـ API */
+		accessToken?: string; // 👈 خليه Optional علشان ما يطلعش Error قبل الـ Login
 		user: {
-			/** The user's postal address. */
-			role: string
-			address: string
-		} & DefaultSession["user"]
+			/** Role اليوزر */
+			role?: string;
+			/** أي فيلدز زيادة */
+			address?: string;
+		} & DefaultSession["user"];
 	}
 
 	interface User {
-		token: string
-		role: string
+		/** التوكن الراجع من الـ API */
+		token: string;
+		role: string;
+	}
+
+	interface JWT {
+		/** نضيف التوكن في الـ JWT عشان نقدر نمرره للـ Session */
+		token?: string;
+		role?: string;
 	}
 }

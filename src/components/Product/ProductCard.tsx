@@ -57,7 +57,7 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 			try {
 				const wishlist = await getWishlist();
 				setIsInWishlist(
-					wishlist.data.some((item: Product) => item._id === product._id)
+					wishlist.data?.some((item: Product) => item._id === product._id)
 				);
 			} catch (err) {
 				console.error(err);
@@ -84,7 +84,7 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 
 						{/* action icons */}
 						<div className="absolute top-2 right-2 ">
-							<Button onClick={() => handleToggleWishlist()} className={`p-2 rounded-full shadow hover:bg-gray-100 transition bg-white`}>
+							<Button id={product._id} onClick={() => handleToggleWishlist()} className={`p-2 rounded-full shadow hover:bg-gray-100 transition bg-white`}>
 								{
 									isAddingToWishList ? (<Loader2 className="animate-spin text-black" />) : <Heart className="h-5 w-5 text-red-500" fill={isInWishlist ? "red" : "none"} />
 								}

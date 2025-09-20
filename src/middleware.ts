@@ -7,8 +7,8 @@ export async function middleware(request: NextRequest) {
 	if (token?.token) {
 		NextResponse.next()
 	} else {
-		const LoginUrl = new URL(`auth/login`, request.url)
-		LoginUrl.searchParams.set(`callbackUrl`, request.nextUrl.pathname + request.nextUrl.search)
+		const LoginUrl = new URL("auth/login", request.url)
+		LoginUrl.searchParams.set("callbackUrl", request.nextUrl.pathname + request.nextUrl.search)
 		return NextResponse.redirect(LoginUrl)
 	}
 }
