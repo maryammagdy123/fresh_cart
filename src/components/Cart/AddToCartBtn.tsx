@@ -20,7 +20,7 @@ export default function AddToCartBtn({ productQuantity, productId }: AddToCartBt
 	async function handleAddToCart() {
 		setAddToCartLoader(true)
 		const data = await addToCart(productId)
-		if (data.status === 'success' && status === "authenticated") {
+		if (data.status === 'success' || status === "authenticated") {
 			toast.success(data.message)
 			setCartCount(data.numOfCartItems)
 		} else {

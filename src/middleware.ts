@@ -5,7 +5,7 @@ export async function middleware(request: NextRequest) {
 	const token = await getToken({ req: request });
 
 	if (token?.accessToken) {
-		return NextResponse.next(); 
+		return NextResponse.next();
 	}
 
 	const loginUrl = new URL("/auth/login", request.url); // 

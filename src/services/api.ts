@@ -28,8 +28,12 @@ export async function getHeaders() {
 // -----------------------------------------Products-----------------------------------------------------
 // get All Products
 export async function getAllProducts(page: number = 1): Promise<ProductResponse> {
-	return await fetch(`${BASE_URL}v1/products?page=${page}`,
-	).then((res) => res.json());
+	return await fetch(`${BASE_URL}v1/products?page=${page}`, {
+		// cache: "force-cache"
+		next: {
+			revalidate: 3600
+		}
+	}).then((res) => res.json());
 }
 
 // get single product Details
@@ -45,7 +49,9 @@ export async function getSingleProduct(id: string | string[]): Promise<SinglePro
 
 // get all brands
 export async function getAllBrands(): Promise<BrandResponse> {
-	return await fetch(`${BASE_URL}v1/brands`)
+	return await fetch(`${BASE_URL}v1/brands`, {
+		cache: "force-cache",
+	})
 		.then((res) => res.json());
 }
 
@@ -58,7 +64,9 @@ export async function getSingleBrandAllProducts(id: string | string[]): Promise<
 
 // get Single barnd
 export async function getSingleBrand(id: string | string[]): Promise<SingleBrandResponse> {
-	return await fetch(`${BASE_URL}v1/brands/${id}`).then((res) => res.json());
+	return await fetch(`${BASE_URL}v1/brands/${id}`, {
+		cache: "force-cache",
+	}).then((res) => res.json());
 }
 
 // --------------------------------Categories--------------------------------------------------------------
@@ -88,19 +96,26 @@ export async function getSingleCategoryAllProducts(id: string): Promise<ProductR
 // ------------------------------------Subcategories---------------------------------------------------
 // get all subcategories
 export async function getAllSubcategories(): Promise<SubcategoryResponse> {
-	return await fetch(`${BASE_URL}v1/subcategories`)
+	return await fetch(`${BASE_URL}v1/subcategories`, {
+		cache: "force-cache",
+	})
 		.then((res) => res.json());
 }
 
 // get spesific subcategory
 export async function getSingleSubcategory(id: string): Promise<SingleSubcategoryResponse> {
-	return await fetch(`${BASE_URL}v1/subcategories/${id}`).then((res) => res.json())
+	return await fetch(`${BASE_URL}v1/subcategories/${id}`, {
+		cache: "force-cache"
+	}).then((res) => res.json())
 }
 
 // get all products with specific subcategory
 export async function getSingleSubCategoryAllProducts(id: string): Promise<ProductResponse> {
 	const headers = await getHeaders();
-	const res = await fetch(`${BASE_URL}v1/products?category[in]=${encodeURIComponent(id)}`)
+	const res = await fetch(`${BASE_URL}v1/products?category[in]=${encodeURIComponent(id)}`, {
+		cache: "no-store",
+		headers
+	})
 	const data: ProductResponse = await res.json()
 	return data
 }

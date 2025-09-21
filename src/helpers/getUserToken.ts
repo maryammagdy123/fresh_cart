@@ -1,15 +1,16 @@
-"use server"
-import { decode } from "next-auth/jwt";
-import { cookies } from "next/headers";
 
-export async function getUserToken() {
 
-	const cookiesData = await cookies();
-	const encryptedToken =
+import { useSession } from "next-auth/react";
 
-		cookiesData.get("next-auth.session-token")?.value;
+export function useToken() {
 
-	const data = await decode({ token: encryptedToken, secret: process.env.NEXTAUTH_SECRET! })
-	return data?.accessToken;
-
+	const { data: session } = useSession();
+	const token = session?.accessToken
+	function getHeaders() {
+		return {
+			"Content-Type": "application/json",
+			token: token
+		};
+	}
+	return getHeaders()
 }

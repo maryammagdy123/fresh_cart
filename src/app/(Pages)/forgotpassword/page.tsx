@@ -54,7 +54,7 @@ export default function ForgotPassword() {
 			if (res.token) {
 				toast.success("Password reset");
 				console.log(res)
-				router.push("/login");
+				router.push("/auth/login");
 			} else {
 				console.log(res)
 			}

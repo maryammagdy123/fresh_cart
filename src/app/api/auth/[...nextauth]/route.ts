@@ -20,7 +20,7 @@ export const authOptions: NextAuthOptions = {
 
 				if (res.message === "success") {
 					return {
-						id: res.user.email, // لازم ID فريد
+						id: res.user.email,
 						name: res.user.name,
 						email: res.user.email,
 						role: res.user.role,
@@ -54,7 +54,7 @@ export const authOptions: NextAuthOptions = {
 	secret: process.env.NEXTAUTH_SECRET,
 };
 
-// 👇 مهم تصدّره علشان تقدر تستدعيه من getServerSession
+
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

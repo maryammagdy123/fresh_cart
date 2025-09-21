@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 
 export default function ProvidersContainer({ children }: { children: ReactNode }) {
 	return (
-		<SessionProvider>
+		<SessionProvider >
 			<Provider store={store}>
 				<WishlistContextProvider>
 					<CartContextProvider>
