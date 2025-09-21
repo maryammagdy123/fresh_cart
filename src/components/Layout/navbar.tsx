@@ -16,8 +16,8 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { usePathname } from "next/navigation";
 import { useContext, useState } from "react";
 import { cartContext } from "@/Context/CartContext";
-import { Loader2 } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { Loader2, LogOut } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
 
 
 
@@ -108,14 +108,27 @@ export default function Navbar() {
 									{/* shoppingCart icon */}
 									<Button variant="ghost" size="icon" className="relative">
 										<BsCart3 className="h-10 w-10" />
-										{cartCount > 0 && <span
-											className="absolute -top-2 -right-2 bg-black text-white text-xs font-bold px-2 py-0.5 rounded-full"
-										>
-											{
-												isLoading ? <Loader2 className="animate-spin" /> : <span>{cartCount}</span>
-											}
-										</span>}
+
+										{isLoading || cartCount > 0 ? (
+											<span
+												className="absolute -top-2 -right-2 bg-black text-white text-xs font-bold px-2 py-0.5 rounded-full flex items-center justify-center min-w-[20px] min-h-[20px]"
+											>
+												{isLoading ? (
+													<Loader2 className="animate-spin w-3 h-3" />
+												) : (
+													cartCount
+												)}
+											</span>
+										) : null}
 									</Button>
+
+
+									{/* logout */}
+									<Button variant="ghost" size="icon" className="relative" onClick={() => signOut({ callbackUrl: "/" })}>
+										<LogOut className="h-10 w-10" />
+
+									</Button>
+
 								</>) : (
 									<Link href="/auth/login">
 										<span >Login</span>

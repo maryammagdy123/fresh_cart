@@ -5,6 +5,7 @@ import { Loader2, ShoppingCart } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { addToCart } from '@/services/api'
 import { cartContext } from '@/Context/CartContext'
+import { useSession } from 'next-auth/react'
 interface AddToCartBtnProps {
 	productQuantity?: number | null
 	productId: string
@@ -14,13 +15,12 @@ interface AddToCartBtnProps {
 
 export default function AddToCartBtn({ productQuantity, productId }: AddToCartBtnProps) {
 	const [addToCartLoader, setAddToCartLoader] = useState(false)
+	const { status } = useSession()
 	const { setCartCount } = useContext(cartContext)
 	async function handleAddToCart() {
 		setAddToCartLoader(true)
 		const data = await addToCart(productId)
-		if (data.status ===
-			'success'
-		) {
+		if (data.status === 'success' && status === "authenticated") {
 			toast.success(data.message)
 			setCartCount(data.numOfCartItems)
 		} else {

@@ -53,7 +53,7 @@ export default function InnerWishList({ wishListProducts }: InnerWishListProps) 
 				<EmptyWishlist />
 			) : (
 				<ul className="space-y-4">
-					{wishlist.data.map((item) => (
+					{wishlist.data?.map((item) => (
 						<li
 							key={item._id}
 							className="

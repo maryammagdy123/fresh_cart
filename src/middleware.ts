@@ -1,19 +1,22 @@
-import { getToken } from 'next-auth/jwt'
-import { NextResponse, NextRequest } from 'next/server'
+import { getToken } from "next-auth/jwt";
+import { NextResponse, NextRequest } from "next/server";
 
-// This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
-	const token = await getToken({ req: request })
-	if (token?.token) {
-		NextResponse.next()
-	} else {
-		const LoginUrl = new URL("auth/login", request.url)
-		LoginUrl.searchParams.set("callbackUrl", request.nextUrl.pathname + request.nextUrl.search)
-		return NextResponse.redirect(LoginUrl)
-	}
-}
+	const token = await getToken({ req: request });
 
+	if (token?.accessToken) {
+		return NextResponse.next(); 
+	}
+
+	const loginUrl = new URL("/auth/login", request.url); // 
+	loginUrl.searchParams.set(
+		"callbackUrl",
+		request.nextUrl.pathname + request.nextUrl.search
+	);
+
+	return NextResponse.redirect(loginUrl);
+}
 
 export const config = {
-	matcher: ['/cart', '/orders'],
-}
+	matcher: ["/cart", "/orders", "/wishlist"],
+};

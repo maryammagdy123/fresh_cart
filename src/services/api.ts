@@ -1,5 +1,6 @@
 "use server"
 import { RegisterFormValues } from '@/app/(Pages)/auth/register/page';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 // import { authHeaders } from '@/helpers/authHeaders';
 import { AuthResponse, CodeRes, ForgetPasswordResponse, NewPassword } from '@/Interfaces';
 import { AddToCartResponse, ClearCartResponse, GetCartResponse, UpdateCartItemResponse } from '@/Interfaces/cart';
@@ -8,29 +9,27 @@ import { CodeFormValues, EmailFormValues, PasswordFormValues } from '@/schemas/f
 
 
 import { AddToWishListResponse, BrandResponse, CategoryResponse, ProductResponse, RemoveFromWishListResponse, SingleBrandResponse, SingleCategoryResponse, SingleProductResponse, SingleSubcategoryResponse, SubcategoryResponse } from "@/types";
+import { getServerSession } from 'next-auth';
 
 // -------------------BASE URL------------------------------
 const BASE_URL = process.env.NEXT_BASE_URL
 // -----------------------------headers and token-----------------------------------------------------
 
 // headers
-async function getHeaders() {
+export async function getHeaders() {
+	const session = await getServerSession(authOptions);
 
 	return {
 		"Content-Type": "application/json",
-		token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Y2M4YTg3OWRmNDU4OTQzODA3ZjM5NSIsIm5hbWUiOiJGYXJhaCBNYWdkeSBCb3Ryb3MgRmFyYWoiLCJyb2xlIjoidXNlciIsImlhdCI6MTc1ODQwNzM3MiwiZXhwIjoxNzY2MTgzMzcyfQ.eFbn2u8TA9_UuO5lfmJyBISuZrAO7yZy4KxeUmFQqoA"
-	}
+		token: session?.accessToken ?? "",
+	};
 }
 
 // -----------------------------------------Products-----------------------------------------------------
 // get All Products
 export async function getAllProducts(page: number = 1): Promise<ProductResponse> {
-	return await fetch(`${BASE_URL}v1/products?page=${page}`, {
-		// cache: "force-cache"
-		next: {
-			revalidate: 3600
-		}
-	}).then((res) => res.json());
+	return await fetch(`${BASE_URL}v1/products?page=${page}`,
+	).then((res) => res.json());
 }
 
 // get single product Details
@@ -46,9 +45,7 @@ export async function getSingleProduct(id: string | string[]): Promise<SinglePro
 
 // get all brands
 export async function getAllBrands(): Promise<BrandResponse> {
-	return await fetch(`${BASE_URL}v1/brands`, {
-		cache: "force-cache",
-	})
+	return await fetch(`${BASE_URL}v1/brands`)
 		.then((res) => res.json());
 }
 
@@ -61,9 +58,7 @@ export async function getSingleBrandAllProducts(id: string | string[]): Promise<
 
 // get Single barnd
 export async function getSingleBrand(id: string | string[]): Promise<SingleBrandResponse> {
-	return await fetch(`${BASE_URL}v1/brands/${id}`, {
-		cache: "force-cache",
-	}).then((res) => res.json());
+	return await fetch(`${BASE_URL}v1/brands/${id}`).then((res) => res.json());
 }
 
 // --------------------------------Categories--------------------------------------------------------------
@@ -84,35 +79,28 @@ export async function getSingleCategory(id: string): Promise<SingleCategoryRespo
 }
 // get all products with specific category
 export async function getSingleCategoryAllProducts(id: string): Promise<ProductResponse> {
-
+	const headers = await getHeaders();
 	return await fetch(`${BASE_URL}v1/products?category[in]=${id}`, {
-		headers: getHeaders()
+		headers
 	}).then((res) => res.json())
 }
 
 // ------------------------------------Subcategories---------------------------------------------------
 // get all subcategories
 export async function getAllSubcategories(): Promise<SubcategoryResponse> {
-	return await fetch(`${BASE_URL}v1/subcategories`, {
-		cache: "force-cache",
-	})
+	return await fetch(`${BASE_URL}v1/subcategories`)
 		.then((res) => res.json());
 }
 
 // get spesific subcategory
 export async function getSingleSubcategory(id: string): Promise<SingleSubcategoryResponse> {
-	return await fetch(`${BASE_URL}v1/subcategories/${id}`, {
-		cache: "force-cache"
-	}).then((res) => res.json())
+	return await fetch(`${BASE_URL}v1/subcategories/${id}`).then((res) => res.json())
 }
 
 // get all products with specific subcategory
 export async function getSingleSubCategoryAllProducts(id: string): Promise<ProductResponse> {
-
-	const res = await fetch(`${BASE_URL}v1/products?category[in]=${encodeURIComponent(id)}`, {
-		cache: "no-store",
-		headers: getHeaders()
-	})
+	const headers = await getHeaders();
+	const res = await fetch(`${BASE_URL}v1/products?category[in]=${encodeURIComponent(id)}`)
 	const data: ProductResponse = await res.json()
 	return data
 }
@@ -123,29 +111,30 @@ export async function getSingleSubCategoryAllProducts(id: string): Promise<Produ
 // ---------------------------------------Cart-------------------------------------------
 // add products to cart
 export async function addToCart(productId: string | string[]): Promise<AddToCartResponse> {
-
+	const headers = await getHeaders();
 	return await fetch(`${BASE_URL}v1/cart`, {
 		method: 'post',
 		body: JSON.stringify({ productId }),
-		headers: getHeaders()
+		headers
 	}).then((res) => res.json());
 
 }
 
 // get user cart
 export async function getUserCart(): Promise<GetCartResponse> {
+	const headers = await getHeaders();
 	return await fetch(`${BASE_URL}v1/cart`, {
-		headers: getHeaders()
+		headers
 	}).then((res) => res.json())
 
 }
 
 // delete specific cart item
 export async function deleteCartItem(productId: string): Promise<UpdateCartItemResponse> {
-
+	const headers = await getHeaders();
 	return await fetch(`${BASE_URL}v1/cart/${productId}`, {
 		method: 'delete',
-		headers: getHeaders()
+		headers
 	}).then((res) => res.json())
 
 }
@@ -153,20 +142,21 @@ export async function deleteCartItem(productId: string): Promise<UpdateCartItemR
 // update cart product quantity
 
 export async function updateCartProductQuantity(productId: string, count: number): Promise<UpdateCartItemResponse> {
-
+	const headers = await getHeaders();
 	return await fetch(`${BASE_URL}v1/cart/${productId}`, {
+
 		method: `put`,
 		body: JSON.stringify({ count }),
-		headers: getHeaders()
+		headers
 	}).then((res) => res.json())
 
 }
 // clear cart
 export async function clearCart(): Promise<ClearCartResponse> {
-
+	const headers = await getHeaders();
 	return await fetch(`${BASE_URL}v1/cart`, {
 		method: `delete`,
-		headers: getHeaders()
+		headers
 	}).then((res) => res.json())
 
 }
@@ -175,10 +165,10 @@ export async function clearCart(): Promise<ClearCartResponse> {
 
 // add to wishlist
 export async function addToWishlist(productId: string): Promise<AddToWishListResponse> {
-
+	const headers = await getHeaders();
 	const res = await fetch(`${BASE_URL}v1/wishlist`, {
 		method: "POST",
-		headers: getHeaders(),
+		headers,
 		body: JSON.stringify({ productId }),
 	});
 
@@ -190,10 +180,10 @@ export async function addToWishlist(productId: string): Promise<AddToWishListRes
 
 // remove from wishlist
 export async function removeFromWishlist(productId: string): Promise<RemoveFromWishListResponse> {
-
+	const headers = await getHeaders();
 	const res = await fetch(`${BASE_URL}v1/wishlist/${productId}`, {
 		method: "DELETE",
-		headers: getHeaders(),
+		headers,
 		body: JSON.stringify({ productId }),
 	});
 
@@ -205,9 +195,9 @@ export async function removeFromWishlist(productId: string): Promise<RemoveFromW
 // get wishlist
 
 export async function getWishlist(): Promise<WishListResponse> {
-
+	const headers = await getHeaders();
 	const res = await fetch(`${BASE_URL}v1/wishlist`, {
-		headers: getHeaders()
+		headers
 	})
 	const data: WishListResponse = await res.json();
 	return data;
