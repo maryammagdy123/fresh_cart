@@ -40,14 +40,13 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 			if (data.status === "success") {
 				setIsInWishlist(!isInWishlist);
 				toast.success(successMsg);
+				setIsAddingToWishList(false);
 			} else {
 				toast.error(data.message || errorMsg);
 			}
 		} catch (err) {
 			console.error(err);
 			toast.error("Something went wrong");
-		} finally {
-			setIsAddingToWishList(false);
 		}
 	}
 

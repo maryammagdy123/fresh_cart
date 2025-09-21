@@ -23,11 +23,12 @@ export default function AddToCartBtn({ productQuantity, productId }: AddToCartBt
 		if (data.status === 'success' || status === "authenticated") {
 			toast.success(data.message)
 			setCartCount(data.numOfCartItems)
+			setAddToCartLoader(false)
 		} else {
 			toast.error(data.message)
 		}
 
-		setAddToCartLoader(false)
+
 	}
 	return (
 		<Button onClick={handleAddToCart} disabled={addToCartLoader || productQuantity == 0} >
