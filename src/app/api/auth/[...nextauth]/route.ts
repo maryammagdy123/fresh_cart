@@ -41,15 +41,18 @@ export const authOptions: NextAuthOptions = {
 			if (user) {
 				token.accessToken = user.token;
 				token.role = user.role;
+				token.id = user.id;
 			}
 			return token;
 		},
 		async session({ session, token }) {
 			session.user.role = token.role as string;
 			session.accessToken = token.accessToken as string;
+			session.user.id = token.id as string;
 			return session;
 		},
 	},
+
 
 	secret: process.env.NEXTAUTH_SECRET,
 };

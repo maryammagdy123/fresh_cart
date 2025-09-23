@@ -1,15 +1,14 @@
 "use server"
 import { RegisterFormValues } from '@/app/(Pages)/auth/register/page';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { getToken } from '@/helpers/getUserToken';
 // import { authHeaders } from '@/helpers/authHeaders';
 import { AuthResponse, CodeRes, ForgetPasswordResponse, NewPassword } from '@/Interfaces';
 import { AddToCartResponse, ClearCartResponse, GetCartResponse, UpdateCartItemResponse } from '@/Interfaces/cart';
+import { ShippingAddress, UserOrderResponse } from '@/Interfaces/order';
 import { WishListResponse } from '@/Interfaces/wishlist';
 import { CodeFormValues, EmailFormValues, PasswordFormValues } from '@/schemas/forgetPassword';
-
-
 import { AddToWishListResponse, BrandResponse, CategoryResponse, ProductResponse, RemoveFromWishListResponse, SingleBrandResponse, SingleCategoryResponse, SingleProductResponse, SingleSubcategoryResponse, SubcategoryResponse } from "@/types";
-import { getServerSession } from 'next-auth';
+
 
 // -------------------BASE URL------------------------------
 const BASE_URL = process.env.NEXT_BASE_URL
@@ -17,11 +16,10 @@ const BASE_URL = process.env.NEXT_BASE_URL
 
 // headers
 export async function getHeaders() {
-	const session = await getServerSession(authOptions);
-
+	const Token = await getToken();
 	return {
 		"Content-Type": "application/json",
-		token: session?.accessToken ?? "",
+		token: Token
 	};
 }
 
@@ -291,4 +289,21 @@ export async function resetPassword(values: PasswordFormValues): Promise<NewPass
 	const data: NewPassword = await res.json();
 
 	return data;
+}
+
+// ----------------------------------------Get user orders -------------------------------------
+export async function getUserOrders(userID: string | null): Promise<UserOrderResponse> {
+	const res = await fetch(`${BASE_URL}v1/orders/user/${userID}`);
+	const ordersRes: UserOrderResponse = await res.json()
+	return ordersRes
+}
+
+// ----------------------------------------Order Checkout---------------------------------------------
+export async function checkoutOrder(cartID: string, values: ShippingAddress) {
+	const headers = await getHeaders();
+	const res = await fetch(`${BASE_URL}v1/orders/checkout-session/${cartID}?url=${process.env.NEXTAUTH_URL}`, {
+		method: "POST",
+		body: JSON.stringify(values),
+		headers
+	}).then((res) => res.json())
 }

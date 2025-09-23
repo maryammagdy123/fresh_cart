@@ -21,7 +21,9 @@ import { signOut, useSession } from "next-auth/react";
 
 
 
+
 export default function Navbar() {
+
 	const { cartCount, isLoading } = useContext(cartContext)
 	const links: { href: string, label: string }[] = [
 		{
@@ -45,7 +47,7 @@ export default function Navbar() {
 			label: "Wishlist"
 		},
 		{
-			href: "/orders",
+			href: "/allorders",
 			label: "Orders"
 		},
 
@@ -53,7 +55,8 @@ export default function Navbar() {
 
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 	const pathname = usePathname()
-	const { status } = useSession()
+	const { status, data } = useSession()
+
 
 
 	return (
@@ -103,8 +106,10 @@ export default function Navbar() {
 										<Link href="/register">
 											<BiUser className="h-10 w-10" />
 										</Link>
-										<span className="sr-only">Account</span>
+
 									</Button>
+									<span className="mx-3">Hello,{data.user.name?.slice(0, 5)}</span>
+
 									{/* shoppingCart icon */}
 									<Button variant="ghost" size="icon" className="relative">
 										<BsCart3 className="h-10 w-10" />

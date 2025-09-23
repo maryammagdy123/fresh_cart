@@ -1,18 +1,18 @@
-"use client";
-import { useSession } from "next-auth/react";
+// "use client";
+// import { useSession } from "next-auth/react";
 
-export function useUserToken() {
+// export function useUserToken() {
 
-	const { data: session, status } = useSession();
+// 	const { data: session, status } = useSession();
 
-	const getHeaders = () => {
-		if (status !== "authenticated") return { "Content-Type": "application/json" };
+// 	const getHeaders = () => {
+// 		if (status !== "authenticated") return { "Content-Type": "application/json" };
 
-		return {
-			"Content-Type": "application/json",
-			Authorization: session.accessToken,
-		};
-	};
+// 		return {
+// 			"Content-Type": "application/json",
+// 			Authorization: session.accessToken,
+// 		};
+// 	};
 
-	return getHeaders;
-}
+// 	return getHeaders;
+// }

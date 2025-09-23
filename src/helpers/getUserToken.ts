@@ -1,16 +1,35 @@
+import { cookies } from "next/headers";
+import { decode } from "next-auth/jwt";
+import jwt from "jsonwebtoken";
 
+export async function getToken() {
+	const cookieStore = cookies();
 
-import { useSession } from "next-auth/react";
+	const raw = (await cookieStore).get("__Secure-next-auth.session-token")?.value
+		?? (await cookieStore).get("next-auth.session-token")?.value;
 
-export function useToken() {
+	if (!raw) return null;
 
-	const { data: session } = useSession();
-	const token = session?.accessToken
-	function getHeaders() {
-		return {
-			"Content-Type": "application/json",
-			token: token
-		};
-	}
-	return getHeaders()
+	const decoded = await decode({
+		token: raw,
+		secret: process.env.NEXTAUTH_SECRET!,
+	});
+	return decoded?.accessToken ?? null;
 }
+
+export async function userId() {
+
+
+	const decoded = await getToken()
+
+	if (decoded && typeof decoded === "string") {
+		const inner = jwt.decode(decoded) as { id?: string };
+		console.log(inner)
+		return inner?.id ?? null;
+
+	}
+
+	return null;
+}
+
+

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from '../ui/button'
 import { GetCartResponse } from '@/Interfaces'
+import Link from 'next/link'
 interface CartSummaryProps {
 	cart: GetCartResponse
 }
@@ -20,8 +21,10 @@ export default function CartSummary({ cart }: CartSummaryProps) {
 				<span>Total</span>
 				<span>${cart.data.totalCartPrice}</span>
 			</div>
-			<Button variant={'outline'} className="w-full mt-6">Checkout</Button>
+			<Button variant={'outline'} className="w-full mt-6">
+				<Link className=' text-black' href={`/ckeckout/` + cart.cartId}>Order checkout</Link>
+			</Button>
 			<Button className="w-full mt-6">continue shopping</Button>
-		</aside>
+		</aside >
 	)
 }
