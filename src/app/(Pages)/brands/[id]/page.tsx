@@ -12,7 +12,9 @@ export async function generateMetadata({
 	params: Promise<{ id: string }>;
 }): Promise<Metadata> {
 	try {
-		const brandData = await getSingleBrand(params.id);
+		const param = await params
+		const barndID = param.id
+		const brandData = await getSingleBrand(barndID);
 		const brand: Brand = brandData.data;
 
 		return {
