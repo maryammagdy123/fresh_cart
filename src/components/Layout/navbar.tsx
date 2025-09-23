@@ -131,13 +131,19 @@ export default function Navbar() {
 									{/* logout */}
 									<Button variant="ghost" size="icon" className="relative" onClick={() => signOut({ callbackUrl: "/" })}>
 										<LogOut className="h-10 w-10" />
-
 									</Button>
 
 								</>) : (
-									<Link href="/auth/login">
-										<span >Login</span>
-									</Link>
+
+									<>
+										<Link href="/auth/login">
+											<span >Login</span>
+										</Link>
+										<Link href="/auth/register">
+											<span >Register</span>
+										</Link>
+
+									</>
 
 								))
 						}
