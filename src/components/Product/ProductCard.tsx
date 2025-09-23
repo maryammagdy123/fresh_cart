@@ -74,7 +74,7 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 				<div className="relative border rounded-2xl shadow-md p-4 flex flex-col justify-between hover:shadow-lg transition  h-full">
 					{/* product image */}
 					<div className="relative w-full h-48 mb-4 bg-gray-100 rounded-lg ">
-						<Image src={product.imageCover}
+						<Image src={product.imageCover ?? ""}
 							alt={product.title}
 							fill
 							className="object-cover rounded-lg group-hover:scale-105 transition-transform duration-300 h-full"

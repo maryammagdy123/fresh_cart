@@ -2,13 +2,13 @@
 import { Loader2, Minus, Plus, Trash2 } from 'lucide-react'
 import React, { useState } from 'react'
 import { Button } from '../ui/button'
-import { CartProduct, Product } from '@/Interfaces/cart'
+import { CartProduct, ProductCart } from '@/Interfaces/cart'
 import Image from 'next/image'
 
 
 
 interface CartListProps {
-	cartItem: CartProduct<Product>
+	cartItem: CartProduct<ProductCart>
 	handleDeleteCartItem: (productId: string, setIsDelete: (value: boolean) => void) => void
 	handleUpdate: (productId: string, count: number) => void
 	handleClearCart: (setIsDelete: (value: boolean) => void) => void

@@ -1,4 +1,4 @@
-import { CartProduct, Product } from "./cart";
+import { CartProduct, ProductCart } from "./cart";
 
 export interface UserOrderResponse {
 	_id: string;
@@ -10,7 +10,7 @@ export interface UserOrderResponse {
 	isPaid: boolean;
 	isDelivered: boolean;
 	user: OrderUser;
-	cartItems: CartProduct<Product>[];
+	cartItems: CartProduct<ProductCart>[];
 	createdAt: string;
 	updatedAt: string;
 	id: number;

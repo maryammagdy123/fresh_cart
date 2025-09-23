@@ -24,7 +24,7 @@ export interface GetCartResponse {
 	message: string,
 	numOfCartItems: number,
 	cartId: string,
-	data: CartData<Product>,
+	data: CartData<ProductCart>,
 }
 
 // product[] - string 
@@ -46,7 +46,7 @@ export interface CartProduct<T> {
 	price: number,
 }
 
-export interface Product {
+export interface ProductCart {
 	subcategory: Subcategory[];
 	_id: string,
 	id?: string,
