@@ -13,9 +13,8 @@ interface CodeStepProps {
 	loading: boolean;
 }
 
-/**
- * 🟠 الخطوة الثانية: إدخال كود التحقق
- */
+
+
 export default function CodeStep({ onSubmit, onBack, loading }: CodeStepProps) {
 	const form = useForm<CodeFormValues>({
 		resolver: zodResolver(codeSchema),

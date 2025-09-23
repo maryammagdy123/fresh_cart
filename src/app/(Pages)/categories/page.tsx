@@ -1,10 +1,7 @@
-import BrowsCategory from "@/components/Category/BrowsCategory";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
-import { Button } from "@/components/ui/button";
 import { Category } from "@/Interfaces";
 import { getAllCategories } from "@/services/api";
 import { CategoryResponse } from "@/types";
-import { Grid2x2 } from "lucide-react";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
