@@ -105,8 +105,6 @@ export default function Navbar() {
 
 
 
-									<span className="mx-3">Hello,{data.user.name?.slice(0, 5)}</span>
-
 									{/* shoppingCart icon */}
 									<Button variant="ghost" size="icon" className="relative">
 										<BsCart3 className="h-10 w-10" />
