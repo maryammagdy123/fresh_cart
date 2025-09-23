@@ -19,7 +19,7 @@ export async function getHeaders() {
 	const Token = await getToken();
 	return {
 		"Content-Type": "application/json",
-		token: Token
+		token: Token as string
 	};
 }
 
