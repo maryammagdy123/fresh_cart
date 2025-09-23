@@ -2,7 +2,8 @@
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import { Suspense } from "react";
 import Link from "next/link";
-import LoginForm from "@/components/Form/loginForm";
+import LoginForm from "@/components/Form/LoginForm";
+
 
 
 

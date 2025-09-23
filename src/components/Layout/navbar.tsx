@@ -102,12 +102,9 @@ export default function Navbar() {
 						{
 							status == "loading" ? (<Loader2 className="animate-spin" />) : (
 								status == "authenticated" ? (<>
-									<Button variant="ghost" size="icon">
-										<Link href="/register">
-											<BiUser className="h-10 w-10" />
-										</Link>
 
-									</Button>
+
+
 									<span className="mx-3">Hello,{data.user.name?.slice(0, 5)}</span>
 
 									{/* shoppingCart icon */}
@@ -162,27 +159,29 @@ export default function Navbar() {
 			</nav >
 
 			{/* Mobile NavigationMenu */}
-			{isMobileMenuOpen && (
-				<div className="lg:hidden border-t bg-background absolute shadow-md w-full z-[10000]">
-					<div className="flex flex-col space-y-4 p-4 ">
-						{links.map((link) => {
-							const isActive = pathname.startsWith(link.href)
-							return (
-								<Link
-									key={link.href}
-									href={link.href}
-									className={`${isActive
-										? "text-blue-600 font-semibold border-b-2 border-blue-600"
-										: "text-gray-700 hover:text-blue-600"
-										} transition-colors text-lg`}
-								>
-									{link.label}
-								</Link>
-							)
-						})}
+			{
+				isMobileMenuOpen && (
+					<div className="lg:hidden border-t bg-background absolute shadow-md w-full z-[10000]">
+						<div className="flex flex-col space-y-4 p-4 ">
+							{links.map((link) => {
+								const isActive = pathname.startsWith(link.href)
+								return (
+									<Link
+										key={link.href}
+										href={link.href}
+										className={`${isActive
+											? "text-blue-600 font-semibold border-b-2 border-blue-600"
+											: "text-gray-700 hover:text-blue-600"
+											} transition-colors text-lg`}
+									>
+										{link.label}
+									</Link>
+								)
+							})}
+						</div>
 					</div>
-				</div>
-			)}
+				)
+			}
 		</>
 
 	)
