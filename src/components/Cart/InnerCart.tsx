@@ -18,6 +18,7 @@ export default function InnerCart({ cartData }: InnerCartProps) {
 	const [isDelete, setIsDelete] = useState(false)
 	const { setCartCount } = useContext(cartContext)
 
+
 	useEffect(() => {
 		setCartCount(cart.numOfCartItems)
 	}, [cart])

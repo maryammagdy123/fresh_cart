@@ -22,7 +22,7 @@ export default function CartSummary({ cart }: CartSummaryProps) {
 				<span>${cart.data.totalCartPrice}</span>
 			</div>
 			<Button variant={'outline'} className="w-full mt-6">
-				<Link className=' text-black' href={`/ckeckout/` + cart.cartId}>Order checkout</Link>
+				<Link className=' text-black' href={`/checkout/${cart.data._id}`}>Order checkout</Link>
 			</Button>
 			<Button className="w-full mt-6">continue shopping</Button>
 		</aside >

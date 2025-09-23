@@ -17,6 +17,16 @@ export interface UserOrderResponse {
 	__v: number;
 }
 
+
+export interface CheckoutOrderRes {
+	status: string;
+	session: {
+		url: string
+		success_url: string,
+		cancel_url: string
+	}
+}
+
 export interface ShippingAddress {
 	details: string;
 	phone: string;

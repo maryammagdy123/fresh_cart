@@ -2,6 +2,7 @@ import { UpdateWishListResponse } from '@/Interfaces/wishlist';
 import { Subcategory } from './../Interfaces/category';
 
 import { ApiResponse, Brand, Category, Product } from '@/Interfaces';
+import { UserOrderResponse } from '@/Interfaces/order';
 
 
 export type ProductResponse = ApiResponse<Product>
@@ -11,7 +12,7 @@ export type SubcategoryResponse = ApiResponse<Subcategory>
 export type AddToWishListResponse = UpdateWishListResponse;
 export type RemoveFromWishListResponse = UpdateWishListResponse;
 
-
+export type UserOrdersResponse = UserOrderResponse[]
 
 
 // get specific [product , category , brand]

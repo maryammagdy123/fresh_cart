@@ -4,8 +4,9 @@ import { getToken } from '@/helpers/getUserToken';
 // import { authHeaders } from '@/helpers/authHeaders';
 import { AuthResponse, CodeRes, ForgetPasswordResponse, NewPassword } from '@/Interfaces';
 import { AddToCartResponse, ClearCartResponse, GetCartResponse, UpdateCartItemResponse } from '@/Interfaces/cart';
-import { ShippingAddress, UserOrderResponse } from '@/Interfaces/order';
+import { CheckoutOrderRes, UserOrderResponse } from '@/Interfaces/order';
 import { WishListResponse } from '@/Interfaces/wishlist';
+import { CheckoutFormValues } from '@/schemas/checkout';
 import { CodeFormValues, EmailFormValues, PasswordFormValues } from '@/schemas/forgetPassword';
 import { AddToWishListResponse, BrandResponse, CategoryResponse, ProductResponse, RemoveFromWishListResponse, SingleBrandResponse, SingleCategoryResponse, SingleProductResponse, SingleSubcategoryResponse, SubcategoryResponse } from "@/types";
 
@@ -292,18 +293,21 @@ export async function resetPassword(values: PasswordFormValues): Promise<NewPass
 }
 
 // ----------------------------------------Get user orders -------------------------------------
-export async function getUserOrders(userID: string | null): Promise<UserOrderResponse> {
+export async function getUserOrders(userID: string | null): Promise<UserOrderResponse[]> {
 	const res = await fetch(`${BASE_URL}v1/orders/user/${userID}`);
-	const ordersRes: UserOrderResponse = await res.json()
-	return ordersRes
+	const ordersRes: UserOrderResponse[] = await res.json();
+	return ordersRes;
 }
 
+
 // ----------------------------------------Order Checkout---------------------------------------------
-export async function checkoutOrder(cartID: string, values: ShippingAddress) {
+export async function checkoutOrder(cartID: string, values: CheckoutFormValues): Promise<CheckoutOrderRes> {
 	const headers = await getHeaders();
-	const res = await fetch(`${BASE_URL}v1/orders/checkout-session/${cartID}?url=${process.env.NEXTAUTH_URL}`, {
+	const res = await fetch(`${BASE_URL}v1/orders/checkout-session/${cartID}?url=${process.env.NEXTAUTHURL}`, {
 		method: "POST",
 		body: JSON.stringify(values),
 		headers
-	}).then((res) => res.json())
+	})
+	const checkoutRes: CheckoutOrderRes = await res.json()
+	return checkoutRes
 }
