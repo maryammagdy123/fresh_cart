@@ -38,10 +38,7 @@ export default function Navbar() {
 			href: "/categories",
 			label: "Categories"
 		},
-		{
-			href: "/cart",
-			label: "Cart"
-		},
+
 		{
 			href: "/wishlist",
 			label: "Wishlist"
@@ -107,7 +104,7 @@ export default function Navbar() {
 
 									{/* shoppingCart icon */}
 									<Button variant="ghost" size="icon" className="relative">
-										<BsCart3 className="h-10 w-10" />
+										<Link href="/cart">		<BsCart3 className="h-10 w-10" /></Link>
 
 										{isLoading || cartCount > 0 ? (
 											<span
