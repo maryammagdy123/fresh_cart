@@ -2,6 +2,7 @@
 import { Product } from "@/Interfaces"
 import ProductGridContainer from "@/components/Product/ProductGridContainer"
 import LoadingSpinner from "@/components/shared/LoadingSpinner"
+import { Form } from "@/components/ui/form"
 import { getAllProducts } from "@/services/api"
 import { ProductResponse } from "@/types"
 import { Metadata } from "next"
@@ -17,16 +18,22 @@ export const metadata: Metadata = {
 export default async function ProductsPage({
 	searchParams,
 }: {
-	searchParams: Promise<{ page?: string }>
+	searchParams?: { page?: string, search?: string }
 }) {
 
-	const params = await searchParams
+	const params = searchParams
 	const page = Number(params?.page) || 1
-	const data: ProductResponse = await getAllProducts(page)
-	const products: Product[] = data.data
-	const totalPages = data.metadata.numberOfPages
+	const productBySearch = params?.search
+	const res: ProductResponse = await getAllProducts(page, productBySearch)
+	const products: Product[] = res.data
+	const totalPages = res.metadata.numberOfPages
 	return (
 		<Suspense fallback={<LoadingSpinner />}>
+
+			<form action="/products" className="mb-6 flex justify-center" >
+				<input type="text" name="fields" defaultValue={productBySearch} placeholder="Search products..." className="border px-4 py-2 rounded-l-md" />
+				<button type="submit" className="bg-black text-white px-4 py-2 rounded-r-md hover:bg-gray-800" > Search </button>
+			</form>
 			<>
 				<ProductGridContainer products={products} />
 				{/* Pagination */}
