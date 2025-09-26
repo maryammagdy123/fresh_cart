@@ -28,7 +28,7 @@ export async function getHeaders() {
 // get All Products
 export async function getAllProducts(page: number = 1, productBySearch: string = ""): Promise<ProductResponse> {
 	return await fetch(`${BASE_URL}v1/products?page=${page}&fields=${productBySearch}`, {
-		cache: "no-store"
+		// cache: "no-store"
 		// next: {
 		// 	revalidate: 3600
 		// }

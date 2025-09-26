@@ -30,11 +30,12 @@ export default async function ProductsPage({
 	return (
 		<Suspense fallback={<LoadingSpinner />}>
 
-			<form action="/products" className="mb-6 flex justify-center" >
-				<input type="text" name="fields" defaultValue={productBySearch} placeholder="Search products..." className="border px-4 py-2 rounded-l-md" />
-				<button type="submit" className="bg-black text-white px-4 py-2 rounded-r-md hover:bg-gray-800" > Search </button>
-			</form>
 			<>
+
+				<form action="/products" className="mb-6 flex justify-center" >
+					<input type="text" name="fields" defaultValue={productBySearch} placeholder="Search products..." className="border px-4 py-2 rounded-l-md" />
+					<button type="submit" className="bg-black text-white px-4 py-2 rounded-r-md hover:bg-gray-800" > Search </button>
+				</form>
 				<ProductGridContainer products={products} />
 				{/* Pagination */}
 				<div className="fixed bottom-4 left-0 right-0 flex justify-center z-50 ">
@@ -75,7 +76,8 @@ export default async function ProductsPage({
 					</div>
 				</div>
 
-			</></Suspense>
+			</>
+		</Suspense>
 
 	)
 }
