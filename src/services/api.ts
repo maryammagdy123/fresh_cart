@@ -26,14 +26,15 @@ export async function getHeaders() {
 
 // -----------------------------------------Products-----------------------------------------------------
 // get All Products
-export async function getAllProducts(page: number = 1, productBySearch: string = ""): Promise<ProductResponse> {
-	return await fetch(`${BASE_URL}v1/products?page=${page}&fields=${productBySearch}`, {
+export async function getAllProducts(page: number = 1): Promise<ProductResponse> {
+	return await fetch(`${BASE_URL}v1/products?page=${page}`, {
 		// cache: "no-store"
 		// next: {
 		// 	revalidate: 3600
 		// }
 	}).then((res) => res.json());
 }
+
 
 // get single product Details
 export async function getSingleProduct(id: string | string[]): Promise<SingleProductResponse> {

@@ -17,24 +17,17 @@ export const metadata: Metadata = {
 export default async function ProductsPage({
 	searchParams,
 }: {
-	searchParams?: { page?: string, fields?: string }
+	searchParams: { page?: string }
 }) {
 
-	const params = searchParams
+	const params = await searchParams
 	const page = Number(params?.page) || 1
-	const productBySearch = params?.fields
-	const res: ProductResponse = await getAllProducts(page, productBySearch)
-	const products: Product[] = res.data
-	const totalPages = res.metadata.numberOfPages
+	const data: ProductResponse = await getAllProducts(page)
+	const products: Product[] = data.data
+	const totalPages = data.metadata.numberOfPages
 	return (
 		<Suspense fallback={<LoadingSpinner />}>
-
 			<>
-
-				<form action="/products" className="mb-6 flex justify-center" >
-					<input type="text" name="fields" defaultValue={productBySearch} placeholder="Search products..." className="border px-4 py-2 rounded-l-md" />
-					<button type="submit" className="bg-black text-white px-4 py-2 rounded-r-md hover:bg-gray-800" > Search </button>
-				</form>
 				<ProductGridContainer products={products} />
 				{/* Pagination */}
 				<div className="fixed bottom-4 left-0 right-0 flex justify-center z-50 ">
@@ -42,7 +35,7 @@ export default async function ProductsPage({
 						{/* Prev button */}
 						{page > 1 && (
 							<Link
-								href={`/products?page=${page + 1}&fields=${productBySearch}`}
+								href={`/products?page=${page - 1}`}
 								className="px-3 py-1 border rounded-md  hover:bg-gray-100"
 							>
 								Prev
@@ -75,8 +68,7 @@ export default async function ProductsPage({
 					</div>
 				</div>
 
-			</>
-		</Suspense>
+			</></Suspense>
 
 	)
 }
