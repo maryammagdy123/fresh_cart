@@ -20,7 +20,7 @@ export default async function ProductsPage({
 	searchParams: { page?: string }
 }) {
 
-	const params = await searchParams
+	const params = searchParams
 	const page = Number(params?.page) || 1
 	const data: ProductResponse = await getAllProducts(page)
 	const products: Product[] = data.data
