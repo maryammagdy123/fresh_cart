@@ -18,12 +18,12 @@ export const metadata: Metadata = {
 export default async function ProductsPage({
 	searchParams,
 }: {
-	searchParams?: { page?: string, search?: string }
+	searchParams?: { page?: string, fields?: string }
 }) {
 
 	const params = searchParams
 	const page = Number(params?.page) || 1
-	const productBySearch = params?.search
+	const productBySearch = params?.fields
 	const res: ProductResponse = await getAllProducts(page, productBySearch)
 	const products: Product[] = res.data
 	const totalPages = res.metadata.numberOfPages
@@ -43,7 +43,7 @@ export default async function ProductsPage({
 						{/* Prev button */}
 						{page > 1 && (
 							<Link
-								href={`/products?page=${page - 1}`}
+								href={`/products?page=${page + 1}&fields=${productBySearch}`}
 								className="px-3 py-1 border rounded-md  hover:bg-gray-100"
 							>
 								Prev
