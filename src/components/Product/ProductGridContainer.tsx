@@ -41,7 +41,6 @@ export default function ProductGridContainer() {
 	}
 
 	const [state, dispatch] = useReducer(productReducer, initialState)
-
 	useEffect(() => {
 		const fetchProducts = async () => {
 			dispatch({ type: "FETCH_INIT" })
