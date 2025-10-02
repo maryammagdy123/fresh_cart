@@ -15,8 +15,6 @@ interface InnerCartProps {
 export default function InnerCart({ cartData }: InnerCartProps) {
 	const { cart,
 		isLoading,
-		handleDeleteCartItem,
-		handleUpdateCart,
 		handleClearCart, } = useCart(cartData)
 
 
@@ -45,7 +43,7 @@ export default function InnerCart({ cartData }: InnerCartProps) {
 
 						{
 							cart?.data?.products?.map((item) =>
-								<CartList key={item._id} cartItem={item} handleDeleteCartItem={handleDeleteCartItem} handleUpdate={handleUpdateCart} handleClearCart={handleClearCart} />
+								<CartList key={item._id} cartItem={item} cartData={cart} />
 							)
 
 						}
