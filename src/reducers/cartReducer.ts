@@ -3,74 +3,97 @@ import { GetCartResponse } from "@/Interfaces"
 
 
 // initial state value
-type CartInitState = {
+type State = {
 	cart: GetCartResponse
 	isLoading: boolean
 }
 
 // cart type actions
 type CartActions =
-	| { type: "SET_CART"; payload: GetCartResponse }
+	| { type: "SET_CART", payload: GetCartResponse }
 	| { type: "START_LOADING" }
 	| { type: "STOP_LOADING" }
-	| { type: "UPDATE_ITEM"; payload: { productId: string; count: number } }
-	| { type: "DELETE_ITEM"; payload: { productId: string } }
-	| { type: "CLEAR_CART" }
 
 // reducer function
-export function cartReducer(state: CartInitState, action: CartActions): CartInitState {
+export function cartReducer(state: State, action: CartActions): State {
 	switch (action.type) {
 		case "SET_CART":
-			return { ...state, cart: action.payload }
+			return {
+				...state,
+				cart: action.payload
+			}
 
 		case "START_LOADING":
-			return { ...state, isLoading: true }
-
+			return {
+				...state,
+				isLoading: true
+			}
 		case "STOP_LOADING":
-			return { ...state, isLoading: false }
-
-		case "UPDATE_ITEM":
 			return {
 				...state,
-				cart: {
-					...state.cart,
-					data: {
-						...state.cart.data,
-						products: state.cart.data.products.map((item) =>
-							item.product._id === action.payload.productId
-								? { ...item, count: action.payload.count }
-								: item
-						),
-					},
-				},
+				isLoading: true
 			}
-
-		case "DELETE_ITEM":
-			return {
-				...state,
-				cart: {
-					...state.cart,
-					data: {
-						...state.cart.data,
-						products: state.cart.data.products.filter(
-							(item) => item.product._id !== action.payload.productId
-						),
-					},
-					numOfCartItems: state.cart.numOfCartItems - 1,
-				},
-			}
-
-		case "CLEAR_CART":
-			return {
-				...state,
-				cart: {
-					...state.cart,
-					data: { ...state.cart.data, products: [] },
-					numOfCartItems: 0,
-				},
-			}
-
 		default:
-			return state
+			return { ...state }
 	}
 }
+
+// ----------------------------------------------------------------------------------------------------------------------------------------------
+// // "use client"
+// import React from 'react'
+// import CartList from './CartList'
+// import CartSummary from './CartSummary'
+// import { GetCartResponse } from '@/Interfaces/cart'
+// import EmptyCart from './EmptyCart'
+// import { Button } from '../ui/button'
+// import { Loader2, Trash2 } from 'lucide-react'
+// import { useCart } from '@/Hooks/useCart'
+
+// interface InnerCartProps {
+// 	cartData: GetCartResponse
+
+// }
+// export default function InnerCart({ cartData }: InnerCartProps) {
+// 	const { cart,
+// 		isLoading,
+// 		handleClearCart, } = useCart(cartData)
+
+
+// 	if (cart.data.products.length === 0) {
+// 		return <EmptyCart />
+// 	}
+
+
+// 	return (
+// 		<>
+// 			<section>
+
+// 				<p className="text-gray-500 mb-4">You have {cart?.numOfCartItems} {cart?.numOfCartItems == 1 ? "item" : "items"} in your cart</p>
+// 				<Button className='my-4'
+// 					variant="outline"
+// 					size={'lg'}
+// 					onClick={handleClearCart}
+// 					disabled={isLoading}
+// 					id='clearCartBtn'
+// 				>
+// 					{isLoading ? <Loader2 className='animate-spin' /> : <Trash2 className="h-4 w-4" />}	clear cart
+// 				</Button>
+// 				<div className="grid lg:grid-cols-3 gap-8">
+// 					{/* products list */}
+// 					<div className="lg:col-span-2  space-y-4">
+
+// 						{
+// 							cart?.data?.products?.map((item) =>
+// 								<CartList key={item._id} cartItem={item}  />
+// 							)
+
+// 						}
+// 					</div>
+
+// 					{/* summary box */}
+// 					<CartSummary cart={cart} />
+// 				</div>
+// 			</section>
+// 		</>
+// 	)
+// }

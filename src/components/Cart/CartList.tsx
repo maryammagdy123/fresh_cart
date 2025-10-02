@@ -2,38 +2,39 @@
 import { Loader2, Minus, Plus, Trash2 } from 'lucide-react'
 import React, { useState } from 'react'
 import { Button } from '../ui/button'
-import { CartProduct, GetCartResponse, ProductCart } from '@/Interfaces/cart'
+import { CartProduct, ProductCart } from '@/Interfaces/cart'
 import Image from 'next/image'
-import { useCart } from '@/Hooks/useCart'
 
 
 
 interface CartListProps {
 	cartItem: CartProduct<ProductCart>
-	cartData: GetCartResponse
+	handleDeleteCartItem: (productId: string, setIsDelete: (value: boolean) => void) => void
+	handleUpdate: (productId: string, count: number) => void
+	handleClearCart: (setIsDelete: (value: boolean) => void) => void
 }
-export default function CartList({ cartItem, cartData }: CartListProps) {
-	const { isLoading, handleDeleteCartItem, handleUpdateCart } = useCart(cartData)
+export default function CartList({ cartItem, handleDeleteCartItem, handleUpdate }: CartListProps) {
+	const [isDelete, setIsDelete] = useState(false)
 	const [count, setCount] = useState<number>(cartItem.count)
 	const [timeOutId, setTimeOutId] = useState<NodeJS.Timeout>()
-
 
 	function handleIncrease() {
 		const newCount = count + 1
 		setCount(newCount)
 		clearTimeout(timeOutId)
 		const id = setTimeout(() => {
-			handleUpdateCart(cartItem.product._id, newCount)
-		}, 100)
+			handleUpdate(cartItem.product._id, newCount)
+		}, 500)
 		setTimeOutId(id)
+
 	}
 	function handleDcrease() {
 		const newCount = count - 1
 		setCount(newCount)
 		clearTimeout(timeOutId)
 		const id = setTimeout(() => {
-			handleUpdateCart(cartItem.product._id, newCount)
-		}, 100)
+			handleUpdate(cartItem.product._id, newCount)
+		}, 5000)
 		setTimeOutId(id)
 	}
 
@@ -97,14 +98,14 @@ export default function CartList({ cartItem, cartData }: CartListProps) {
 					<p className="font-semibold">${cartItem.count * cartItem.price}</p>
 					<Button
 						onClick={() => {
-							handleDeleteCartItem(cartItem.product._id)
+							handleDeleteCartItem(cartItem.product._id, setIsDelete)
 						}}
 						variant="destructive"
 						size="icon"
-						disabled={isLoading}
+						disabled={isDelete}
 					>
 						{
-							isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />
+							isDelete ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />
 						}
 					</Button>
 				</div >

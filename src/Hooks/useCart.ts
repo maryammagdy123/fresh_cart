@@ -17,34 +17,30 @@ export function useCart(initialCart: GetCartResponse) {
 		setCartCount(state.cart.numOfCartItems)
 	}, [state.cart])
 
-	// delete item
-	async function handleDeleteCartItem(productId: string) {
-		dispatch({ type: "DELETE_ITEM", payload: { productId } }) // Optimistic UI
-		dispatch({ type: "START_LOADING" })
 
+	// handle delete item from cart
+	async function handleDeleteCartItem(productId: string) {
+		dispatch({ type: "START_LOADING" })
 		const data = await deleteCartItem(productId)
 		if (data.statusMsg === "success") {
-			toast.success("Item removed successfully!")
-			const newCart = await getUserCart()
-			dispatch({ type: "SET_CART", payload: newCart })
+			toast.success("Item removed successfully!!")
 		} else {
 			toast.error(data.message || data.statusMsg)
 		}
-
+		// setting new cart
+		const newCart = await getUserCart()
+		dispatch({ type: "SET_CART", payload: newCart })
 		dispatch({ type: "STOP_LOADING" })
 	}
-
-	// update quantity
+	// update cart product quantity
 	async function handleUpdateCart(productId: string, count: number) {
-		dispatch({ type: "UPDATE_ITEM", payload: { productId, count } }) // Optimistic UI
 		await updateCartProductQuantity(productId, count)
 		const newCart = await getUserCart()
 		dispatch({ type: "SET_CART", payload: newCart })
 	}
 
-	// clear cart
+	// handle clear cart
 	async function handleClearCart() {
-		dispatch({ type: "CLEAR_CART" }) // Optimistic UI
 		dispatch({ type: "START_LOADING" })
 		await clearCart()
 		const newCart = await getUserCart()
