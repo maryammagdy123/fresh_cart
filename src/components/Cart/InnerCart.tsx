@@ -3,13 +3,11 @@ import React from 'react'
 import CartList from './CartList'
 import CartSummary from './CartSummary'
 import { GetCartResponse } from '@/Interfaces/cart'
-// import { clearCart, deleteCartItem, getUserCart, updateCartProductQuantity } from '@/services/api'
-// import toast from 'react-hot-toast'
 import EmptyCart from './EmptyCart'
 import { Button } from '../ui/button'
 import { Loader2, Trash2 } from 'lucide-react'
 import { useCart } from '@/Hooks/useCart'
-// import { cartContext } from '@/Context/CartContext'
+
 interface InnerCartProps {
 	cartData: GetCartResponse
 
