@@ -9,7 +9,7 @@ import {
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu"
 import { BsCart3 } from 'react-icons/bs';
-import { BiUser } from 'react-icons/bi';
+
 import { AiOutlineMenu } from 'react-icons/ai';
 import { Button } from "../ui/button";
 import { AiOutlineClose } from 'react-icons/ai';
@@ -52,7 +52,7 @@ export default function Navbar() {
 
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 	const pathname = usePathname()
-	const { status, data } = useSession()
+	const { status } = useSession()
 
 
 
