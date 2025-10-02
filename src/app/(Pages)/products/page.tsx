@@ -1,5 +1,4 @@
 
-import { Product } from "@/Interfaces"
 import ProductGridContainer from "@/components/Product/ProductGridContainer"
 import LoadingSpinner from "@/components/shared/LoadingSpinner"
 import { getAllProducts } from "@/services/api"
@@ -23,7 +22,7 @@ export default async function ProductsPage({
 	const params = searchParams
 	const page = Number(params?.page) || 1
 	const data: ProductResponse = await getAllProducts(page)
-	const products: Product[] = data.data
+
 	const totalPages = data.metadata.numberOfPages
 	return (
 		<Suspense fallback={<LoadingSpinner />}>
