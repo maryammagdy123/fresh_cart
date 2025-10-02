@@ -10,6 +10,7 @@ import { getAllProducts } from '@/services/api'
 import { Input } from '../ui/input'
 import LoadingSpinner from '../shared/LoadingSpinner'
 
+
 const ProductCard = React.lazy(() => import("./ProductCard"))
 
 
