@@ -45,8 +45,8 @@ export default function ProductGridContainer() {
 			try {
 				const res = await getAllProducts(1) // صفحة ١
 				dispatch({ type: "FETCH_SUCCESS", payload: res.data })
-			} catch (error: any) {
-				dispatch({ type: "FETCH_ERROR", payload: error.message })
+			} catch (error: unknown) {
+				dispatch({ type: "FETCH_ERROR", payload: String(error) })
 			}
 		}
 		fetchProducts()
