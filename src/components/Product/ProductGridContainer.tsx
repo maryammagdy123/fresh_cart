@@ -45,6 +45,7 @@ export default function ProductGridContainer() {
 			dispatch({ type: "FETCH_INIT" })
 			try {
 				const res = await getAllProducts(1)
+				console.log(res)
 				dispatch({ type: "FETCH_SUCCESS", payload: res.data })
 			} catch (error: unknown) {
 				dispatch({ type: "FETCH_ERROR", payload: String(error) })
