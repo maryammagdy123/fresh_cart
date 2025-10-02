@@ -23,31 +23,31 @@ export default function InnerCart({ cartData }: InnerCartProps) {
 		setCartCount(cart.numOfCartItems)
 	}, [cart])
 	// delete item from cart
-	async function handleDeleteCartItem(productId: string, setIsDelete: (value: boolean) => void) {
-		setIsDelete(true)
-		const data = await deleteCartItem(productId)
-		if (data.statusMsg === "success") {
-			toast.success("Item removed successfully!!")
-		}
-		setIsDelete(false)
-		const newCartResponseData = await getUserCart()
-		setCart(newCartResponseData)
-	}
+	// async function handleDeleteCartItem(productId: string, setIsDelete: (value: boolean) => void) {
+	// 	setIsDelete(true)
+	// 	const data = await deleteCartItem(productId)
+	// 	if (data.statusMsg === "success") {
+	// 		toast.success("Item removed successfully!!")
+	// 	}
+	// 	setIsDelete(false)
+	// 	const newCartResponseData = await getUserCart()
+	// 	setCart(newCartResponseData)
+	// }
 	// update cart product quantity
-	async function handleUpdateCart(productId: string, count: number) {
-		const response = await updateCartProductQuantity(productId, count)
-		console.log(response)
-		const newCartResponseData = await getUserCart()
-		setCart(newCartResponseData)
-	}
+	// async function handleUpdateCart(productId: string, count: number) {
+	// 	const response = await updateCartProductQuantity(productId, count)
+	// 	console.log(response)
+	// 	const newCartResponseData = await getUserCart()
+	// 	setCart(newCartResponseData)
+	// }
 	// handle clear cart
-	async function handleClearCart(setIsDelete: (value: boolean) => void) {
-		setIsDelete(true)
-		const response = await clearCart()
-		setIsDelete(false)
-		const newCartResponseData = await getUserCart()
-		setCart(newCartResponseData)
-	}
+	// async function handleClearCart(setIsDelete: (value: boolean) => void) {
+	// 	setIsDelete(true)
+	// 	const response = await clearCart()
+	// 	setIsDelete(false)
+	// 	const newCartResponseData = await getUserCart()
+	// 	setCart(newCartResponseData)
+	// }
 	if (cart.data.products.length === 0) {
 		return <EmptyCart />
 	}
