@@ -4,7 +4,7 @@ import { GetCartResponse } from '@/Interfaces';
 import { cartContext } from '@/Context/CartContext';
 import { clearCart, deleteCartItem, getUserCart, updateCartProductQuantity } from '@/services/api';
 import toast from 'react-hot-toast';
-import React from 'react';
+
 export function useCart(initialCart: GetCartResponse) {
 	const [state, dispatch] = useReducer(cartReducer, {
 		cart: initialCart,
