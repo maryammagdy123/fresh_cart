@@ -9,8 +9,6 @@ import { productReducer } from '@/reducers/productReducer'
 import { getAllProducts } from '@/services/api'
 import { Input } from '../ui/input'
 import LoadingSpinner from '../shared/LoadingSpinner'
-import { Card } from '@mui/material'
-import ProductCardSkeleton from '../ProductCardSkeleton/ProductCardSkeleton'
 
 const ProductCard = React.lazy(() => import("./ProductCard"))
 
@@ -54,7 +52,7 @@ export default function ProductGridContainer() {
 		fetchProducts()
 	}, [])
 
-	if (state.loading) return <ProductCardSkeleton viewMode={viewMode} />
+	if (state.loading) return <LoadingSpinner />
 	if (state.error) return <p className="text-center text-red-500">Error: {state.error}</p>
 
 
@@ -134,7 +132,7 @@ export default function ProductGridContainer() {
 					>
 						{state.filtered.map((product) => (
 							<motion.div key={product._id} variants={itemVariants}>
-								<Suspense fallback={<ProductCardSkeleton viewMode={viewMode} />}>
+								<Suspense fallback={<LoadingSpinner />}>
 									<ProductCard product={product} viewMode={viewMode} />
 								</Suspense>
 							</motion.div>
