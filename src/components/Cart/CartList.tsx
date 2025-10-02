@@ -24,9 +24,8 @@ export default function CartList({ cartItem, cartData }: CartListProps) {
 		clearTimeout(timeOutId)
 		const id = setTimeout(() => {
 			handleUpdateCart(cartItem.product._id, newCount)
-		}, 500)
+		}, 100)
 		setTimeOutId(id)
-
 	}
 	function handleDcrease() {
 		const newCount = count - 1
@@ -34,7 +33,7 @@ export default function CartList({ cartItem, cartData }: CartListProps) {
 		clearTimeout(timeOutId)
 		const id = setTimeout(() => {
 			handleUpdateCart(cartItem.product._id, newCount)
-		}, 5000)
+		}, 100)
 		setTimeOutId(id)
 	}
 
