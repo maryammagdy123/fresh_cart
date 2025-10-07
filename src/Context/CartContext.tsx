@@ -23,7 +23,7 @@ export default function CartContextProvider({ children }: { children: ReactNode 
 
 	useEffect(() => {
 		getCart()
-	}, [])
+	}, [cartCount])
 
 	return (
 		<cartContext.Provider value={{ cartCount, setCartCount, isLoading }}>{children}</cartContext.Provider>
