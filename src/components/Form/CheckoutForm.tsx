@@ -10,7 +10,6 @@ import { Input } from '../ui/input'
 import { Loader2 } from 'lucide-react'
 import { Form } from "@/components/ui/form";
 import { checkoutOrder } from '@/services/api'
-import { useRouter } from 'next/router'
 
 interface CheckoutFormProps {
 	cartID: string
@@ -30,7 +29,7 @@ export default function CheckoutForm({ cartID }: CheckoutFormProps) {
 		},
 	});
 	const [isSubmiting, setIsSubmiting] = useState(false)
-	const router = useRouter()
+
 	const onSubmit = async (values: CheckoutFormValues) => {
 		setIsSubmiting(true)
 		console.log(cartID, "cart id")
@@ -38,8 +37,7 @@ export default function CheckoutForm({ cartID }: CheckoutFormProps) {
 			const response = await checkoutOrder(cartID, values);
 			console.log(response)
 			if (response.status === "success") {
-				router.push(response.session?.url)
-
+				window.open(response.session?.url, "_self")
 			}
 		} catch (error) {
 			console.log(error)
