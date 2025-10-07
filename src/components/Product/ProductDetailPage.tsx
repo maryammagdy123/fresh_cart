@@ -1,16 +1,19 @@
 "use client";
 import React, { useState } from "react";
 import { Product } from "@/Interfaces";
-import { Heart, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import AddToCartBtn from "../Cart/AddToCartBtn";
 import Image from "next/image";
+import { useWishlist } from "@/Hooks/useWishlist";
+
+import WishListButton from "../Wishlist/WishListButton";
 
 export default function ProductDetailPage({ productData }: { productData: Product }) {
 	const [mainIndex, setMainIndex] = useState(0);
 	const [quantity, setQuantity] = useState(1);
-
+	const { isInWishlist, isLoading, toggleWishlist } = useWishlist(productData._id);
 
 	const product = productData;
 	return (
@@ -112,9 +115,11 @@ export default function ProductDetailPage({ productData }: { productData: Produc
 							</div>
 
 							<div className="flex items-center gap-2">
-								<Button className="p-2 rounded-md border hover:bg-gray-50" aria-label="add to wishlist">
-									<Heart className="h-5 w-5 text-red-500" />
-								</Button>
+								<WishListButton
+									isInWishlist={isInWishlist}
+									isLoading={isLoading}
+									onClick={toggleWishlist}
+								/>
 								<AddToCartBtn productQuantity={product?.quantity} productId={product._id} />
 
 							</div>

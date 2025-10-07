@@ -12,7 +12,7 @@ export default function RemoveFromWishlistBtn({ id, handleRemoveFromWishList }: 
 	const [isDelete, setIsDelete] = useState(false)
 
 	return (
-		<Button onClick={() => handleRemoveFromWishList(id, setIsDelete)} className="rounded-lg bg-red-500 px-4 py-2 text-white transition hover:bg-red-600">
+		<Button onClick={() => handleRemoveFromWishList(id, setIsDelete)} disabled={isDelete} className="rounded-lg bg-red-500 px-4 py-2 text-white transition hover:bg-red-600">
 			{
 				isDelete && <Loader2 className='animate-spin' />
 			}
