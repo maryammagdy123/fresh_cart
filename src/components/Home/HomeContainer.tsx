@@ -23,7 +23,7 @@ export default function HomeContainer() {
 				<div className="text-center space-y-6">
 					{/* Title */}
 					<h1 className="animate__animated animate__fadeInDown animate__faster text-4xl font-bold tracking-tight lg:text-6xl">
-						Welcome to FreshMart
+						Welcome to FreshCart
 					</h1>
 
 					{/* Subtitle */}
