@@ -1,12 +1,11 @@
 import { Product } from '@/Interfaces'
 import Image from 'next/image'
 import React from 'react'
-import { Button } from '../ui/button'
 import { useWishlist } from '@/Hooks/useWishlist'
-import { Heart, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { renderStars } from '@/helpers/rating'
 import AddToCartBtn from '../Cart/AddToCartBtn'
+import WishListButton from '../Wishlist/WishListButton'
 interface ProductGridCardProps {
 	product: Product
 }
@@ -23,16 +22,13 @@ export default function ProductGridCard({ product }: ProductGridCardProps) {
 					sizes="(max-width:766px) 100vw, (max-width:1200px) 50vw ,25vw"
 					loading="lazy" />
 
-				{/* action icons */}
-				<div className="absolute top-2 right-2 ">
-					<Button id={product._id} onClick={() => toggleWishlist()} className={`p-2 rounded-full shadow hover:bg-gray-100 transition bg-white`}>
-						{
-							isLoading ? (<Loader2 className="animate-spin text-black" />) : <Heart className="h-5 w-5 text-red-500" fill={isInWishlist ? "red" : "none"} />
-						}
-					</Button>
-					{/* <Button className="p-2 bg-white rounded-full shadow hover:bg-gray-100 transition">
-								
-							</Button> */}
+				{/* ADD TO WISHLIST BUTTON */}
+				<div className="absolute top-2 right-2 md:right-2 md:bottom-2 ">
+					<WishListButton
+						isInWishlist={isInWishlist}
+						isLoading={isLoading}
+						onClick={toggleWishlist}
+					/>
 				</div>
 			</div>
 
