@@ -12,7 +12,7 @@ export default function HomeContainer() {
 			variant: "default" as const,
 		},
 		{
-			href: "/Categories",
+			href: "/categories",
 			label: "Browse Categories",
 			variant: "outline" as const,
 		},
