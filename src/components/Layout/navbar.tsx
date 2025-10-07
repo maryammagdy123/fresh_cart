@@ -62,7 +62,7 @@ export default function Navbar() {
 				<div className="container mx-auto px-4 flex items-center justify-between h-16">
 					{/* Logo */}
 					<Link href="/" className="text-xl font-bold text-black p-2 px-4">
-						<span className='p-2 px-4 rounded-xl mx-2 bg-black font-bold text-xl text-white'>F</span>FreshMart
+						<span className='p-2 px-4 rounded-xl mx-2 bg-black font-bold text-xl text-white'>F</span>FreshCart
 					</Link>
 
 
