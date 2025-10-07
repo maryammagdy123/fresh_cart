@@ -17,19 +17,28 @@ export default function AddToCartBtn({ productQuantity, productId }: AddToCartBt
 	const [addToCartLoader, setAddToCartLoader] = useState(false)
 	const { status } = useSession()
 	const { setCartCount } = useContext(cartContext)
-	async function handleAddToCart() {
-		setAddToCartLoader(true)
-		const data = await addToCart(productId)
-		if (data.status === 'success' || status === "authenticated") {
-			toast.success(data.message)
-			setCartCount(data.numOfCartItems)
 
-		} else {
-			toast.error(data.message)
+	async function handleAddToCart() {
+		if (status !== "authenticated") {
+			toast.error("You must be logged in to add items to the cart.")
+			return
 		}
 
+		setAddToCartLoader(true)
+		try {
+			const data = await addToCart(productId)
+			if (data.status === 'success') {
+				toast.success(data.message)
+				setCartCount(data.numOfCartItems)
+			} else {
+				toast.error(data.message)
+			}
+		} catch (error) {
+			toast.error("Something went wrong. Please try again.")
+		}
 		setAddToCartLoader(false)
 	}
+
 	return (
 		<Button onClick={handleAddToCart} disabled={addToCartLoader || productQuantity == 0} >
 			{addToCartLoader && <Loader2 className='animate-spin' />}
