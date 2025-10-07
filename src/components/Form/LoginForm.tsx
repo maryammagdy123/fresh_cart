@@ -46,9 +46,12 @@ export default function LoginForm() {
 			if (response?.ok) {
 				toast.success("Loged in successfully")
 				router.push(callabackUrl)
+			} else {
+				toast.error(response?.error || "Logging in failed. Please try again.");
 			}
 		} catch (error) {
-			console.log(error)
+			console.error("Logging in error:", error);
+			toast.error("Something went wrong. Please try again later.");
 		}
 		setIslogin(false)
 	};
