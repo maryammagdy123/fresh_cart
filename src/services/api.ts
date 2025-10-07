@@ -155,10 +155,20 @@ export async function addToCart(productId: string | string[]): Promise<AddToCart
 // get user cart
 export async function getUserCart(): Promise<GetCartResponse> {
 	const headers = await getHeadersCached();
-	return await fetch(`${BASE_URL}v1/cart`, {
-		headers
-	}).then((res) => res.json())
 
+
+	try {
+		const res = await fetch(`${BASE_URL}v1/cart`, {
+			headers
+		})
+		if (!res.ok) {
+			throw new Error(`Request failed with status ${res.status}`);
+		}
+		return await res.json();
+	} catch (error) {
+		console.error("Getting user cart :", error)
+		return { status: "error", message: "Something went wrong. Please try again." } as GetCartResponse
+	}
 }
 
 // delete specific cart item
