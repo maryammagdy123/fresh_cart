@@ -133,13 +133,24 @@ export async function getSingleSubCategoryAllProducts(id: string): Promise<Produ
 // add products to cart
 export async function addToCart(productId: string | string[]): Promise<AddToCartResponse> {
 	const headers = await getHeadersCached();
-	return await fetch(`${BASE_URL}v1/cart`, {
-		method: 'post',
-		body: JSON.stringify({ productId }),
-		headers
-	}).then((res) => res.json());
+	try {
+		const res = await fetch(`${BASE_URL}v1/cart`, {
+			method: 'POST',
+			body: JSON.stringify({ productId }),
+			headers
+		});
 
+		if (!res.ok) {
+			throw new Error(`Request failed with status ${res.status}`);
+		}
+
+		return await res.json();
+	} catch (error) {
+		console.error("Add to cart error:", error);
+		return { status: "error", message: "Something went wrong. Please try again." } as AddToCartResponse;
+	}
 }
+
 
 // get user cart
 export async function getUserCart(): Promise<GetCartResponse> {

@@ -34,6 +34,7 @@ export default function AddToCartBtn({ productQuantity, productId }: AddToCartBt
 				toast.error(data.message)
 			}
 		} catch (error) {
+			console.log("Add To Cart Error", error)
 			toast.error("Something went wrong. Please try again.")
 		}
 		setAddToCartLoader(false)
