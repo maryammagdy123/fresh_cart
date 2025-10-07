@@ -16,15 +16,19 @@ const BASE_URL = process.env.NEXT_BASE_URL
 // -----------------------------headers and token-----------------------------------------------------
 
 // headers
-export async function getHeaders() {
-	const Token = await getToken();
+
+let cachedHeaders: HeadersInit | null = null;
+
+/** ✅ Returns chached headers*/
+export async function getHeaders(): Promise<HeadersInit> {
+	const token = await getToken();
 	return {
 		"Content-Type": "application/json",
-		token: Token as string
+		token: token ?? "",
 	};
 }
-let cachedHeaders: HeadersInit | null = null;
-async function getHeadersCached() {
+
+export async function getHeadersCached(): Promise<HeadersInit> {
 	if (cachedHeaders) return cachedHeaders;
 	cachedHeaders = await getHeaders();
 	return cachedHeaders;
@@ -95,7 +99,7 @@ export async function getSingleCategory(id: string): Promise<SingleCategoryRespo
 export async function getSingleCategoryAllProducts(id: string): Promise<ProductResponse> {
 	const headers = await getHeadersCached();
 	return await fetch(`${BASE_URL}v1/products?category[in]=${id}`, {
-		headers
+		headers, cache: "force-cache"
 	}).then((res) => res.json())
 }
 
@@ -119,7 +123,7 @@ export async function getSingleSubcategory(id: string): Promise<SingleSubcategor
 export async function getSingleSubCategoryAllProducts(id: string): Promise<ProductResponse> {
 	const headers = await getHeadersCached();
 	const res = await fetch(`${BASE_URL}v1/products?category[in]=${encodeURIComponent(id)}`, {
-		cache: "no-store",
+		cache: "force-cache",
 		headers
 	})
 	const data: ProductResponse = await res.json()
@@ -137,7 +141,8 @@ export async function addToCart(productId: string | string[]): Promise<AddToCart
 		const res = await fetch(`${BASE_URL}v1/cart`, {
 			method: 'POST',
 			body: JSON.stringify({ productId }),
-			headers
+			headers,
+			cache: "no-store",
 		});
 
 		if (!res.ok) {
@@ -159,7 +164,7 @@ export async function getUserCart(): Promise<GetCartResponse> {
 
 	try {
 		const res = await fetch(`${BASE_URL}v1/cart`, {
-			headers
+			headers,
 		})
 		if (!res.ok) {
 			throw new Error(`Request failed with status ${res.status}`);
@@ -207,17 +212,34 @@ export async function clearCart(): Promise<ClearCartResponse> {
 
 // add to wishlist
 export async function addToWishlist(productId: string): Promise<AddToWishListResponse> {
-	const headers = await getHeadersCached();
-	const res = await fetch(`${BASE_URL}v1/wishlist`, {
-		method: "POST",
-		headers,
-		body: JSON.stringify({ productId }),
-	});
+	try {
+		// Get headers (includes authentication info)
+		const headers = await getHeadersCached();
 
-	// if (!res.ok) throw new Error("Failed to add product");
-	const data: AddToWishListResponse = await res.json();
-	return data;
+		// Send POST request to add product to wishlist
+		const res = await fetch(`${BASE_URL}v1/wishlist`, {
+			method: "POST",
+			headers,
+			body: JSON.stringify({ productId }),
+		});
+
+		// Check if response is not successful (e.g. 400, 401, 500)
+		if (!res.ok) {
+			const errorMessage = `Failed to add product. Status: ${res.status}`;
+			throw new Error(errorMessage);
+		}
+
+		// Parse JSON response
+		const data: AddToWishListResponse = await res.json();
+		return data;
+
+	} catch (error) {
+		// Handle network or fetch-related errors
+		console.error("Error adding product to wishlist:", error);
+		return { status: "error", message: "Something went wrong. Please try again." } as AddToWishListResponse
+	}
 }
+
 
 
 // remove from wishlist

@@ -12,6 +12,7 @@ import { Heart, Loader2 } from "lucide-react"
 import { addToWishlist, getWishlist, removeFromWishlist } from "@/services/api"
 import toast from "react-hot-toast"
 import { useEffect, useState } from "react"
+import { useSession } from "next-auth/react"
 
 
 
@@ -28,8 +29,13 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 
 	const [isInWishlist, setIsInWishlist] = useState<boolean>(false);
 	const [isAddingToWishList, setIsAddingToWishList] = useState<boolean>(false);
+	const { status } = useSession()
 
 	async function handleToggleWishlist() {
+		if (status !== "authenticated") {
+			toast.error("You must be logged in to add items to the wishlist.")
+			return
+		}
 		try {
 			setIsAddingToWishList(true);
 			const successMsg = isInWishlist ? "Removed from wishlist" : "Added to wishlist";
@@ -42,12 +48,12 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 				toast.success(successMsg);
 				setIsAddingToWishList(false);
 			} else {
-				toast.error(data.message || errorMsg);
+				toast.error(errorMsg);
 			}
 		} catch (err) {
 			console.error(err);
 			toast.error("Something went wrong");
-		}
+		} finally { setIsAddingToWishList(false); }
 	}
 
 
