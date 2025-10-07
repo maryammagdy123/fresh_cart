@@ -38,14 +38,17 @@ export default function HomeContainer() {
 						{btns.map((btn) => {
 							const { href, label, variant } = btn
 							return (
-								<Button
-									size="lg"
-									variant={variant}
-									className="text-lg px-8"
-									key={href}
-								>
-									<Link href={href}>{label}</Link>
-								</Button>
+
+								<Link href={href} key={href}>
+									<Button
+										size="lg"
+										variant={variant}
+										className="text-lg px-8"
+
+									>
+										{label}
+									</Button>
+								</Link>
 							)
 						})}
 					</div>
