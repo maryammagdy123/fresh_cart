@@ -12,7 +12,7 @@ export default function Footer() {
 							<div className="w-8 h-8 gradient-bg rounded-lg flex items-center justify-center">
 								<div className='p-2 px-4 rounded-xl bg-white font-bold text-xl text-black'>F</div>
 							</div>
-							<h4 className="text-xl font-bold">FreshMart</h4>
+							<h4 className="text-xl font-bold">FreshCart</h4>
 						</div>
 						<p className="text-gray-400">Your trusted destination for the latest technology products.</p>
 					</div>
@@ -50,7 +50,7 @@ export default function Footer() {
 					</div>
 				</div>
 				<div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-					<p>&copy; 2025 FreshMart. All rights reserved.</p>
+					<p>&copy; 2025 FreshCart. All rights reserved.</p>
 				</div>
 			</div>
 		</footer>
