@@ -2,14 +2,16 @@ import { Product } from '@/Interfaces'
 import Image from 'next/image'
 import React from 'react'
 import { Button } from '../ui/button'
-import { Heart } from 'lucide-react'
+import { Heart, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { renderStars } from '@/helpers/rating'
 import AddToCartBtn from '../Cart/AddToCartBtn'
+import { useWishlist } from '@/Hooks/useWishlist'
 interface ProductListCardProps {
 	product: Product
 }
 export default function ProductListCard({ product }: ProductListCardProps) {
+	const { isInWishlist, isLoading, toggleWishlist } = useWishlist(product._id);
 	return (
 		<div className="relative border rounded-2xl shadow-md p-4 flex md:flex-row flex-col items-center gap-6 hover:shadow-lg transition w-full overflow-hidden">
 
@@ -23,10 +25,11 @@ export default function ProductListCard({ product }: ProductListCardProps) {
 
 				{/* action icons */}
 				<div className="absolute top-2 right-2 md:right-2 md:bottom-2 ">
-					<Button className="p-2 bg-white rounded-full shadow hover:bg-gray-100 transition">
-						<Heart className="h-5 w-5 text-red-500" />
+					<Button id={product._id} onClick={() => toggleWishlist()} className={`p-2 rounded-full shadow hover:bg-gray-100 transition bg-white`}>
+						{
+							isLoading ? (<Loader2 className="animate-spin text-black" />) : <Heart className="h-5 w-5 text-red-500" fill={isInWishlist ? "red" : "none"} />
+						}
 					</Button>
-
 				</div>
 			</div>
 

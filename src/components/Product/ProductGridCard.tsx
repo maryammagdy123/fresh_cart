@@ -2,10 +2,16 @@ import { Product } from '@/Interfaces'
 import Image from 'next/image'
 import React from 'react'
 import { Button } from '../ui/button'
+import { useWishlist } from '@/Hooks/useWishlist'
+import { Heart, Loader2 } from 'lucide-react'
+import Link from 'next/link'
+import { renderStars } from '@/helpers/rating'
+import AddToCartBtn from '../Cart/AddToCartBtn'
 interface ProductGridCardProps {
 	product: Product
 }
 export default function ProductGridCard({ product }: ProductGridCardProps) {
+	const { isInWishlist, isLoading, toggleWishlist } = useWishlist(product._id);
 	return (
 		<div className="relative border rounded-2xl shadow-md p-4 flex flex-col justify-between hover:shadow-lg transition  h-full">
 			{/* product image */}
@@ -19,9 +25,9 @@ export default function ProductGridCard({ product }: ProductGridCardProps) {
 
 				{/* action icons */}
 				<div className="absolute top-2 right-2 ">
-					<Button id={product._id} onClick={() => handleToggleWishlist()} className={`p-2 rounded-full shadow hover:bg-gray-100 transition bg-white`}>
+					<Button id={product._id} onClick={() => toggleWishlist()} className={`p-2 rounded-full shadow hover:bg-gray-100 transition bg-white`}>
 						{
-							isAddingToWishList ? (<Loader2 className="animate-spin text-black" />) : <Heart className="h-5 w-5 text-red-500" fill={isInWishlist ? "red" : "none"} />
+							isLoading ? (<Loader2 className="animate-spin text-black" />) : <Heart className="h-5 w-5 text-red-500" fill={isInWishlist ? "red" : "none"} />
 						}
 					</Button>
 					{/* <Button className="p-2 bg-white rounded-full shadow hover:bg-gray-100 transition">

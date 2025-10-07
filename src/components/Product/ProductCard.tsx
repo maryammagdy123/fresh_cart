@@ -1,14 +1,8 @@
 "use client"
 
-import { Button } from "../ui/button"
-import Link from "next/link"
-import { Product } from "@/Interfaces"
-import { renderStars } from "@/helpers/rating"
-// import { div } from "framer-motion/client"
-import Image from "next/image"
 
-import AddToCartBtn from "../Cart/AddToCartBtn"
-import { Heart, Loader2 } from "lucide-react"
+import { Product } from "@/Interfaces"
+
 import { addToWishlist, getWishlist, removeFromWishlist } from "@/services/api"
 import toast from "react-hot-toast"
 import { useEffect, useState } from "react"
@@ -84,7 +78,7 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 				<ProductGridCard product={product} />
 			) : (
 				//  list viewmode
-				<ProductListCard />
+				<ProductListCard product={product} />
 			)}
 		</section>
 	)
