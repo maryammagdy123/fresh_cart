@@ -37,7 +37,8 @@ export default function CheckoutForm({ cartID }: CheckoutFormProps) {
 			const response = await checkoutOrder(cartID, values);
 			console.log(response)
 			if (response.status === "success") {
-				window.open(response.session?.url, "_blank")
+				window.location.href = response.session?.url
+
 			}
 		} catch (error) {
 			console.log(error)
