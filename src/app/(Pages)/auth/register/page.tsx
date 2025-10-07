@@ -61,21 +61,41 @@ export default function RegisterPage() {
 		},
 	});
 
-	const onSubmit = async (values: RegisterFormValues) => {
-		const registerRes = await SignUp(values)
-		if (registerRes.message === "success") {
-			console.log(registerRes)
-			toast.success("Registered successfully!");
-			console.log("Form Values:", values);
-			form.reset()
-			navigate.push('/login')
-		} else {
-			toast.error(registerRes.message)
-		}
-	};
+
 
 	// Watch password
 	const password = form.watch("password");
+
+	const onSubmit = async (values: RegisterFormValues) => {
+		try {
+			const registerRes = await SignUp(values);
+
+			if (registerRes.message === "success") {
+				console.log(registerRes);
+				toast.success("Registered successfully!");
+				console.log("Form Values:", values);
+				form.reset();
+				navigate.push("/login");
+			} else {
+				toast.error(registerRes.message || "Registration failed. Please try again.");
+			}
+
+		} catch (error: any) {
+			console.error("Registration error:", error);
+
+			if (error.response?.data?.message) {
+				toast.error(error.response.data.message);
+			}
+
+			else if (error.message?.includes("Network")) {
+				toast.error("Network error. Please check your internet connection.");
+			}
+
+			else {
+				toast.error("Something went wrong. Please try again later.");
+			}
+		}
+	};
 
 
 
