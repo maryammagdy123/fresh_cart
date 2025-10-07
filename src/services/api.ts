@@ -142,7 +142,7 @@ export async function addToCart(productId: string | string[]): Promise<AddToCart
 			method: 'POST',
 			body: JSON.stringify({ productId }),
 			headers,
-			cache: "no-store",
+
 		});
 
 		if (!res.ok) {
