@@ -80,20 +80,10 @@ export default function RegisterPage() {
 				toast.error(registerRes.message || "Registration failed. Please try again.");
 			}
 
-		} catch (error: any) {
+		} catch (error) {
 			console.error("Registration error:", error);
+			toast.error("Something went wrong. Please try again later.");
 
-			if (error.response?.data?.message) {
-				toast.error(error.response.data.message);
-			}
-
-			else if (error.message?.includes("Network")) {
-				toast.error("Network error. Please check your internet connection.");
-			}
-
-			else {
-				toast.error("Something went wrong. Please try again later.");
-			}
 		}
 	};
 
