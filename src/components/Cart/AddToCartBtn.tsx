@@ -18,6 +18,9 @@ export default function AddToCartBtn({ productQuantity, productId }: AddToCartBt
 	const { status } = useSession()
 	const { setCartCount } = useContext(cartContext)
 
+
+
+
 	async function handleAddToCart() {
 		if (status !== "authenticated") {
 			toast.error("You must be logged in to add items to the cart.")
@@ -27,17 +30,18 @@ export default function AddToCartBtn({ productQuantity, productId }: AddToCartBt
 		setAddToCartLoader(true)
 		try {
 			const data = await addToCart(productId)
-			if (data.status === 'success') {
+			if (data?.status === 'success') {
 				toast.success(data.message)
 				setCartCount(data.numOfCartItems)
 			} else {
-				toast.error(data.message)
+				toast.error("Failed to add product.")
 			}
 		} catch (error) {
-			console.log("Add To Cart Error", error)
+			console.error("Add To Cart Error:", error)
 			toast.error("Something went wrong. Please try again.")
+		} finally {
+			setAddToCartLoader(false)
 		}
-		setAddToCartLoader(false)
 	}
 
 	return (
