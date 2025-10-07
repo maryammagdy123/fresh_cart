@@ -47,7 +47,7 @@ export default function LoginForm() {
 				toast.success("Loged in successfully")
 				router.push(callabackUrl)
 			} else {
-				toast.error(response?.error || "Password or Email is Incorrect.");
+				toast.error("Password or Email is Incorrect.");
 			}
 		} catch (error) {
 			console.error("Logging in error:", error);
