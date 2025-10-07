@@ -58,6 +58,9 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 
 
 	useEffect(() => {
+
+		if (status !== "authenticated") return;
+
 		const checkWishlistStatus = async () => {
 			try {
 				const wishlist = await getWishlist();
@@ -70,8 +73,7 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 		};
 
 		checkWishlistStatus();
-	}, [product._id]);
-
+	}, [product._id, status]);
 
 	return (
 		<section>
