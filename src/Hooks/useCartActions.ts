@@ -1,16 +1,16 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { cartContext } from '@/Context/CartContext'
 import { GetCartResponse } from '@/Interfaces'
-import { addToCart, clearCart, deleteCartItem, getUserCart, updateCartProductQuantity } from '@/services/api'
+import { clearCart, deleteCartItem, getUserCart, updateCartProductQuantity } from '@/services/api'
 import toast from 'react-hot-toast'
-import { useSession } from 'next-auth/react'
+
 
 export default function useCartActions(initialCart: GetCartResponse) {
 	const [cart, setCart] = useState<GetCartResponse>(initialCart)
 	const [isLoading, setIsLoading] = useState(false);
 	const { setCartCount } = useContext(cartContext)
 
-	const { status } = useSession()
+
 
 
 
