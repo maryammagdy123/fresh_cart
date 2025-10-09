@@ -7,6 +7,7 @@ import { Product } from "@/Interfaces";
 export function useWishlist(productId: string) {
 	const [isInWishlist, setIsInWishlist] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+	const [isChecking, setIsChecking] = useState(true)
 	const { status } = useSession();
 
 
@@ -41,6 +42,7 @@ export function useWishlist(productId: string) {
 
 	useEffect(() => {
 		async function checkWishlist() {
+			setIsChecking(true);
 			const cached = localStorage.getItem("wishlist");
 			if (cached) {
 				const wishlist = JSON.parse(cached);
@@ -56,10 +58,13 @@ export function useWishlist(productId: string) {
 				);
 			} catch (err) {
 				console.error(err);
+			} finally {
+				setIsChecking(false);
 			}
 		}
 		checkWishlist();
+
 	}, [productId]);
 
-	return { isInWishlist, isLoading, toggleWishlist };
+	return { isInWishlist, isLoading, toggleWishlist, isChecking };
 }
