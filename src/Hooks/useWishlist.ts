@@ -9,6 +9,7 @@ export function useWishlist(productId: string) {
 	const [isLoading, setIsLoading] = useState(false);
 	const { status } = useSession();
 
+
 	async function toggleWishlist() {
 		if (status !== "authenticated") {
 			toast.error("You must be logged in to add items to the wishlist.");

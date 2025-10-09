@@ -33,7 +33,7 @@ export default function InnerWishList({ wishListProducts }: InnerWishListProps) 
 
 	useEffect(() => {
 		setWishlistCount(wishlist.count)
-	}, [wishlist])
+	}, [wishlist, setWishlistCount])
 
 	return (
 		<main className="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-10 py-8">
