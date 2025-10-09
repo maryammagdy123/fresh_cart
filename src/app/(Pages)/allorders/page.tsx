@@ -1,5 +1,4 @@
 import EmptyOrders from '@/components/Orders/EmptyOrders'
-import { Button } from '@/components/ui/button'
 import { userId } from '@/helpers/getUserToken'
 import { UserOrderResponse } from '@/Interfaces/order'
 
