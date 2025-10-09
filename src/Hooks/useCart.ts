@@ -15,7 +15,7 @@ export function useCart(initialCart: GetCartResponse) {
 
 	useEffect(() => {
 		setCartCount(state.cart.numOfCartItems)
-	}, [state.cart])
+	}, [state.cart, setCartCount])
 
 
 	// handle delete item from cart
