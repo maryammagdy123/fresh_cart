@@ -13,10 +13,11 @@ interface CartListProps {
 	handleUpdate: (productId: string, count: number) => void
 	handleClearCart: (setIsDelete: (value: boolean) => void) => void
 }
-export default function CartList({ cartItem, handleDeleteCartItem, handleUpdate }: CartListProps) {
+function CartList({ cartItem, handleDeleteCartItem, handleUpdate }: CartListProps) {
 	const [isDelete, setIsDelete] = useState(false)
 	const [count, setCount] = useState<number>(cartItem.count)
-	const [timeOutId, setTimeOutId] = useState<NodeJS.Timeout>()
+	const [timeOutId, setTimeOutId] = useState<ReturnType<typeof setTimeout>>()
+
 
 	function handleIncrease() {
 		const newCount = count + 1
@@ -34,7 +35,7 @@ export default function CartList({ cartItem, handleDeleteCartItem, handleUpdate 
 		clearTimeout(timeOutId)
 		const id = setTimeout(() => {
 			handleUpdate(cartItem.product._id, newCount)
-		}, 5000)
+		}, 500)
 		setTimeOutId(id)
 	}
 
@@ -112,3 +113,4 @@ export default function CartList({ cartItem, handleDeleteCartItem, handleUpdate 
 			</div ></>
 	)
 }
+export default React.memo(CartList)
