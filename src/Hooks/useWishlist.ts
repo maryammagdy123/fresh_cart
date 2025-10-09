@@ -14,20 +14,24 @@ export function useWishlist(productId: string) {
 			toast.error("You must be logged in to add items to the wishlist.");
 			return;
 		}
+		const prevState = isInWishlist
+		setIsInWishlist(!isInWishlist) //Optimistic update , true
 
 		try {
 			setIsLoading(true);
-			const action = isInWishlist ? removeFromWishlist : addToWishlist;
+			const action = prevState ? removeFromWishlist : addToWishlist;
 			const res = await action(productId);
 
 			if (res.status === "success") {
 				setIsInWishlist(!isInWishlist);
-				toast.success(isInWishlist ? "Removed from wishlist" : "Added to wishlist");
+				toast.success(prevState ? "Removed from wishlist" : "Added to wishlist");
 			} else {
+				setIsInWishlist(prevState)
 				toast.error("Action failed");
 			}
 		} catch (err) {
 			console.error(err);
+			setIsInWishlist(prevState)
 			toast.error("Something went wrong");
 		} finally {
 			setIsLoading(false);
@@ -36,8 +40,15 @@ export function useWishlist(productId: string) {
 
 	useEffect(() => {
 		async function checkWishlist() {
+			const cached = localStorage.getItem("wishlist",)
+			if (cached) {
+				const wishlist = JSON.parse(cached);
+				const exists = wishlist.some((item: Product) => item._id === productId);
+				setIsInWishlist(exists);
+			}
 			try {
 				const wishlist = await getWishlist();
+				localStorage.setItem("wishlist", JSON.stringify(wishlist.data));
 				setIsInWishlist(
 					wishlist.data?.some((item: Product) => item._id === productId)
 				);
