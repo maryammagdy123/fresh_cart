@@ -37,7 +37,7 @@ export default async function OrdersPage() {
 									{new Date(order.createdAt).toLocaleString()}
 								</p>
 								<p className="text-lg font-semibold mt-1">
-									Total: ${order.totalOrderPrice}
+									Total: EGP {order.totalOrderPrice}
 								</p>
 							</div>
 
@@ -96,12 +96,7 @@ export default async function OrdersPage() {
 							))}
 						</div>
 
-						{/* Action Button */}
-						<div className="mt-4 text-right">
-							<Button className="bg-black text-white hover:bg-gray-800 text-sm">
-								View Details
-							</Button>
-						</div>
+
 					</div>
 				))}
 			</div>
