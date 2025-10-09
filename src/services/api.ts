@@ -1,5 +1,5 @@
 "use server"
-import { RegisterFormValues } from '@/app/(Pages)/auth/register/page';
+
 import { getToken } from '@/helpers/getUserToken';
 // import { authHeaders } from '@/helpers/authHeaders';
 import { AuthResponse, CodeRes, ForgetPasswordResponse, NewPassword } from '@/Interfaces';
@@ -8,6 +8,7 @@ import { CheckoutOrderRes, UserOrderResponse } from '@/Interfaces/order';
 import { WishListResponse } from '@/Interfaces/wishlist';
 import { CheckoutFormValues } from '@/schemas/checkout';
 import { CodeFormValues, EmailFormValues, PasswordFormValues } from '@/schemas/forgetPassword';
+import { RegisterFormValues } from '@/schemas/register';
 import { AddToWishListResponse, BrandResponse, CategoryResponse, ProductResponse, RemoveFromWishListResponse, SingleBrandResponse, SingleCategoryResponse, SingleProductResponse, SingleSubcategoryResponse, SubcategoryResponse } from "@/types";
 
 
