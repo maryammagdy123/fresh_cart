@@ -10,7 +10,7 @@ import WishListButton from '../Wishlist/WishListButton'
 interface ProductListCardProps {
 	product: Product
 }
-export default function ProductListCard({ product }: ProductListCardProps) {
+function ProductListCard({ product }: ProductListCardProps) {
 	const { isInWishlist, isLoading, toggleWishlist } = useWishlist(product._id);
 	return (
 		<div className="relative border rounded-2xl shadow-md p-4 flex md:flex-row flex-col items-center gap-6 hover:shadow-lg transition w-full overflow-hidden">
@@ -85,3 +85,4 @@ export default function ProductListCard({ product }: ProductListCardProps) {
 		</div>
 	)
 }
+export default React.memo(ProductListCard)
