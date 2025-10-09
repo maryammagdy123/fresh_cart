@@ -56,7 +56,7 @@ function ProductGridCard({ product }: ProductGridCardProps) {
 
 			{/* price + sold quantity */}
 			<div className="flex gap-4 justify-between mb-4">
-				<p className="text-gray-800 font-medium">${product.price}</p>
+				<p className="text-gray-800 font-medium">EGP{product.price}</p>
 				<span className="text-gray-500 text-sm">
 					{product.sold ? product.sold.toString().slice(0, 4) : 0} sold
 				</span>

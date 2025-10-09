@@ -68,7 +68,7 @@ function ProductListCard({ product }: ProductListCardProps) {
 
 				{/* price + button */}
 				<div className="flex items-center justify-between mt-3">
-					<p className="text-lg font-semibold text-gray-800">${product.price}</p>
+					<p className="text-lg font-semibold text-gray-800">EGP{product.price}</p>
 					{/* actions */}
 					<AddToCartBtn productId={product._id} productQuantity={product.quantity} />
 

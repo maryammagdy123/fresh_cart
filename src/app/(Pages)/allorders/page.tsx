@@ -86,7 +86,7 @@ export default async function OrdersPage() {
 									<div className="flex-1">
 										<p className="text-sm font-medium">{item.product.title}</p>
 										<p className="text-xs text-gray-500">
-											Qty: {item.count} × ${item.price}
+											Qty: {item.count} × EGP{item.price}
 										</p>
 										<p className="text-xs text-gray-400">
 											Brand: {item.product.brand.name}
