@@ -23,7 +23,9 @@ export default function LoginForm() {
 	const inputs = [
 		{ name: "email", formLabel: "Email", inputType: "email" },
 		{ name: "password", formLabel: "Password", inputType: "password" },
-	]; const router = useRouter();
+	];
+	const router = useRouter();
+
 	const searchParams = useSearchParams()
 	const callabackUrl = searchParams.get("callabackUrl") || "/products"
 	const [isLogin, setIslogin] = useState(false)

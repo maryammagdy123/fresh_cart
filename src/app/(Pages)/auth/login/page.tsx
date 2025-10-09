@@ -4,16 +4,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import LoginForm from "@/components/Form/LoginForm";
 
-
-
-
-
-
-
 export default function LoginPage() {
-
-
-
 
 	return (
 		<Suspense fallback={<LoadingSpinner />}>
