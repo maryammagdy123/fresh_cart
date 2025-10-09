@@ -11,7 +11,7 @@ interface ProductListCardProps {
 	product: Product
 }
 function ProductListCard({ product }: ProductListCardProps) {
-	const { isInWishlist, isLoading, toggleWishlist } = useWishlist(product._id);
+	const { isInWishlist, isLoading, toggleWishlist, isChecking } = useWishlist(product._id);
 	return (
 		<div className="relative border rounded-2xl shadow-md p-4 flex md:flex-row flex-col items-center gap-6 hover:shadow-lg transition w-full overflow-hidden">
 
@@ -29,6 +29,7 @@ function ProductListCard({ product }: ProductListCardProps) {
 						isInWishlist={isInWishlist}
 						isLoading={isLoading}
 						onClick={toggleWishlist}
+						isChecking={isChecking}
 					/>
 				</div>
 			</div>
