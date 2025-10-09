@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Layout/navbar";
@@ -40,7 +41,7 @@ export default function RootLayout({
           <Footer />
           <Toaster />
         </ProvidersContainer>
-
+        <SpeedInsights />
 
         {/* <WishlistContextProvider>
           <CartContextProvider>
