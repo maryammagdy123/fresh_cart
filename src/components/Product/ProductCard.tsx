@@ -2,6 +2,7 @@
 import { Product } from "@/Interfaces"
 import ProductGridCard from "./ProductGridCard"
 import ProductListCard from "./ProductListCard"
+import React from "react"
 
 
 interface ProductCardProps {
@@ -10,7 +11,7 @@ interface ProductCardProps {
 
 }
 
-export default function ProductCard({ viewMode = "grid", product }: ProductCardProps) {
+function ProductCard({ viewMode = "grid", product }: ProductCardProps) {
 
 
 
@@ -26,3 +27,4 @@ export default function ProductCard({ viewMode = "grid", product }: ProductCardP
 		</section>
 	)
 }
+export default React.memo(ProductCard);
