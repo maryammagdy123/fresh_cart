@@ -13,7 +13,7 @@ import WishListButton from "../Wishlist/WishListButton";
 export default function ProductDetailPage({ productData }: { productData: Product }) {
 	const [mainIndex, setMainIndex] = useState(0);
 	const [quantity, setQuantity] = useState(1);
-	const { isInWishlist, isLoading, toggleWishlist, isChecking } = useWishlist(productData._id);
+	const { isInWishlist, isLoading, toggleWishlist } = useWishlist(productData._id);
 
 	const product = productData;
 	return (
@@ -119,7 +119,6 @@ export default function ProductDetailPage({ productData }: { productData: Produc
 									isInWishlist={isInWishlist}
 									isLoading={isLoading}
 									onClick={toggleWishlist}
-									isChecking={isChecking}
 								/>
 								<AddToCartBtn productQuantity={product?.quantity} productId={product._id} />
 

@@ -1,3 +1,4 @@
+"use client"
 import { Product } from '@/Interfaces'
 import Image from 'next/image'
 import React from 'react'
@@ -10,7 +11,7 @@ interface ProductGridCardProps {
 	product: Product
 }
 function ProductGridCard({ product }: ProductGridCardProps) {
-	const { isInWishlist, isLoading, toggleWishlist, isChecking } = useWishlist(product._id);
+	const { isInWishlist, isLoading, toggleWishlist } = useWishlist(product._id);
 	return (
 		<div className="relative border rounded-2xl shadow-md p-4 flex flex-col justify-between hover:shadow-lg transition  h-full">
 			{/* product image */}
@@ -28,7 +29,6 @@ function ProductGridCard({ product }: ProductGridCardProps) {
 						isInWishlist={isInWishlist}
 						isLoading={isLoading}
 						onClick={toggleWishlist}
-						isChecking={isChecking}
 					/>
 				</div>
 			</div>

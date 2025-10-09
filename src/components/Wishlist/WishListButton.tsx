@@ -5,17 +5,14 @@ interface WishListButtonProps {
 	isInWishlist: boolean
 	isLoading: boolean
 	onClick: () => Promise<void>
-	isChecking: boolean
+
 
 }
-export default function WishListButton({ isInWishlist, isLoading, onClick, isChecking }: WishListButtonProps) {
+export default function WishListButton({ isInWishlist, isLoading, onClick }: WishListButtonProps) {
 	return (
-		<Button
-			onClick={onClick}
-			className="p-2 rounded-full bg-white shadow hover:bg-gray-100"
-			disabled={isChecking}
-		>
-			{isLoading || isChecking ? (
+
+		<Button onClick={onClick} className="p-2 rounded-full bg-white shadow hover:bg-gray-100">
+			{isLoading ? (
 				<Loader2 className="animate-spin text-black" />
 			) : (
 				<Heart className="h-5 w-5 text-red-500" fill={isInWishlist ? "red" : "none"} />
