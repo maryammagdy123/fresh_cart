@@ -6,7 +6,6 @@ import { GetCartResponse } from '@/Interfaces/cart'
 import EmptyCart from './EmptyCart'
 import { Button } from '../ui/button'
 import { Loader2, Trash2 } from 'lucide-react'
-import { useState } from 'react'
 import useCartActions from '@/Hooks/useCartActions'
 
 interface InnerCartProps {

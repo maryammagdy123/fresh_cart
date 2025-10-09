@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { cartContext } from '@/Context/CartContext'
 import { GetCartResponse } from '@/Interfaces'
 import { clearCart, deleteCartItem, getUserCart, updateCartProductQuantity } from '@/services/api'
