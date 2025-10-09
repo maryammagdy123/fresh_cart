@@ -1,7 +1,7 @@
 "use client"
 import { RegisterFormValues, registerSchema } from '@/schemas/register';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/router';
+
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
@@ -10,6 +10,7 @@ import { PasswordChecklist } from './PasswordCheckList';
 import { Button } from '../ui/button';
 import { SignUp } from '@/services/api';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 export default function RegisterForm() {
 
