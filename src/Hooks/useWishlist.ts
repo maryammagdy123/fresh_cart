@@ -40,7 +40,7 @@ export function useWishlist(productId: string) {
 
 	useEffect(() => {
 		async function checkWishlist() {
-			const cached = localStorage.getItem("wishlist",)
+			const cached = localStorage.getItem("wishlist")
 			if (cached) {
 				const wishlist = JSON.parse(cached);
 				const exists = wishlist.some((item: Product) => item._id === productId);
