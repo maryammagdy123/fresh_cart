@@ -1,14 +1,12 @@
 "use client"
-import React, { useState, Suspense, useReducer, useEffect } from 'react'
+import React, { useState, Suspense } from 'react'
 import MainSlider from './MainSlider'
 import { Button } from '../ui/button'
 import { AlertCircle, Grid, List } from 'lucide-react'
 import { motion, Variants } from "framer-motion"
-import { Product } from '@/Interfaces'
-import { productReducer } from '@/reducers/productReducer'
-import { getAllProducts } from '@/services/api'
 import { Input } from '../ui/input'
 import LoadingSpinner from '../shared/LoadingSpinner'
+import useProducts from '@/Hooks/useProducts'
 
 
 const ProductCard = React.lazy(() => import("./ProductCard"))
@@ -31,28 +29,7 @@ export default function ProductGridContainer() {
 		},
 	}
 
-	// reducer initialstate
-	const initialState = {
-		products: [] as Product[],
-		filtered: [] as Product[],
-		loading: false,
-		error: null as string | null,
-	}
-
-	const [state, dispatch] = useReducer(productReducer, initialState)
-	useEffect(() => {
-		const fetchProducts = async () => {
-			dispatch({ type: "FETCH_INIT" })
-			try {
-				const res = await getAllProducts(1)
-				console.log(res)
-				dispatch({ type: "FETCH_SUCCESS", payload: res.data })
-			} catch (error: unknown) {
-				dispatch({ type: "FETCH_ERROR", payload: String(error) })
-			}
-		}
-		fetchProducts()
-	}, [])
+	const { state, dispatch } = useProducts()
 
 	if (state.loading) return <LoadingSpinner />
 	if (state.error) return <p className="text-center text-red-500">Error: {state.error}</p>
