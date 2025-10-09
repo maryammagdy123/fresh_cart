@@ -1,7 +1,7 @@
 import { Product } from '@/Interfaces'
 import { productReducer } from '@/reducers/productReducer'
 import { getAllProducts } from '@/services/api'
-import { useEffect, useReducer } from 'react'
+import { useCallback, useEffect, useReducer } from 'react'
 
 export default function useProducts() {
 	// reducer initialstate
@@ -26,5 +26,13 @@ export default function useProducts() {
 		}
 		fetchProducts()
 	}, [])
-	return { state, dispatch }
+
+	const handleSearch = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			dispatch({ type: "SEARCH", payload: e.target.value })
+		},
+		[]
+	)
+
+	return { state, handleSearch }
 }

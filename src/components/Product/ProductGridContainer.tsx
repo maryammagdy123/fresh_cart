@@ -29,7 +29,7 @@ export default function ProductGridContainer() {
 		},
 	}
 
-	const { state, dispatch } = useProducts()
+	const { state, handleSearch } = useProducts()
 
 	if (state.loading) return <LoadingSpinner />
 	if (state.error) return <p className="text-center text-red-500">Error: {state.error}</p>
@@ -51,7 +51,7 @@ export default function ProductGridContainer() {
 					type="text"
 					placeholder="Search products..."
 					className="border rounded-md p-2 w-1/2 mx-auto"
-					onChange={(e) => dispatch({ type: "SEARCH", payload: e.target.value })}
+					onChange={handleSearch}
 				/>
 
 
