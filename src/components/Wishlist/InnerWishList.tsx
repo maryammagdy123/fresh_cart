@@ -87,7 +87,7 @@ export default function InnerWishList() {
 								<div className='space-x-2.5'>
 									<AddToCartBtn productId={item._id} />
 
-									<RemoveFromWishlistBtn id={item._id} handleRemoveFromWishList={handleRemoveFromWishList} />
+									<RemoveFromWishlistBtn id={item._id} handleRemoveFromWishList={removeMutation} />
 								</div>
 							</div>
 						</li>
