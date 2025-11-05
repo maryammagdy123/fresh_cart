@@ -10,6 +10,7 @@ import 'animate.css';
 import { Toaster } from "react-hot-toast";
 import ProvidersContainer from "@/components/StoreProvider/ProvidersContainer";
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
