@@ -7,10 +7,9 @@ import { Product } from "@/Interfaces";
 export function useWishlist(productId: string) {
 	const [isInWishlist, setIsInWishlist] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-	// const [isChecking, setIsChecking] = useState(true)
 	const { status } = useSession();
 
-
+	// ✅ Toggle wishlist (add/remove)
 	async function toggleWishlist() {
 		if (status !== "authenticated") {
 			toast.error("You must be logged in to add items to the wishlist.");
@@ -18,7 +17,7 @@ export function useWishlist(productId: string) {
 		}
 
 		const prevState = isInWishlist;
-		setIsInWishlist(!prevState); // ✅ Optimistic update
+		setIsInWishlist(!prevState); // Optimistic update
 
 		try {
 			setIsLoading(true);
@@ -40,29 +39,24 @@ export function useWishlist(productId: string) {
 		}
 	}
 
+	// ✅ Check if product is in wishlist — directly from API
 	useEffect(() => {
-		async function checkWishlist() {
-			// setIsChecking(true);
-			const cached = localStorage.getItem("wishlist");
-			if (cached) {
-				const wishlist = JSON.parse(cached);
-				const exists = wishlist.some((item: Product) => item._id === productId);
-				setIsInWishlist(exists);
-			}
+		if (status !== "authenticated") return;
 
+		async function checkWishlist() {
 			try {
 				const wishlist = await getWishlist();
-				localStorage.setItem("wishlist", JSON.stringify(wishlist.data));
-				setIsInWishlist(
-					wishlist.data?.some((item: Product) => item._id === productId)
+				const exists = wishlist?.data?.some(
+					(item: Product) => item._id === productId
 				);
+				setIsInWishlist(!!exists);
 			} catch (err) {
-				console.error(err);
+				console.error("Failed to fetch wishlist", err);
 			}
 		}
-		checkWishlist();
 
-	}, [productId]);
+		checkWishlist();
+	}, [productId, status]);
 
 	return { isInWishlist, isLoading, toggleWishlist };
 }
