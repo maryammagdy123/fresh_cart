@@ -7,6 +7,8 @@ import { motion, Variants } from "framer-motion"
 import { Input } from '../ui/input'
 import LoadingSpinner from '../shared/LoadingSpinner'
 import useProducts from '@/Hooks/useProducts'
+import { getAllCategories } from '@/services/api'
+import Sidebar from '../Sidebar'
 
 
 const ProductCard = React.lazy(() => import("./ProductCard"))
@@ -28,6 +30,8 @@ export default function ProductGridContainer() {
 			},
 		},
 	}
+
+
 
 	const { state, dispatch } = useProducts()
 
@@ -75,18 +79,12 @@ export default function ProductGridContainer() {
 							<List className="h-4 w-4" />
 						</Button>
 					</div>
+
 				</div>
 
-				{/* {products.map(product => (
-						<motion.div key={product._id} variants={itemVariants}>
-						<Suspense fallback={<div>Loading...</div>}>
-						<ProductCard product={product} viewMode={viewMode} />
-						</Suspense>
-						</motion.div>
-						))} */}
 				{/* 🔹 Check if no products found */}
 				{state.filtered.length === 0 ? (
-					<div className="flex justify-center mt-10">
+					<div className="flex  justify-center mt-10">
 						<div className="w-full sm:w-1/2 md:w-1/3 shadow-lg border border-gray-200">
 							<div className="flex flex-col items-center text-center py-8">
 								<AlertCircle className="w-12 h-12 text-red-500 mb-3" />
@@ -98,6 +96,7 @@ export default function ProductGridContainer() {
 								</p>
 							</div>
 						</div>
+
 					</div>
 				) : (
 					<motion.div

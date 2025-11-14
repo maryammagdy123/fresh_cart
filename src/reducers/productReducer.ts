@@ -12,7 +12,8 @@ type Action =
 	| { type: "FETCH_INIT" }
 	| { type: "FETCH_SUCCESS"; payload: Product[] }
 	| { type: "FETCH_ERROR"; payload: string }
-	| { type: "SEARCH"; payload: string };
+	| { type: "SEARCH"; payload: string }
+	| { type: "FILTER_BY_CATEGORY"; payload: string };
 
 export function productReducer(state: State, action: Action): State {
 	switch (action.type) {
@@ -37,6 +38,15 @@ export function productReducer(state: State, action: Action): State {
 					p.title.toLowerCase().includes(action.payload.toLowerCase())
 				),
 			};
+		case 'FILTER_BY_CATEGORY':
+			return {
+				...state,
+				filtered: action.payload === "All"
+					? state.products
+					: state.products.filter(
+						(p) => p.category.name.toLowerCase() === (action.payload.toLocaleLowerCase())
+					),
+			}
 
 		default:
 			return state;
