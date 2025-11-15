@@ -29,13 +29,13 @@ export default function Sidebar({ dispatch }: SidebarProp) {
 	}, []);
 
 	return (
-		<div className="p-4 border rounded-md shadow-md mb-6">
+		<div className=" p-4 border rounded-md shadow-md mb-6 sticky top-20">
 			<h3 className="font-semibold mb-3">Categories</h3>
-			<ul>
+			<ul className="max-h-[calc(100vh-100px)] overflow-y-auto">
 				{categories.map((cat) => (
 					<li
-						key={cat.name}
-						className="cursor-pointer mb-2 hover:text-blue-500"
+						key={cat._id}
+						className="cursor-pointer mb-2 hover:text-blue-500 transition-colors duration-200"
 						onClick={() => dispatch({ type: "FILTER_BY_CATEGORY", payload: cat.name })}
 					>
 						{cat.name}
@@ -43,5 +43,6 @@ export default function Sidebar({ dispatch }: SidebarProp) {
 				))}
 			</ul>
 		</div>
+
 	)
 }
