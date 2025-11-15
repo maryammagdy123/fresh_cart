@@ -8,7 +8,7 @@ type State = {
 	error: string | null;
 };
 
-type Action =
+export type Action =
 	| { type: "FETCH_INIT" }
 	| { type: "FETCH_SUCCESS"; payload: Product[] }
 	| { type: "FETCH_ERROR"; payload: string }

@@ -7,8 +7,7 @@ import { motion, Variants } from "framer-motion"
 import { Input } from '../ui/input'
 import LoadingSpinner from '../shared/LoadingSpinner'
 import useProducts from '@/Hooks/useProducts'
-import { getAllCategories } from '@/services/api'
-import Sidebar from '../Sidebar'
+
 
 
 const ProductCard = React.lazy(() => import("./ProductCard"))

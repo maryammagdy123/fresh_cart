@@ -1,10 +1,11 @@
 import { Category } from '@/Interfaces';
+import { Action } from '@/reducers/productReducer';
 import { getAllCategories } from '@/services/api'
 import { CategoryResponse } from '@/types';
 import React, { useEffect, useState } from 'react'
 
 interface SidebarProp {
-	dispatch: (action: any) => void
+	dispatch: (action: Action) => void
 }
 export default function Sidebar({ dispatch }: SidebarProp) {
 	const [categories, setCategories] = useState<Category[]>([]);
@@ -13,12 +14,12 @@ export default function Sidebar({ dispatch }: SidebarProp) {
 		const fetchData = async () => {
 			const catRes: CategoryResponse = await getAllCategories();
 
-			// نضيف "All" في أول المصفوفة
+
 			const allCategory: Category = {
-				_id: "all",       // ممكن تحطي أي id وهمي
+				_id: "all",
 				name: "All",
 				slug: "all",
-				image: "",        // ممكن تسيبيها فاضية أو تحطي أي أيقونة
+				image: "",
 			};
 
 			setCategories([allCategory, ...catRes.data]);
