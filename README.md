@@ -8,16 +8,36 @@
 
 ## 📌 Features
 
-- Browse products and categories  
-- Add, remove, and update items in the cart  
-- User authentication (Register / Login / Protected routes)  
-- View user orders and order history  
-- Fully responsive design for all devices  
-- State management using Context API or Redux Toolkit  
-- Animated UI using **Framer Motion**  
-- Toast notifications for success/error messages  
-- Robust API error handling  
-- Code splitting and optimized performance  
+
+### 🛍️ Product Browsing
+- Browse products and categories with dynamic filtering and search.
+
+### 🛒 Cart Management
+- Add, remove, and update items in the shopping cart seamlessly.
+
+### 🔒 User Authentication
+- Register and Login functionality with protected routes for authenticated users.
+
+### 📦 Orders
+- View user orders and order history in a clean interface.
+
+### 📱 Responsive Design
+- Fully responsive for desktop, tablet, and mobile devices.
+
+### ⚛️ State Management
+- Efficient state handling using **Context API** or **Redux Toolkit**.
+
+### ✨ Animated UI
+- Smooth UI animations using **Framer Motion** for better user experience.
+
+### 🔔 Notifications
+- Toast messages for success, warnings, and error feedback.
+
+### 🛡️ API Handling
+- Robust API error handling to prevent crashes and improve reliability.
+
+### 🚀 Performance Optimization
+- Code splitting and optimized loading for faster performance.
 
 ---
 
